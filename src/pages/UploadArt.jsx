@@ -10,7 +10,6 @@ function UploadArt() {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [artwork, setArtwork] = useState('');
-  const [tags, setTags] = useState([]);
   const [inputTags, setInputTags] = useState([]);
   const [time, setTime] = useState('');
   const [cost, setCost] = useState(0);
@@ -61,7 +60,6 @@ function UploadArt() {
         time,
         artistId: user._id,
         commissions,
-        tags,
       };
 
       //   if (tags.length > 0) {
@@ -75,7 +73,7 @@ function UploadArt() {
           return tag.text;
         });
         console.log(artworkTags);
-        setTags(artworkTags);
+        requestBody.tags = artworkTags;
       }
       if (artwork) {
         const uploadData = new FormData();
