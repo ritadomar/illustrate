@@ -25,3 +25,34 @@
   flex-direction: row !important;
   gap: 8px !important;
 }
+
+.Navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 80px;
+  box-sizing: border-box;
+}
+
+.nav-links {
+  display: flex;
+  gap: 40px;
+  align-items: center;
+}
+
+.user-links {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.user-links img {
+  width: 40px;
+  border: 2px black solid;
+  border-radius: 50%;
+}
+
+.ReactTags__tagInputField {
+  width: 100%;
+  box-sizing: border-box;
+}
