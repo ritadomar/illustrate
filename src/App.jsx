@@ -7,7 +7,7 @@ import SignUp from './pages/SignUp';
 import LogIn from './pages/LogIn';
 import IsAnon from './components/IsAnon';
 import IsPrivate from './components/IsPrivate';
-import UploadArt from './pages/UploadArt';
+import UploadArtwork from './pages/UploadArtwork';
 import Profile from './pages/Profile';
 import ArtworkDetails from './pages/ArtworkDetails';
 import EditArtwork from './pages/EditArtwork';
@@ -41,7 +41,7 @@ function App() {
           path="/newPost"
           element={
             <IsPrivate>
-              <UploadArt />
+              <UploadArtwork />
             </IsPrivate>
           }
         />

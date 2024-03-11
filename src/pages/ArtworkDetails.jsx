@@ -34,7 +34,7 @@ function ArtworkDetails() {
           <header>
             <h1>{artwork.title}</h1>
             <div>
-              {user.username === username && (
+              {user && user.username === username && (
                 <>
                   <button onClick={handleDelete}>Delete Artwork</button>
                   <Link to={`/${artwork.artist.username}/${artworkId}/edit`}>

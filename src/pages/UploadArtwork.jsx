@@ -81,7 +81,7 @@ function UploadArt() {
         requestBody.artworkUrl = response.data.imgUrl;
       }
       await addArtwork(requestBody);
-      navigate('/');
+      navigate(`/${user.username}`);
     } catch (error) {
       console.log;
     }

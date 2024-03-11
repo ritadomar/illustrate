@@ -4,7 +4,7 @@ import { updateArtwork, getArtwork } from '../api/artwork.api';
 import { upload } from '../api/upload.api';
 import InputTag from '../components/InputTag';
 
-function UploadArt() {
+function EditArtwork() {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [artwork, setArtwork] = useState(null);
@@ -180,4 +180,4 @@ function UploadArt() {
   );
 }
 
-export default UploadArt;
+export default EditArtwork;
