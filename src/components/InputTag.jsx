@@ -18,7 +18,6 @@ function InputTag({ tags, setTags }) {
       const suggestionsList = response.data.map(tag => {
         return { id: tag._id, text: tag.tagName };
       });
-      console.log(suggestionsList);
       setSuggestions(suggestionsList);
     } catch (error) {
       console.log(error);
@@ -42,7 +41,7 @@ function InputTag({ tags, setTags }) {
   };
   return (
     <>
-      {suggestions.length > 0 && (
+      {suggestions && (
         <ReactTags
           tags={tags}
           delimiters={delimiters}

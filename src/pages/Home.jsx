@@ -1,5 +1,6 @@
 import { getAllArtworks } from '../api/artwork.api';
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 function Home() {
   const [artworks, setArtworks] = useState([]);
@@ -21,10 +22,15 @@ function Home() {
       <h1>Home</h1>
       {artworks.map(artwork => {
         return (
-          <article key={artwork._id}>
-            <h2>{artwork.title}</h2>
-            <img src={artwork.artworkUrl} alt="" width={100} />
-          </article>
+          <Link
+            to={`/${artwork.artist.username}/${artwork._id}`}
+            key={artwork._id}
+          >
+            <article>
+              <img src={artwork.artworkUrl} alt="" width={500} />
+              <h2>{artwork.title}</h2>
+            </article>
+          </Link>
         );
       })}
     </div>

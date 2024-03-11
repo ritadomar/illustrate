@@ -1,15 +1,13 @@
-import { useState, useContext, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { addArtwork } from '../api/artwork.api';
+import { useState, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { updateArtwork, getArtwork } from '../api/artwork.api';
 import { upload } from '../api/upload.api';
-import { AuthContext } from '../context/auth.context';
 import InputTag from '../components/InputTag';
-import { getProfile } from '../api/profiles.api';
 
 function UploadArt() {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [artwork, setArtwork] = useState('');
+  const [artwork, setArtwork] = useState(null);
   const [inputTags, setInputTags] = useState([]);
   const [time, setTime] = useState('');
   const [cost, setCost] = useState(0);
@@ -17,22 +15,28 @@ function UploadArt() {
   const [displayArtwork, setDisplayArtwork] = useState('');
   const [artist, setArtist] = useState(null);
 
-  const { user } = useContext(AuthContext);
+  const { artworkId, username } = useParams();
 
   const navigate = useNavigate();
 
-  const getArtist = async () => {
-    try {
-      const response = await getProfile(user.username);
-      setArtist(response.data);
-      console.log(response.data.rate);
-    } catch (error) {
-      console.log(error);
-    }
+  const getSingleArtwork = async () => {
+    const response = await getArtwork(artworkId);
+    setTitle(response.data.title);
+    setDescription(response.data.description);
+    const tags = response.data.tags.map(tag => {
+      return { id: tag._id, text: tag.tagName };
+    });
+    setInputTags(tags);
+    setTime(response.data.time);
+    setCost(response.data.cost);
+    setCommissions(response.data.commissions);
+    setDisplayArtwork(response.data.artworkUrl);
+    console.log(response.data.artworkUrl);
+    setArtist(response.data.artist);
   };
 
   useEffect(() => {
-    getArtist();
+    getSingleArtwork();
   }, []);
 
   const handleArtwork = ({ target }) => {
@@ -58,8 +62,8 @@ function UploadArt() {
         title,
         description,
         time,
-        artistId: user._id,
         commissions,
+        _id: artworkId,
       };
 
       if (inputTags.length > 0) {
@@ -80,8 +84,8 @@ function UploadArt() {
 
         requestBody.artworkUrl = response.data.imgUrl;
       }
-      await addArtwork(requestBody);
-      navigate('/');
+      await updateArtwork(requestBody);
+      navigate(`/${username}/${artworkId}`);
     } catch (error) {
       console.log;
     }
@@ -90,16 +94,11 @@ function UploadArt() {
   return (
     <>
       <main className="Authentication">
-        <h1>Upload Artwork</h1>
+        <h1>Edit Artwork</h1>
         <form onSubmit={handleSubmit}>
           <label htmlFor="artwork">
-            {artwork && (
-              <>
-                Edit artwork:
-                <img src={displayArtwork} alt="" width={'100%'} />
-              </>
-            )}
-            {!artwork && 'Upload your artwork:'}
+            Edit artwork:
+            <img src={displayArtwork} alt="" width={'100%'} />
             <input
               type="file"
               name="artwork"
@@ -174,7 +173,7 @@ function UploadArt() {
               })}
             </>
           )}
-          <button type="submit">Upload artwork</button>
+          <button type="submit">Save changes</button>
         </form>
       </main>
     </>

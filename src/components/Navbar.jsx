@@ -30,7 +30,7 @@ function Navbar() {
         <div className="user-links">
           <Link onClick={logOutUser}>Log Out</Link>
           {user.isArtist && <Link to="/newPost">Upload Art</Link>}
-          <Link to="/:profile">
+          <Link to={`/${user.username}`}>
             <img src={user.avatarUrl} alt="" className="nopin" />
           </Link>
         </div>

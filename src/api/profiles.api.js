@@ -19,18 +19,17 @@ const setAuthorizationHeaders = () => {
 
 setAuthorizationHeaders();
 
-export const getProfile = id => {
-  return axios.get(`${baseURL}/profiles/${id}`);
-};
-
-export const addProfile = profile => {
-  return axios.post(`${baseURL}/profiles`, profile);
+export const getProfile = username => {
+  return axios.get(`${baseURL}/profiles/${username}`);
 };
 
 export const updateProfile = updatedProfile => {
-  return axios.put(`${baseURL}/profiles/${updatedProfile._id}`, updatedProfile);
+  return axios.put(
+    `${baseURL}/profiles/${updatedProfile.username}`,
+    updatedProfile
+  );
 };
 
-export const deleteProfile = id => {
-  return axios.delete(`${baseURL}/profiles/${id}`);
+export const deleteProfile = username => {
+  return axios.delete(`${baseURL}/profiles/${username}`);
 };

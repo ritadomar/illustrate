@@ -8,6 +8,9 @@ import LogIn from './pages/LogIn';
 import IsAnon from './components/IsAnon';
 import IsPrivate from './components/IsPrivate';
 import UploadArt from './pages/UploadArt';
+import Profile from './pages/Profile';
+import ArtworkDetails from './pages/ArtworkDetails';
+import EditArtwork from './pages/EditArtwork';
 
 function App() {
   return (
@@ -32,11 +35,21 @@ function App() {
             </IsAnon>
           }
         />
+        <Route path="/:username" element={<Profile />} />
+        <Route path="/:username/:artworkId" element={<ArtworkDetails />} />
         <Route
           path="/newPost"
           element={
             <IsPrivate>
               <UploadArt />
+            </IsPrivate>
+          }
+        />
+        <Route
+          path="/:username/:artworkId/edit"
+          element={
+            <IsPrivate>
+              <EditArtwork />
             </IsPrivate>
           }
         />
