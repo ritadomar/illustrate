@@ -35,9 +35,7 @@ function InputTag({ tags, setTags }) {
 
   // Method to Add tag into Array
   const handleAddition = tag => {
-    console.log(tag);
     setTags([...tags, tag]);
-    console.log(tags);
   };
   return (
     <>

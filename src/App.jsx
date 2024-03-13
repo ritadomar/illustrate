@@ -3,15 +3,26 @@ import './App.css';
 import { Route, Routes } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
+
+// Auth
 import SignUp from './pages/SignUp';
 import LogIn from './pages/LogIn';
+
+// Protect
 import IsAnon from './components/IsAnon';
 import IsPrivate from './components/IsPrivate';
 import IsForArtists from './components/IsForArtists';
-import UploadArtwork from './pages/UploadArtwork';
+
+// Profile
 import Profile from './pages/Profile';
+
+// Artwork
+import UploadArtwork from './pages/UploadArtwork';
 import ArtworkDetails from './pages/ArtworkDetails';
 import EditArtwork from './pages/EditArtwork';
+
+// Commissions
+import CreateCommission from './pages/CreateCommission';
 
 function App() {
   return (
@@ -65,27 +76,30 @@ function App() {
         />
 
         {/* Commission routes */}
-        <Route path="/:username/:artworkId" element={<ArtworkDetails />} />
+        {/* <Route
+          path="/:username/:commissionId"
+          element={<CommissionDetails />}
+        /> */}
         <Route
-          path="/upload"
+          path="/newCommission"
           element={
             <IsPrivate>
               <IsForArtists>
-                <UploadArtwork />
+                <CreateCommission />
               </IsForArtists>
             </IsPrivate>
           }
         />
-        <Route
-          path="/:username/:artworkId/edit"
+        {/* <Route
+          path="/:username/:commission/edit"
           element={
             <IsPrivate>
               <IsForArtists>
-                <EditArtwork />
+                <EditCommission />
               </IsForArtists>
             </IsPrivate>
           }
-        />
+        /> */}
       </Routes>
     </>
   );

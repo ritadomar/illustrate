@@ -18,6 +18,7 @@ function Profile() {
       console.log(error);
     }
   };
+
   useEffect(() => {
     getUserProfile();
   }, []);
@@ -27,16 +28,49 @@ function Profile() {
       {userProfile && (
         <>
           <img src={userProfile.avatarUrl} alt="" width={200} />
-          {userProfile.artwork.map(artwork => {
-            return (
-              <Link to={`/${username}/${artwork._id}`} key={artwork._id}>
-                <article>
-                  <img src={artwork.artworkUrl} alt="" width={500} />
-                  <h2>{artwork.title}</h2>
-                </article>
-              </Link>
-            );
-          })}
+          <h2>Commissions</h2>
+          {userProfile.isArtist && userProfile.commissions.length < 0 && (
+            <p>No commissions yet</p>
+          )}
+          {userProfile.commissions &&
+            userProfile.commissions.map(commission => {
+              return (
+                <Link
+                  to={`/${username}/${commission._id}`}
+                  key={commission._id}
+                >
+                  <article>
+                    <img
+                      src={
+                        userProfile.artwork.find(
+                          artwork =>
+                            artwork._id === commission.exampleArtwork[0]
+                        ).artworkUrl
+                      }
+                      alt=""
+                      width={500}
+                    />
+                    <h2>{commission.title}</h2>
+                    <p>From: {commission.cost}€</p>
+                  </article>
+                </Link>
+              );
+            })}
+          <h2>Portfolio</h2>
+          {userProfile.isArtist && userProfile.artwork.length < 0 && (
+            <p>No artwork uploaded yet</p>
+          )}
+          {userProfile.artwork &&
+            userProfile.artwork.map(artwork => {
+              return (
+                <Link to={`/${username}/${artwork._id}`} key={artwork._id}>
+                  <article>
+                    <img src={artwork.artworkUrl} alt="" width={500} />
+                    <h2>{artwork.title}</h2>
+                  </article>
+                </Link>
+              );
+            })}
         </>
       )}
     </>

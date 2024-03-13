@@ -11,7 +11,7 @@ const IsForArtists = props => {
     <p>Loading...</p>;
   }
 
-  if (!user.isArtist || username !== user.username) {
+  if (!user.isArtist || (username && username !== user.username)) {
     // if the user is not an artist in
     return <Navigate to={`/`} />;
   } else {

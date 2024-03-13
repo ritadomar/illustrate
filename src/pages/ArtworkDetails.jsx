@@ -51,6 +51,16 @@ function ArtworkDetails() {
               return <span key={tag._id}>{tag.tagName}</span>;
             })}
             <p>{artwork.cost}€</p>
+            <h2>Commissions:</h2>
+            {artwork.commissions.length > 0 &&
+              artwork.commissions.map(commission => {
+                return (
+                  <article key={commission._id}>
+                    <h3>{commission.title}</h3>
+                    <p>From: {commission.cost}€</p>
+                  </article>
+                );
+              })}
           </main>
         </>
       )}
