@@ -131,13 +131,6 @@ function UploadArt() {
           </label>
           <label htmlFor="tags">
             Tags:
-            {/* <input
-              type="text"
-              name="tags"
-              id="tags"
-              value={tags}
-              onChange={({ target }) => setTags(target.value)}
-            /> */}
             <InputTag tags={inputTags} setTags={setInputTags} />
           </label>
           <label htmlFor="time">

@@ -29,7 +29,12 @@ function Navbar() {
       {isLoggedIn && (
         <div className="user-links">
           <Link onClick={logOutUser}>Log Out</Link>
-          {user.isArtist && <Link to="/newPost">Upload Art</Link>}
+          {user.isArtist && (
+            <>
+              <Link to="/upload">Upload Art</Link>
+              <Link to="/newCommission">Create Commission</Link>
+            </>
+          )}
           <Link to={`/${user.username}`}>
             <img src={user.avatarUrl} alt="" className="nopin" />
           </Link>
