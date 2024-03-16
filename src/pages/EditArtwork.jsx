@@ -52,7 +52,7 @@ function EditArtwork() {
 
   const getCommissions = async () => {
     try {
-      if (artist.commissions.length > 0) {
+      if (artist && artist.commissions.length > 0) {
         const commissionsList = artist.commissions.map(commission => {
           const details = getCommission(commission);
           return details;
@@ -84,29 +84,6 @@ function EditArtwork() {
   const handleCost = time => {
     setCost(time * artist.rate);
   };
-
-  // const checkCommission = commissionId => {
-  //   const commissionsArray = commissions;
-  //   const commissionExists = commissionsArray.find(commission => {
-  //     return commission._id === commissionId;
-  //   });
-  //   if (commissionExists) {
-  //     setSelectedCommissions([...selectedCommissions, commissionId]);
-  //   } else {
-  //     setSelectedCommissions(
-  //       selectedCommissions.filter(id => id !== commissionId)
-  //     );
-  //   }
-  //   return (
-  //     <input
-  //       type="checkbox"
-  //       name="commission"
-  //       value={commissionId}
-  //       checked={selectedCommissions.includes(commissionId)}
-  //       onChange={handleCheck}
-  //     />
-  //   );
-  // };
 
   const handleCheck = e => {
     const checkedId = e.target.value;
@@ -204,13 +181,6 @@ function EditArtwork() {
           </label>
           <label htmlFor="tags">
             Tags:
-            {/* <input
-              type="text"
-              name="tags"
-              id="tags"
-              value={tags}
-              onChange={({ target }) => setTags(target.value)}
-            /> */}
             <InputTag tags={inputTags} setTags={setInputTags} />
           </label>
           <label htmlFor="time">

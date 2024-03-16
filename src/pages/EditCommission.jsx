@@ -47,24 +47,6 @@ function EditCommission() {
     }
   };
 
-  // const getArtworks = async () => {
-  //   try {
-  //     if (artist.artwork.length > 0) {
-  //       const artworksList = artist.artwork.map(artwork => {
-  //         const details = getArtwork(artwork);
-  //         return details;
-  //       });
-  //       const response = await Promise.all(artworksList);
-  //       const responseData = response.map(response => {
-  //         return response.data;
-  //       });
-  //       setArtworkList(responseData);
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
   const getArtist = async () => {
     try {
       const response = await getProfile(user.username);
@@ -78,12 +60,6 @@ function EditCommission() {
     getSingleCommission();
     getArtist();
   }, []);
-
-  //   const handleArtwork = ({ target }) => {
-  //     console.log(target.files[0]);
-  //     setArtwork(target.files[0]);
-  //     setDisplayArtwork(URL.createObjectURL(target.files[0]));
-  //   };
 
   const handleOnChange = e => {
     const { value, checked } = e.target;
@@ -159,21 +135,6 @@ function EditCommission() {
               );
             })}
 
-          {/* <label htmlFor="artwork">
-            {artwork && (
-              <>
-                Edit artwork:
-                <img src={displayArtwork} alt="" width={'100%'} />
-              </>
-            )}
-            {!artwork && 'Upload your artwork:'}
-            <input
-              type="file"
-              name="artwork"
-              id="artwork"
-              onChange={handleArtwork}
-            />
-          </label> */}
           <label htmlFor="title">
             Title:
             <input
