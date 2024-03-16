@@ -24,6 +24,7 @@ import EditArtwork from './pages/EditArtwork';
 // Commissions
 import CreateCommission from './pages/CreateCommission';
 import CommissionDetails from './pages/CommissionDetails';
+import EditCommission from './pages/EditCommission';
 
 function App() {
   return (
@@ -94,8 +95,8 @@ function App() {
             </IsPrivate>
           }
         />
-        {/* <Route
-          path="/:username/commission/:commission/edit"
+        <Route
+          path="/:username/commission/:commissionId/edit"
           element={
             <IsPrivate>
               <IsForArtists>
@@ -103,7 +104,7 @@ function App() {
               </IsForArtists>
             </IsPrivate>
           }
-        /> */}
+        />
       </Routes>
     </>
   );
