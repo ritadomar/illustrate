@@ -15,7 +15,12 @@ function EditArtwork() {
   const [commissions, setCommissions] = useState([]);
   const [displayArtwork, setDisplayArtwork] = useState('');
   const [artist, setArtist] = useState(null);
-  const [commissionDetails, setCommissionDetails] = useState(null);
+
+  // to display commissions list
+  const [commissionsList, setCommissionsList] = useState(null);
+
+  // controlling dynamic checkbox
+  const [selectedCommissions, setSelectedCommissions] = useState([]);
 
   const { artworkId, username } = useParams();
 
@@ -35,6 +40,11 @@ function EditArtwork() {
       setCommissions(response.data.commissions);
       setDisplayArtwork(response.data.artworkUrl);
       setArtist(response.data.artist);
+
+      const checkedCommissions = response.data.commissions.map(commission => {
+        return commission._id;
+      });
+      setSelectedCommissions(checkedCommissions);
     } catch (error) {
       console.log(error);
     }
@@ -42,18 +52,16 @@ function EditArtwork() {
 
   const getCommissions = async () => {
     try {
-      console.log(commissions.length);
-      if (commissions.length > 0) {
-        const commissionDetails = commissions.map(commission => {
-          const details = getCommission(commission._id);
+      if (artist.commissions.length > 0) {
+        const commissionsList = artist.commissions.map(commission => {
+          const details = getCommission(commission);
           return details;
         });
-        const response = await Promise.all(commissionDetails);
+        const response = await Promise.all(commissionsList);
         const responseData = response.map(response => {
           return response.data;
         });
-        console.log(responseData);
-        setCommissionDetails(responseData);
+        setCommissionsList(responseData);
       }
     } catch (error) {
       console.log(error);
@@ -69,7 +77,6 @@ function EditArtwork() {
   }, [artwork, commissions]);
 
   const handleArtwork = ({ target }) => {
-    console.log(target.files[0]);
     setArtwork(target.files[0]);
     setDisplayArtwork(URL.createObjectURL(target.files[0]));
   };
@@ -78,49 +85,49 @@ function EditArtwork() {
     setCost(time * artist.rate);
   };
 
-  const checkCommission = commissionId => {
-    const commissionsArray = commissions;
-    const commissionExists = commissionsArray.find(commission => {
-      return commission._id === commissionId;
-    });
-    if (commissionExists) {
-      return (
-        <input
-          type="checkbox"
-          name="commission"
-          value={commissionId}
-          checked
-          onChange={handleCheck}
-        />
-      );
-    } else {
-      return (
-        <input
-          type="checkbox"
-          name="commission"
-          value={commissionId}
-          onChange={handleCheck}
-        />
-      );
-    }
-  };
+  // const checkCommission = commissionId => {
+  //   const commissionsArray = commissions;
+  //   const commissionExists = commissionsArray.find(commission => {
+  //     return commission._id === commissionId;
+  //   });
+  //   if (commissionExists) {
+  //     setSelectedCommissions([...selectedCommissions, commissionId]);
+  //   } else {
+  //     setSelectedCommissions(
+  //       selectedCommissions.filter(id => id !== commissionId)
+  //     );
+  //   }
+  //   return (
+  //     <input
+  //       type="checkbox"
+  //       name="commission"
+  //       value={commissionId}
+  //       checked={selectedCommissions.includes(commissionId)}
+  //       onChange={handleCheck}
+  //     />
+  //   );
+  // };
 
   const handleCheck = e => {
-    const commissionsArray = commissions;
-    const commissionExists = commissionsArray.find(commission => {
-      return commission._id === e.target.value;
-    });
-
-    if (!commissionExists) {
-      commissionsArray.push({ _id: e.target.value });
-      console.log(commissionsArray);
-      setCommissions(commissionsArray);
+    const checkedId = e.target.value;
+    if (e.target.checked) {
+      const updatedCommissions = [...selectedCommissions, checkedId];
+      setSelectedCommissions(updatedCommissions);
+      setCommissions(
+        updatedCommissions.map(commission => {
+          return { _id: commission };
+        })
+      );
     } else {
-      const filteredCommissions = [...commissionsArray].filter(commission => {
-        return commission._id !== e.target.value;
-      });
-      console.log(filteredCommissions);
-      setCommissions(filteredCommissions);
+      const updatedCommissions = selectedCommissions.filter(
+        id => id !== checkedId
+      );
+      setSelectedCommissions(updatedCommissions);
+      setCommissions(
+        updatedCommissions.map(commission => {
+          return { _id: commission };
+        })
+      );
     }
   };
 
@@ -139,7 +146,6 @@ function EditArtwork() {
         const artworkTags = inputTags.map(tag => {
           return tag.text;
         });
-        console.log(artworkTags);
         requestBody.tags = artworkTags;
       } else {
         requestBody.tags = [];
@@ -149,14 +155,13 @@ function EditArtwork() {
         uploadData.append('file', artwork);
 
         const response = await upload(uploadData);
-        console.log(response.data);
 
         requestBody.artworkUrl = response.data.imgUrl;
       }
       await updateArtwork(requestBody);
       navigate(`/${username}/artwork/${artworkId}`);
     } catch (error) {
-      console.log;
+      console.log(error);
     }
   };
 
@@ -224,24 +229,36 @@ function EditArtwork() {
             <p>Artwork cost: {time && `${cost}€`}</p>
           </label>
 
-          {commissionDetails && commissionDetails.length > 0 && (
-            <>
-              <h2>Add to commissions:</h2>
-              {commissionDetails.map(commission => {
-                return (
-                  <label className="radio" key={commission._id}>
-                    {checkCommission(commission._id)}
-                    <img
-                      src={commission.exampleArtwork[0].artworkUrl}
-                      alt=""
-                      width={100}
-                    />
-                    {commission.title}
-                  </label>
-                );
-              })}
-            </>
-          )}
+          {selectedCommissions &&
+            commissionsList &&
+            commissionsList.length > 0 && (
+              <>
+                <h2>Add to commissions:</h2>
+                {commissionsList.map(commission => {
+                  return (
+                    <label className="radio" key={commission._id}>
+                      {
+                        <input
+                          type="checkbox"
+                          name="commission"
+                          value={commission._id}
+                          checked={selectedCommissions.includes(commission._id)}
+                          onChange={handleCheck}
+                        />
+                      }
+                      {commission.exampleArtwork.length > 0 && (
+                        <img
+                          src={commission.exampleArtwork[0].artworkUrl}
+                          alt=""
+                          width={100}
+                        />
+                      )}
+                      {commission.title}
+                    </label>
+                  );
+                })}
+              </>
+            )}
           <button type="submit">Save changes</button>
         </form>
       </main>

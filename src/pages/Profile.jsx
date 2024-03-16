@@ -29,32 +29,37 @@ function Profile() {
         <>
           <img src={userProfile.avatarUrl} alt="" width={200} />
           <h2>Commissions</h2>
-          {userProfile.isArtist && userProfile.commissions.length < 0 && (
+          {userProfile.isArtist && !userProfile.commissions && (
             <p>No commissions yet</p>
           )}
+
           {userProfile.commissions &&
             userProfile.commissions.map(commission => {
-              return (
-                <Link
-                  to={`/${username}/commission/${commission._id}`}
-                  key={commission._id}
-                >
-                  <article>
-                    <img
-                      src={
-                        userProfile.artwork.find(
-                          artwork =>
-                            artwork._id === commission.exampleArtwork[0]
-                        ).artworkUrl
-                      }
-                      alt=""
-                      width={500}
-                    />
-                    <h2>{commission.title}</h2>
-                    <p>From: {commission.cost}€</p>
-                  </article>
-                </Link>
-              );
+              if (commission.exampleArtwork.length > 0) {
+                return (
+                  <Link
+                    to={`/${username}/commission/${commission._id}`}
+                    key={commission._id}
+                  >
+                    <article>
+                      <img
+                        src={
+                          userProfile.artwork.find(
+                            artwork =>
+                              artwork._id === commission.exampleArtwork[0]
+                          ).artworkUrl
+                        }
+                        alt=""
+                        width={500}
+                      />
+                      <h2>{commission.title}</h2>
+                      <p>From: {commission.cost}€</p>
+                    </article>
+                  </Link>
+                );
+              } else {
+                return <p key="empty">No commissions yet</p>;
+              }
             })}
           <h2>Portfolio</h2>
           {userProfile.isArtist && userProfile.artwork.length < 0 && (

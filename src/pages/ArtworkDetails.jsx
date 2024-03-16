@@ -15,7 +15,6 @@ function ArtworkDetails() {
 
   const getSingleArtwork = async () => {
     try {
-      console.log('logging Artwork Details');
       const response = await getArtwork(artworkId);
       setArtwork(response.data);
     } catch (error) {
@@ -36,7 +35,6 @@ function ArtworkDetails() {
         const covers = response.map(cover => {
           return cover.data.artworkUrl;
         });
-        console.log('covers', covers);
         setCommissionCover(covers);
       }
     } catch (error) {
@@ -87,23 +85,25 @@ function ArtworkDetails() {
               return <span key={tag._id}>{tag.tagName}</span>;
             })}
             <p>{artwork.cost}€</p>
-            <h2>Commissions:</h2>
-            {artwork.commissions.length > 0 &&
-              commissionCover &&
-              artwork.commissions.map((commission, index) => {
-                return (
-                  <Link
-                    key={commission._id}
-                    to={`/${artwork.artist.username}/commission/${commission._id}`}
-                  >
-                    <article>
-                      <img src={commissionCover[index]} alt="" width={300} />
-                      <h3>{commission.title}</h3>
-                      <p>From: {commission.cost}€</p>
-                    </article>
-                  </Link>
-                );
-              })}
+            {artwork.commissions.length > 0 && commissionCover && (
+              <>
+                <h2>Commissions:</h2>
+                {artwork.commissions.map((commission, index) => {
+                  return (
+                    <Link
+                      key={commission._id}
+                      to={`/${artwork.artist.username}/commission/${commission._id}`}
+                    >
+                      <article>
+                        <img src={commissionCover[index]} alt="" width={300} />
+                        <h3>{commission.title}</h3>
+                        <p>From: {commission.cost}€</p>
+                      </article>
+                    </Link>
+                  );
+                })}
+              </>
+            )}
           </main>
         </>
       )}
