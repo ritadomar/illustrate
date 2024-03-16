@@ -5,6 +5,7 @@ import { upload } from '../api/upload.api';
 import { AuthContext } from '../context/auth.context';
 import InputTag from '../components/InputTag';
 import { getProfile } from '../api/profiles.api';
+import { getCommission } from '../api/commission.api';
 
 function UploadArt() {
   const [title, setTitle] = useState('');
@@ -17,6 +18,12 @@ function UploadArt() {
   const [displayArtwork, setDisplayArtwork] = useState('');
   const [artist, setArtist] = useState(null);
 
+  // to display commissions list
+  const [commissionsList, setCommissionsList] = useState(null);
+
+  // controlling dynamic checkbox
+  const [selectedCommissions, setSelectedCommissions] = useState([]);
+
   const { user } = useContext(AuthContext);
 
   const navigate = useNavigate();
@@ -25,7 +32,25 @@ function UploadArt() {
     try {
       const response = await getProfile(user.username);
       setArtist(response.data);
-      console.log(response.data.rate);
+      // setCommissionsList(response.data.commissions);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getCommissions = async () => {
+    try {
+      if (artist && artist.commissions.length > 0) {
+        const commissionsList = artist.commissions.map(commission => {
+          const details = getCommission(commission._id);
+          return details;
+        });
+        const response = await Promise.all(commissionsList);
+        const responseData = response.map(response => {
+          return response.data;
+        });
+        setCommissionsList(responseData);
+      }
     } catch (error) {
       console.log(error);
     }
@@ -34,6 +59,10 @@ function UploadArt() {
   useEffect(() => {
     getArtist();
   }, []);
+
+  useEffect(() => {
+    getCommissions();
+  }, [commissions, artist]);
 
   const handleArtwork = ({ target }) => {
     console.log(target.files[0]);
@@ -46,9 +75,29 @@ function UploadArt() {
   };
 
   const handleCheck = e => {
-    const commissionsArray = commissions;
-    commissionsArray.push(e.target.value);
-    setCommissions(commissionsArray);
+    // const commissionsArray = commissions;
+    // commissionsArray.push(e.target.value);
+    // setCommissions(commissionsArray);
+    const checkedId = e.target.value;
+    if (e.target.checked) {
+      const updatedCommissions = [...selectedCommissions, checkedId];
+      setSelectedCommissions(updatedCommissions);
+      setCommissions(
+        updatedCommissions.map(commission => {
+          return { _id: commission };
+        })
+      );
+    } else {
+      const updatedCommissions = selectedCommissions.filter(
+        id => id !== checkedId
+      );
+      setSelectedCommissions(updatedCommissions);
+      setCommissions(
+        updatedCommissions.map(commission => {
+          return { _id: commission };
+        })
+      );
+    }
   };
 
   const handleSubmit = async e => {
@@ -149,19 +198,29 @@ function UploadArt() {
             <p>Artwork cost: {time && `${cost}€`}</p>
           </label>
 
-          {artist && artist.commissions && artist.commissions.length > 0 && (
+          {commissionsList && commissionsList.length > 0 && (
             <>
-              <label htmlFor="commissions">Add to commissions:</label>
-              {artist.commissions.map(commission => {
+              <h2>Add to commissions:</h2>
+              {commissionsList.map(commission => {
                 return (
                   <label className="radio" key={commission._id}>
-                    <input
-                      type="checkbox"
-                      name="commission"
-                      value={commission._id}
-                      onChange={handleCheck}
-                    ></input>
-                    <p>{commission.title}</p>
+                    {
+                      <input
+                        type="checkbox"
+                        name="commission"
+                        value={commission._id}
+                        checked={selectedCommissions.includes(commission._id)}
+                        onChange={handleCheck}
+                      />
+                    }
+                    {commission.exampleArtwork.length > 0 && (
+                      <img
+                        src={commission.exampleArtwork[0].artworkUrl}
+                        alt=""
+                        width={100}
+                      />
+                    )}
+                    {commission.title}
                   </label>
                 );
               })}

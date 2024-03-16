@@ -4,7 +4,6 @@ import { AuthContext } from '../context/auth.context';
 import InputTag from '../components/InputTag';
 import { getProfile } from '../api/profiles.api';
 import { getCommission, updateCommission } from '../api/commission.api';
-import { getArtwork } from '../api/artwork.api';
 
 function EditCommission() {
   const [title, setTitle] = useState('');
