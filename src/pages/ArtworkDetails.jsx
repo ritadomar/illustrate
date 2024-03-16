@@ -6,6 +6,7 @@ import { AuthContext } from '../context/auth.context';
 
 function ArtworkDetails() {
   const [artwork, setArtwork] = useState(null);
+  const [commissionCover, setCommissionCover] = useState([]);
 
   const { user } = useContext(AuthContext);
 
@@ -13,19 +14,52 @@ function ArtworkDetails() {
   const navigate = useNavigate();
 
   const getSingleArtwork = async () => {
-    const response = await getArtwork(artworkId);
-    setArtwork(response.data);
+    try {
+      console.log('logging Artwork Details');
+      const response = await getArtwork(artworkId);
+      setArtwork(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const populateCommissionCover = async () => {
+    try {
+      if (artwork) {
+        const commissionImages = artwork.commissions.map(commission => {
+          const cover = getArtwork(commission.exampleArtwork[0]);
+          return cover;
+        });
+
+        const response = await Promise.all(commissionImages);
+
+        const covers = response.map(cover => {
+          return cover.data.artworkUrl;
+        });
+        console.log('covers', covers);
+        setCommissionCover(covers);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleDelete = async () => {
-    await deleteArtwork(artworkId);
-    console.log(artwork.artist.username);
-    navigate(`/${artwork.artist.username}`);
+    try {
+      await deleteArtwork(artworkId);
+      navigate(`/${artwork.artist.username}`);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {
     getSingleArtwork();
   }, []);
+
+  useEffect(() => {
+    populateCommissionCover();
+  }, [artwork]);
 
   return (
     <>
@@ -37,7 +71,9 @@ function ArtworkDetails() {
               {user && user.username === username && (
                 <>
                   <button onClick={handleDelete}>Delete Artwork</button>
-                  <Link to={`/${artwork.artist.username}/${artworkId}/edit`}>
+                  <Link
+                    to={`/${artwork.artist.username}/artwork/${artworkId}/edit`}
+                  >
                     <button>Edit Artwork</button>
                   </Link>
                 </>
@@ -53,12 +89,19 @@ function ArtworkDetails() {
             <p>{artwork.cost}€</p>
             <h2>Commissions:</h2>
             {artwork.commissions.length > 0 &&
-              artwork.commissions.map(commission => {
+              commissionCover &&
+              artwork.commissions.map((commission, index) => {
                 return (
-                  <article key={commission._id}>
-                    <h3>{commission.title}</h3>
-                    <p>From: {commission.cost}€</p>
-                  </article>
+                  <Link
+                    key={commission._id}
+                    to={`/${artwork.artist.username}/commission/${commission._id}`}
+                  >
+                    <article>
+                      <img src={commissionCover[index]} alt="" width={300} />
+                      <h3>{commission.title}</h3>
+                      <p>From: {commission.cost}€</p>
+                    </article>
+                  </Link>
                 );
               })}
           </main>

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { updateArtwork, getArtwork } from '../api/artwork.api';
+import { getCommission } from '../api/commission.api';
 import { upload } from '../api/upload.api';
 import InputTag from '../components/InputTag';
 
@@ -14,30 +15,58 @@ function EditArtwork() {
   const [commissions, setCommissions] = useState([]);
   const [displayArtwork, setDisplayArtwork] = useState('');
   const [artist, setArtist] = useState(null);
+  const [commissionDetails, setCommissionDetails] = useState(null);
 
   const { artworkId, username } = useParams();
 
   const navigate = useNavigate();
 
   const getSingleArtwork = async () => {
-    const response = await getArtwork(artworkId);
-    setTitle(response.data.title);
-    setDescription(response.data.description);
-    const tags = response.data.tags.map(tag => {
-      return { id: tag._id, text: tag.tagName };
-    });
-    setInputTags(tags);
-    setTime(response.data.time);
-    setCost(response.data.cost);
-    setCommissions(response.data.commissions);
-    setDisplayArtwork(response.data.artworkUrl);
-    console.log(response.data.artworkUrl);
-    setArtist(response.data.artist);
+    try {
+      const response = await getArtwork(artworkId);
+      setTitle(response.data.title);
+      setDescription(response.data.description);
+      const tags = response.data.tags.map(tag => {
+        return { id: tag._id, text: tag.tagName };
+      });
+      setInputTags(tags);
+      setTime(response.data.time);
+      setCost(response.data.cost);
+      setCommissions(response.data.commissions);
+      setDisplayArtwork(response.data.artworkUrl);
+      setArtist(response.data.artist);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getCommissions = async () => {
+    try {
+      console.log(commissions.length);
+      if (commissions.length > 0) {
+        const commissionDetails = commissions.map(commission => {
+          const details = getCommission(commission._id);
+          return details;
+        });
+        const response = await Promise.all(commissionDetails);
+        const responseData = response.map(response => {
+          return response.data;
+        });
+        console.log(responseData);
+        setCommissionDetails(responseData);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {
     getSingleArtwork();
   }, []);
+
+  useEffect(() => {
+    getCommissions();
+  }, [artwork, commissions]);
 
   const handleArtwork = ({ target }) => {
     console.log(target.files[0]);
@@ -49,10 +78,50 @@ function EditArtwork() {
     setCost(time * artist.rate);
   };
 
+  const checkCommission = commissionId => {
+    const commissionsArray = commissions;
+    const commissionExists = commissionsArray.find(commission => {
+      return commission._id === commissionId;
+    });
+    if (commissionExists) {
+      return (
+        <input
+          type="checkbox"
+          name="commission"
+          value={commissionId}
+          checked
+          onChange={handleCheck}
+        />
+      );
+    } else {
+      return (
+        <input
+          type="checkbox"
+          name="commission"
+          value={commissionId}
+          onChange={handleCheck}
+        />
+      );
+    }
+  };
+
   const handleCheck = e => {
     const commissionsArray = commissions;
-    commissionsArray.push(e.target.value);
-    setCommissions(commissionsArray);
+    const commissionExists = commissionsArray.find(commission => {
+      return commission._id === e.target.value;
+    });
+
+    if (!commissionExists) {
+      commissionsArray.push({ _id: e.target.value });
+      console.log(commissionsArray);
+      setCommissions(commissionsArray);
+    } else {
+      const filteredCommissions = [...commissionsArray].filter(commission => {
+        return commission._id !== e.target.value;
+      });
+      console.log(filteredCommissions);
+      setCommissions(filteredCommissions);
+    }
   };
 
   const handleSubmit = async e => {
@@ -85,7 +154,7 @@ function EditArtwork() {
         requestBody.artworkUrl = response.data.imgUrl;
       }
       await updateArtwork(requestBody);
-      navigate(`/${username}/${artworkId}`);
+      navigate(`/${username}/artwork/${artworkId}`);
     } catch (error) {
       console.log;
     }
@@ -155,19 +224,19 @@ function EditArtwork() {
             <p>Artwork cost: {time && `${cost}€`}</p>
           </label>
 
-          {artist && artist.commissions && artist.commissions.length > 0 && (
+          {commissionDetails && commissionDetails.length > 0 && (
             <>
-              <label htmlFor="commissions">Add to commissions:</label>
-              {artist.commissions.map(commission => {
+              <h2>Add to commissions:</h2>
+              {commissionDetails.map(commission => {
                 return (
                   <label className="radio" key={commission._id}>
-                    <input
-                      type="checkbox"
-                      name="commission"
-                      value={commission._id}
-                      onChange={handleCheck}
-                    ></input>
-                    <p>{commission.title}</p>
+                    {checkCommission(commission._id)}
+                    <img
+                      src={commission.exampleArtwork[0].artworkUrl}
+                      alt=""
+                      width={100}
+                    />
+                    {commission.title}
                   </label>
                 );
               })}

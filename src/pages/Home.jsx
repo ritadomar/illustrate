@@ -13,6 +13,7 @@ function Home() {
       console.log();
     }
   };
+
   useEffect(() => {
     getArtworks();
   }, []);
@@ -23,7 +24,7 @@ function Home() {
       {artworks.map(artwork => {
         return (
           <Link
-            to={`/${artwork.artist.username}/${artwork._id}`}
+            to={`/${artwork.artist.username}/artwork/${artwork._id}`}
             key={artwork._id}
           >
             <article>

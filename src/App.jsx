@@ -23,6 +23,7 @@ import EditArtwork from './pages/EditArtwork';
 
 // Commissions
 import CreateCommission from './pages/CreateCommission';
+import CommissionDetails from './pages/CommissionDetails';
 
 function App() {
   return (
@@ -53,7 +54,10 @@ function App() {
         <Route path="/:username" element={<Profile />} />
 
         {/* Artwork routes */}
-        <Route path="/:username/:artworkId" element={<ArtworkDetails />} />
+        <Route
+          path="/:username/artwork/:artworkId"
+          element={<ArtworkDetails />}
+        />
         <Route
           path="/upload"
           element={
@@ -65,7 +69,7 @@ function App() {
           }
         />
         <Route
-          path="/:username/:artworkId/edit"
+          path="/:username/artwork/:artworkId/edit"
           element={
             <IsPrivate>
               <IsForArtists>
@@ -76,10 +80,10 @@ function App() {
         />
 
         {/* Commission routes */}
-        {/* <Route
-          path="/:username/:commissionId"
+        <Route
+          path="/:username/commission/:commissionId"
           element={<CommissionDetails />}
-        /> */}
+        />
         <Route
           path="/newCommission"
           element={
@@ -91,7 +95,7 @@ function App() {
           }
         />
         {/* <Route
-          path="/:username/:commission/edit"
+          path="/:username/commission/:commission/edit"
           element={
             <IsPrivate>
               <IsForArtists>

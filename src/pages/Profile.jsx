@@ -36,7 +36,7 @@ function Profile() {
             userProfile.commissions.map(commission => {
               return (
                 <Link
-                  to={`/${username}/${commission._id}`}
+                  to={`/${username}/commission/${commission._id}`}
                   key={commission._id}
                 >
                   <article>
@@ -63,7 +63,10 @@ function Profile() {
           {userProfile.artwork &&
             userProfile.artwork.map(artwork => {
               return (
-                <Link to={`/${username}/${artwork._id}`} key={artwork._id}>
+                <Link
+                  to={`/${username}/artwork/${artwork._id}`}
+                  key={artwork._id}
+                >
                   <article>
                     <img src={artwork.artworkUrl} alt="" width={500} />
                     <h2>{artwork.title}</h2>
