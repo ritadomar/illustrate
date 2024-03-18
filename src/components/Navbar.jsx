@@ -1,6 +1,10 @@
 import { Link } from 'react-router-dom';
 import { useContext } from 'react';
 import { AuthContext } from '../context/auth.context';
+import ProfileMenu from './ProfileMenu';
+
+import { Avatar } from 'primereact/avatar';
+import { Menu } from 'primereact/menu';
 
 function Navbar() {
   const { isLoggedIn, logOutUser, user } = useContext(AuthContext);
@@ -26,7 +30,7 @@ function Navbar() {
           </Link>
         </div>
       )}
-      {isLoggedIn && (
+      {/* {isLoggedIn && (
         <div className="user-links">
           <Link onClick={logOutUser}>Log Out</Link>
           {user.isArtist && (
@@ -36,10 +40,20 @@ function Navbar() {
             </>
           )}
           <Link to={`/${user.username}`}>
-            <img src={user.avatarUrl} alt="" className="nopin" />
+            {user.avatarUrl.length > 0 && (
+              <Avatar image={user.avatarUrl} size="large" shape="circle" />
+            )}
+            {user.avatarUrl.length <= 0 && (
+              <Avatar
+                label={user.username[0].toUpperCase()}
+                size="large"
+                shape="circle"
+              />
+            )}
           </Link>
         </div>
-      )}
+      )} */}
+      <ProfileMenu />
     </nav>
   );
 }
