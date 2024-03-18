@@ -112,56 +112,55 @@ function EditCommission() {
   };
 
   return (
-    <>
-      <main className="Authentication">
-        <h1>Edit Commission</h1>
-        <form onSubmit={handleSubmit}>
-          {artist &&
-            artist.artwork &&
-            artist.artwork.map(artwork => {
-              return (
-                <label htmlFor={artwork._id} key={artwork._id}>
-                  <input
-                    type="checkbox"
-                    name="exampleArtwork"
-                    id={artwork._id}
-                    checked={selectedArtwork.includes(artwork._id)}
-                    value={artwork._id}
-                    onChange={handleOnChange}
-                  />
-                  <p>{artwork.title}</p>
-                  <img src={artwork.artworkUrl} alt="" />
-                </label>
-              );
-            })}
+    <main className="Authentication">
+      <h1>Edit Commission</h1>
+      <form onSubmit={handleSubmit}>
+        {artist &&
+          artist.artwork[0]._id &&
+          artist.artwork.map(artwork => {
+            return (
+              <label htmlFor={artwork._id} key={artwork._id}>
+                <input
+                  type="checkbox"
+                  name="exampleArtwork"
+                  id={artwork._id}
+                  checked={selectedArtwork.includes(artwork._id)}
+                  value={artwork._id}
+                  onChange={handleOnChange}
+                />
+                <p>{artwork.title}</p>
+                <img src={artwork.artworkUrl} alt="" />
+              </label>
+            );
+          })}
 
-          <label htmlFor="title">
-            Title:
-            <input
-              type="text"
-              name="title"
-              id="title"
-              value={title}
-              onChange={({ target }) => setTitle(target.value)}
-              placeholder="Commission title"
-            />
-          </label>
-          <label htmlFor="description">
-            Description:
-            <textarea
-              type="text"
-              name="description"
-              id="description"
-              value={description}
-              onChange={({ target }) => setDescription(target.value)}
-              placeholder="Insert commission description"
-            />
-          </label>
-          <label htmlFor="tags">
-            Tags:
-            <InputTag tags={inputTags} setTags={setInputTags} />
-          </label>
-          {/* <label htmlFor="time">
+        <label htmlFor="title">
+          Title:
+          <input
+            type="text"
+            name="title"
+            id="title"
+            value={title}
+            onChange={({ target }) => setTitle(target.value)}
+            placeholder="Commission title"
+          />
+        </label>
+        <label htmlFor="description">
+          Description:
+          <textarea
+            type="text"
+            name="description"
+            id="description"
+            value={description}
+            onChange={({ target }) => setDescription(target.value)}
+            placeholder="Insert commission description"
+          />
+        </label>
+        <label htmlFor="tags">
+          Tags:
+          <InputTag tags={inputTags} setTags={setInputTags} />
+        </label>
+        {/* <label htmlFor="time">
             Time spent on piece (hours):
             <input
               type="number"
@@ -177,10 +176,9 @@ function EditCommission() {
             <p>Artwork cost: {time && `${cost}€`}</p>
           </label> */}
 
-          <button type="submit">Save Changes</button>
-        </form>
-      </main>
-    </>
+        <button type="submit">Save Changes</button>
+      </form>
+    </main>
   );
 }
 
