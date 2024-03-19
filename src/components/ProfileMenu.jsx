@@ -19,17 +19,21 @@ function ProfileMenu() {
       template: () => {
         return (
           <>
-            <Link to={`/${user.username}`}>
-              <Avatar image={user.avatarUrl} size="xlarge" shape="circle" />
-              <p>{user.username}</p>
-            </Link>
-            {user.isArtist && (
+            {isLoggedIn && (
               <>
-                <Link to="/upload">Upload Art</Link>
-                <Link to="/newCommission">Create Commission</Link>
+                <Link to={`/${user.username}`}>
+                  <Avatar image={user.avatarUrl} size="xlarge" shape="circle" />
+                  <p>{user.username}</p>
+                </Link>
+                {user.isArtist && (
+                  <>
+                    <Link to="/upload">Upload Art</Link>
+                    <Link to="/newCommission">Create Commission</Link>
+                  </>
+                )}
+                <Link onClick={logOutUser}>Log Out</Link>
               </>
             )}
-            <Link onClick={logOutUser}>Log Out</Link>
           </>
         );
       },
