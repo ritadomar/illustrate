@@ -2,18 +2,17 @@ import { Link } from 'react-router-dom';
 import { useContext } from 'react';
 import { AuthContext } from '../context/auth.context';
 import ProfileMenu from './ProfileMenu';
-
-import { Avatar } from 'primereact/avatar';
-import { Menu } from 'primereact/menu';
+import logo from '../assets/logo-illlu.svg';
+import { Button } from 'primereact/button';
 
 function Navbar() {
-  const { isLoggedIn, logOutUser, user } = useContext(AuthContext);
+  const { isLoggedIn } = useContext(AuthContext);
   return (
     <nav className="Navbar">
       {/* home */}
       <Link to="/">
         {/* change to logo */}
-        Home
+        <img src={logo} alt="illlu logo" />
       </Link>
       <div className="nav-links">
         <Link to="/explore">Explore</Link>
@@ -22,38 +21,15 @@ function Navbar() {
       {/* Protect */}
       {!isLoggedIn && (
         <div className="user-links">
-          <Link to="/signup">
-            <button>Sign Up</button>
-          </Link>
           <Link to="/login">
-            <button>Log In</button>
+            <Button label="Log In" severity="secondary" text rounded />
+          </Link>
+          <Link to="/signup">
+            <Button label="Sign Up" rounded />
           </Link>
         </div>
       )}
-      {/* {isLoggedIn && (
-        <div className="user-links">
-          <Link onClick={logOutUser}>Log Out</Link>
-          {user.isArtist && (
-            <>
-              <Link to="/upload">Upload Art</Link>
-              <Link to="/newCommission">Create Commission</Link>
-            </>
-          )}
-          <Link to={`/${user.username}`}>
-            {user.avatarUrl.length > 0 && (
-              <Avatar image={user.avatarUrl} size="large" shape="circle" />
-            )}
-            {user.avatarUrl.length <= 0 && (
-              <Avatar
-                label={user.username[0].toUpperCase()}
-                size="large"
-                shape="circle"
-              />
-            )}
-          </Link>
-        </div>
-      )} */}
-      <ProfileMenu />
+      {isLoggedIn && <ProfileMenu />}
     </nav>
   );
 }

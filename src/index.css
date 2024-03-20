@@ -27,33 +27,20 @@
 }
 
 
-
-.nav-links {
-  display: flex;
-  gap: 40px;
-  align-items: center;
-}
-
-.user-links {
-  display: flex;
-  gap: 16px;
-  align-items: center;
-}
-
-.user-links img {
-  width: 40px;
-  border: 2px black solid;
-  border-radius: 50%;
-}
-
 .ReactTags__tagInputField {
   width: 100%;
   box-sizing: border-box;
 } */
 
-html {
+/* html {
   font-size: 16px;
+} */
+
+/* TOKENS */
+:root {
+  --brand: rgb(204, 32, 92);
 }
+
 /* NAVBAR */
 a {
   text-decoration: none;
@@ -69,7 +56,7 @@ a {
 }
 
 .p-avatar {
-  border: 4px solid black;
+  border: 4px solid var(--brand);
 }
 
 .p-menu {
@@ -100,7 +87,7 @@ a {
 .p-menuitem-text:hover,
 .profileLink > *:hover {
   background-color: transparent;
-  color: aqua;
+  color: var(--brand);
 }
 
 .p-menu-separator {
@@ -109,4 +96,20 @@ a {
 
 .p-menuitem-content:hover {
   background-color: transparent;
+}
+
+.nav-links {
+  display: flex;
+  gap: 40px;
+  align-items: center;
+}
+
+.nav-links a:hover {
+  color: var(--brand);
+}
+
+.user-links {
+  display: flex;
+  gap: 8px;
+  align-items: center;
 }
