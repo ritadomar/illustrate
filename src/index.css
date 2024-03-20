@@ -51,25 +51,13 @@
   box-sizing: border-box;
 } */
 
-.p-avatar {
-  border: 4px solid black;
+html {
+  font-size: 16px;
 }
-
-.p-menu {
-  width: 300px;
-}
-
-.p-menuitem > *:hover {
-  background-color: transparent;
-  color: aqua;
-}
-
-.p-menuitem-text > *:hover {
-  color: aqua;
-}
-.p-menuitem:focus {
-  background-color: transparent;
-  color: aqua;
+/* NAVBAR */
+a {
+  text-decoration: none;
+  color: grey;
 }
 
 .Navbar {
@@ -78,4 +66,47 @@
   align-items: center;
   padding: 16px 80px;
   box-sizing: border-box;
+}
+
+.p-avatar {
+  border: 4px solid black;
+}
+
+.p-menu {
+  width: 250px;
+  margin-top: 10px;
+}
+
+.profileLink {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: center;
+  margin: auto;
+  padding: 16px 8px;
+}
+
+.profileLink a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.profileLink p {
+  margin: 0;
+}
+
+.p-menuitem-text:hover,
+.profileLink > *:hover {
+  background-color: transparent;
+  color: aqua;
+}
+
+.p-menu-separator {
+  margin: 8px 0;
+}
+
+.p-menuitem-content:hover {
+  background-color: transparent;
 }

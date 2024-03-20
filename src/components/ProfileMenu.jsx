@@ -1,5 +1,4 @@
 import { Menu } from 'primereact/menu';
-import { Button } from 'primereact/button';
 import { Avatar } from 'primereact/avatar';
 import { useContext, useRef } from 'react';
 import { AuthContext } from '../context/auth.context';
@@ -11,80 +10,108 @@ function ProfileMenu() {
 
   const navigate = useNavigate();
 
-  const items = [
-    // {
-    //   //   label: 'Options',
-    //   items: [
-    {
-      template: () => {
-        return (
-          <>
-            {isLoggedIn && (
-              <>
-                <Link to={`/${user.username}`}>
-                  <Avatar image={user.avatarUrl} size="xlarge" shape="circle" />
-                  <p>{user.username}</p>
-                </Link>
-                {user.isArtist && (
-                  <>
-                    <Link to="/upload">Upload Art</Link>
-                    <Link to="/newCommission">Create Commission</Link>
-                  </>
-                )}
-                <Link onClick={logOutUser}>Log Out</Link>
-              </>
-            )}
-          </>
-        );
+  const items = [];
+
+  if (user && user.isArtist) {
+    const insertItems = [
+      {
+        template: () => {
+          return (
+            <>
+              {isLoggedIn && (
+                <div className="profileLink">
+                  <Link to={`/${user.username}`}>
+                    <Avatar
+                      image={user.avatarUrl}
+                      size="xlarge"
+                      shape="circle"
+                    />
+                    <p>{user.username}</p>
+                  </Link>
+                </div>
+              )}
+            </>
+          );
+        },
       },
-    },
-    { separator: true },
-    {
-      label: 'Upload Artwork',
-      icon: 'pi pi-upload',
-      command: () => {
-        navigate('/upload');
+      {
+        label: 'Upload Artwork',
+        icon: 'pi pi-upload',
+        command: () => {
+          navigate('/upload');
+        },
       },
-    },
-    {
-      label: 'Create Commission',
-      icon: 'pi pi-folder',
-      command: () => {
-        navigate('/newCommission');
+      {
+        label: 'Create Commission',
+        icon: 'pi pi-folder',
+        command: () => {
+          navigate('/newCommission');
+        },
       },
-    },
-    { separator: true },
-    {
-      label: 'Log Out',
-      icon: 'pi pi-sign-out',
-      command: () => {
-        logOutUser();
+      { separator: true },
+      {
+        label: 'Log Out',
+        icon: 'pi pi-sign-out',
+        command: () => {
+          logOutUser();
+        },
       },
-    },
-  ];
-  // },
-  //   ];
+    ];
+    items.push(insertItems);
+  } else if (user && !user.isArtist) {
+    const insertItems = [
+      {
+        template: () => {
+          return (
+            <>
+              {isLoggedIn && (
+                <div className="profileLink">
+                  <Link to={`/${user.username}`}>
+                    <Avatar
+                      image={user.avatarUrl}
+                      size="xlarge"
+                      shape="circle"
+                    />
+                    <p>{user.username}</p>
+                  </Link>
+                </div>
+              )}
+            </>
+          );
+        },
+      },
+      { separator: true },
+      {
+        label: 'Log Out',
+        icon: 'pi pi-sign-out',
+        command: () => {
+          logOutUser();
+        },
+      },
+    ];
+    items.push(insertItems);
+  }
 
   return (
     <>
       {isLoggedIn && (
         <>
-          {user.avatarUrl.length > 0 && (
+          {user.avatarUrl && (
             <Avatar
               image={user.avatarUrl}
               size="large"
               shape="circle"
-              onClick={event => menuRight.current.toggle(event)}
+              onMouseEnter={event => menuRight.current.toggle(event)}
               aria-controls="popup_menu_right"
               aria-haspopup
             />
           )}
-          {user.avatarUrl.length <= 0 && (
+          {!user.avatarUrl && (
             <Avatar
               label={user.username[0].toUpperCase()}
               size="large"
               shape="circle"
-              onClick={event => menuRight.current.toggle(event)}
+              onMouseEnter={event => menuRight.current.toggle(event)}
               aria-controls="popup_menu_right"
               aria-haspopup
             />
@@ -92,12 +119,12 @@ function ProfileMenu() {
         </>
       )}
       <Menu
-        model={items}
+        model={items[0]}
         popup
         ref={menuRight}
         id="popup_menu_right"
         popupAlignment="right"
-        // onMouseLeave={e => menuRight.current.toggle(e)}
+        onMouseLeave={e => menuRight.current.toggle(e)}
       />
     </>
   );
