@@ -27,7 +27,7 @@ function Home() {
             to={`/${artwork.artist.username}/artwork/${artwork._id}`}
             key={artwork._id}
           >
-            <article>
+            <article className="artwork">
               <img src={artwork.artworkUrl} alt="" width={500} />
               <h2>{artwork.title}</h2>
             </article>
