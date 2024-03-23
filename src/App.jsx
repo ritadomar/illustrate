@@ -2,6 +2,7 @@ import './App.css';
 
 import { Route, Routes } from 'react-router-dom';
 import Navbar from './components/Navbar';
+import Footer from './components/Footer';
 import Home from './pages/Home';
 
 // Auth
@@ -106,6 +107,7 @@ function App() {
           }
         />
       </Routes>
+      <Footer />
     </>
   );
 }

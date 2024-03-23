@@ -21,11 +21,22 @@ function ProfileMenu() {
               {isLoggedIn && (
                 <div className="profileLink">
                   <Link to={`/${user.username}`}>
-                    <Avatar
-                      image={user.avatarUrl}
-                      size="xlarge"
-                      shape="circle"
-                    />
+                    {user.avatarUrl && (
+                      <Avatar
+                        image={user.avatarUrl}
+                        size="xlarge"
+                        shape="circle"
+                        className="object-cover"
+                      />
+                    )}
+                    {!user.avatarUrl && (
+                      <Avatar
+                        label={user.username[0].toUpperCase()}
+                        size="xlarge"
+                        shape="circle"
+                        className="object-cover"
+                      />
+                    )}
                     <p>{user.username}</p>
                   </Link>
                 </div>
@@ -67,11 +78,22 @@ function ProfileMenu() {
               {isLoggedIn && (
                 <div className="profileLink">
                   <Link to={`/${user.username}`}>
-                    <Avatar
-                      image={user.avatarUrl}
-                      size="xlarge"
-                      shape="circle"
-                    />
+                    {user.avatarUrl && (
+                      <Avatar
+                        image={user.avatarUrl}
+                        size="xlarge"
+                        shape="circle"
+                        className="object-cover"
+                      />
+                    )}
+                    {!user.avatarUrl && (
+                      <Avatar
+                        label={user.username[0].toUpperCase()}
+                        size="xlarge"
+                        shape="circle"
+                        className="object-cover"
+                      />
+                    )}
                     <p>{user.username}</p>
                   </Link>
                 </div>
@@ -104,6 +126,7 @@ function ProfileMenu() {
               onMouseEnter={event => menuRight.current.toggle(event)}
               aria-controls="popup_menu_right"
               aria-haspopup
+              className="object-cover"
             />
           )}
           {!user.avatarUrl && (
@@ -114,6 +137,7 @@ function ProfileMenu() {
               onMouseEnter={event => menuRight.current.toggle(event)}
               aria-controls="popup_menu_right"
               aria-haspopup
+              className="object-cover"
             />
           )}
         </>

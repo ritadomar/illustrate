@@ -8,24 +8,38 @@ import { Button } from 'primereact/button';
 function Navbar() {
   const { isLoggedIn } = useContext(AuthContext);
   return (
-    <nav className="Navbar">
+    <nav className="Navbar px-10 py-4">
       {/* home */}
       <Link to="/">
         {/* change to logo */}
         <img src={logo} alt="illlu logo" />
       </Link>
-      <div className="nav-links">
-        <Link to="/explore">Explore</Link>
-        <Link to="/resources">Resources</Link>
+      <div className="nav-links font-medium">
+        <Link to="/explore" className="hover:text-brand">
+          Explore
+        </Link>
+        <Link to="/resources" className="hover:text-brand">
+          Resources
+        </Link>
       </div>
       {/* Protect */}
       {!isLoggedIn && (
         <div className="user-links">
           <Link to="/login">
-            <Button label="Log In" severity="secondary" text rounded />
+            <Button
+              label="Log In"
+              severity="secondary"
+              text
+              rounded
+              className="hover:text-brand-hover hover:bg-brand/0"
+            />
           </Link>
           <Link to="/signup">
-            <Button label="Sign Up" rounded />
+            <Button
+              label="Sign Up"
+              rounded
+              className="bg-brand border-brand hover:border-opacity-0 hover:bg-brand-hover"
+            />
           </Link>
         </div>
       )}

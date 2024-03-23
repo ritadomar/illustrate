@@ -11,6 +11,12 @@ export default {
     './src/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
+    colors: {
+      brand: 'rgb(204, 32, 92)',
+      'brand-hover': 'rgba(204, 32, 92, 0.7)',
+      black: 'rgb(0, 0, 0)',
+      'black-a-5': 'rgba(0, 0, 0, 0.5)',
+    },
     extend: {},
   },
   plugins: [],

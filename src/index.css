@@ -50,19 +50,20 @@
 /* TOKENS */
 :root {
   --brand: rgb(204, 32, 92);
+  --black-a-8: var(rgba(0, 0, 0, 0.8));
 }
 
 /* NAVBAR */
 a {
   text-decoration: none;
-  color: grey;
+  /* color: grey; */
 }
 
 .Navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 16px 80px;
+  /* padding: 16px 80px; */
   box-sizing: border-box;
 }
 
@@ -115,9 +116,9 @@ a {
   align-items: center;
 }
 
-.nav-links a:hover {
+/* .nav-links a:hover {
   color: var(--brand);
-}
+} */
 
 .user-links {
   display: flex;
@@ -128,3 +129,20 @@ a {
 /* ARTWORK */
 /* .artwork {
 } */
+
+.hero {
+  height: 70vh;
+}
+
+.hire {
+  height: 90vh;
+}
+
+.artwork-overlay {
+  color: rgba(255, 255, 255, 0);
+  transition-duration: 0.3s;
+}
+
+.artwork-overlay:hover {
+  color: white !important;
+}
