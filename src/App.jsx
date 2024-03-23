@@ -13,6 +13,7 @@ import LogIn from './pages/LogIn';
 import IsAnon from './components/IsAnon';
 import IsPrivate from './components/IsPrivate';
 import IsForArtists from './components/IsForArtists';
+import IsSigning from './components/IsSigning';
 
 // Profile
 import Profile from './pages/Profile';
@@ -107,7 +108,9 @@ function App() {
           }
         />
       </Routes>
-      <Footer />
+      <IsSigning>
+        <Footer />
+      </IsSigning>
     </>
   );
 }

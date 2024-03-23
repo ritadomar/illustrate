@@ -9,6 +9,8 @@ const AuthProviderWrapper = props => {
   const [isLoading, setIsLoading] = useState(true);
   const [user, setUser] = useState(null);
 
+  const [isSigning, setIsSigning] = useState(false);
+
   const storeToken = token => {
     localStorage.setItem('authToken', token);
   };
@@ -63,6 +65,8 @@ const AuthProviderWrapper = props => {
         storeToken,
         authenticateUser,
         logOutUser,
+        isSigning,
+        setIsSigning,
       }}
     >
       {props.children}

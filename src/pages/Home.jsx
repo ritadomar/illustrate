@@ -50,11 +50,13 @@ function Home() {
         <p className="text-2xl text-center">
           Say hello to fair pay and stunning results - for everyone!
         </p>
-        <Button
-          label="Get started"
-          rounded
-          className="bg-brand border-brand hover:border-opacity-0 hover:bg-brand-hover"
-        />
+        <Link to="/signup">
+          <Button
+            label="Get started"
+            rounded
+            className="bg-brand border-brand hover:border-opacity-0 hover:bg-brand-hover"
+          />
+        </Link>
       </section>
       <section className="flex flex-col items-center gap-10 px-10 mb-20">
         <h2 className="text-4xl w-full">Explore illustrations</h2>
@@ -110,11 +112,13 @@ function Home() {
           Turn your creative ideas into stunning illustrations. Sign up and
           connect with talented artists in minutes.
         </p>
-        <Button
-          label="Get started now"
-          rounded
-          className="bg-brand border-brand hover:border-opacity-0 hover:bg-brand-hover"
-        />
+        <Link to="/signup">
+          <Button
+            label="Get started now"
+            rounded
+            className="bg-brand border-brand hover:border-opacity-0 hover:bg-brand-hover"
+          />
+        </Link>
       </section>
     </main>
   );

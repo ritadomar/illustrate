@@ -1,11 +1,12 @@
 /* eslint-disable react/no-unescaped-entities */
-import { useContext, useState } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import { logIn } from '../api/auth.api';
 import { AuthContext } from '../context/auth.context';
 import { Link, useNavigate } from 'react-router-dom';
 
 function LogIn() {
-  const { isLoggedIn, storeToken, authenticateUser } = useContext(AuthContext);
+  const { isLoggedIn, storeToken, authenticateUser, isSigning, setIsSigning } =
+    useContext(AuthContext);
   const [credential, setCredential] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
@@ -28,6 +29,13 @@ function LogIn() {
       setError(error.response.data.message);
     }
   };
+
+  useEffect(() => {
+    setIsSigning(true);
+    return () => {
+      setIsSigning(false);
+    };
+  }, []);
 
   return (
     <main className="Authentication">

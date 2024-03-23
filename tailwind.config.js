@@ -16,8 +16,9 @@ export default {
       'brand-hover': 'rgba(204, 32, 92, 0.7)',
       black: 'rgb(0, 0, 0)',
       'black-a-5': 'rgba(0, 0, 0, 0.5)',
+      white: '#ffffff',
     },
     extend: {},
   },
-  plugins: [],
+  plugins: [import('@tailwindcss/forms')],
 };
