@@ -151,3 +151,31 @@ a {
 .artwork-overlay:hover {
   color: white !important;
 }
+
+.portfolio:not(:placeholder-shown) {
+  border-color: var(--brand);
+  box-shadow: 0 0 0 1px var(--brand);
+}
+
+.p-inputtext:enabled {
+  color: black !important;
+  font-weight: 600 !important;
+  box-shadow: none !important;
+}
+
+.p-inputtext:enabled::placeholder {
+  color: rgba(0, 0, 0, 0.3) !important;
+  font-weight: 400 !important;
+}
+
+.p-inputtext:enabled:valid {
+  box-shadow: 0 0 0 1px var(--brand) !important;
+  border-color: var(--brand) !important;
+}
+.p-inputtext:enabled:focus {
+  box-shadow: 0 0 0 1px var(--brand) !important;
+  border-color: var(--brand) !important;
+}
+.p-inputtext:enabled:hover {
+  border-color: var(--brand) !important;
+}

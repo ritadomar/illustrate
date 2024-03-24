@@ -7,6 +7,10 @@ import signupImage from '../assets/signup.jpg';
 import { Button } from 'primereact/button';
 import artistsImage from '../assets/oc-growing.svg';
 import buyersImage from '../assets/oc-hi-five.svg';
+import { InputText } from 'primereact/inputtext';
+import { Password } from 'primereact/password';
+import { InputNumber } from 'primereact/inputnumber';
+import { Messages } from 'primereact/messages';
 
 // import { avgSalary as getAvgSalary } from '../api/ine.api';
 
@@ -66,6 +70,7 @@ function SignUp() {
 
   const handleSubmit = async e => {
     e.preventDefault();
+
     const user = {
       email,
       password,
@@ -97,20 +102,26 @@ function SignUp() {
   return (
     <main className="grid grid-cols-12 gap-10 h-screen pr-10">
       <div className="col-span-5 h-screen">
-        <img src={signupImage} alt="" className="h-full object-cover" />
+        <img
+          src={signupImage}
+          alt=""
+          className="h-full object-cover object-right"
+        />
       </div>
-      <div className="col-span-7 h-screen flex flex-col items-center pt-20 gap-2">
-        <h1 className="text-2xl font-semibold">Sign up to illlu</h1>
+      <div className="col-span-7 h-screen flex flex-col items-center pt-16 gap-2">
         {step === 1 && (
-          <p className=" mb-8 text-sm text-black-a-5">
-            Already have an account?{' '}
-            <Link
-              to={'/login'}
-              className="font-semibold hover:text-brand text-black"
-            >
-              Log In
-            </Link>
-          </p>
+          <>
+            <h1 className="text-2xl font-semibold">Sign up to illlu</h1>
+            <p className="mb-8 text-sm text-black-a-5">
+              Already have an account?{' '}
+              <Link
+                to={'/login'}
+                className="font-semibold hover:text-brand text-black"
+              >
+                Log In
+              </Link>
+            </p>
+          </>
         )}
         <form
           onSubmit={handleSubmit}
@@ -161,7 +172,7 @@ function SignUp() {
                 </label>
               </div>
 
-              <div>
+              <div className="flex items-center gap-4">
                 <Button
                   label="Back"
                   severity="secondary"
@@ -170,186 +181,367 @@ function SignUp() {
                   className="hover:text-brand-hover hover:bg-brand/0"
                   onClick={goBack}
                 />
-                <Button
-                  onClick={nextStep}
-                  label="Continue"
-                  rounded
-                  className="bg-brand border-brand hover:border-opacity-0 hover:bg-brand-hover"
-                />
+                {isArtist === null && (
+                  <Button
+                    onClick={nextStep}
+                    label="Continue"
+                    rounded
+                    disabled
+                    className="bg-black-a-5/30 border-black-a-5/0 hover:border-opacity-0 hover:bg-brand-hover"
+                  />
+                )}
+                {isArtist !== null && (
+                  <Button
+                    onClick={nextStep}
+                    label="Continue"
+                    rounded
+                    className="bg-brand border-brand hover:border-opacity-0 hover:bg-brand-hover"
+                  />
+                )}
               </div>
             </>
           )}
 
           {step === 2 && (
             <>
-              <h2>Welcome to Illu</h2>
-              <p>Tell us a bit about yourself</p>
-              {/* Avatar */}
-              <label htmlFor="avatar">
-                {avatar && (
-                  <>
-                    Edit avatar:
-                    <img src={avatarUrl} alt="" width={100} />
-                  </>
+              <h1 className="text-2xl font-semibold hidden">
+                Sign up to illlu
+              </h1>
+              <div className="flex flex-col items-center gap-2">
+                <h2 className="text-3xl font-semibold">Welcome to illlu</h2>
+                <p className="mb-2 text-sm text-black-a-5">
+                  Tell us a bit about yourself
+                </p>
+              </div>
+              <div className="w-full flex flex-col items-center gap-4">
+                {/* Avatar */}
+                {!avatar && (
+                  <label
+                    htmlFor="avatar"
+                    className="flex flex-col gap-2 items-center font-semibold mb-2"
+                  >
+                    <div className="w-20 h-20 rounded-full bg-brand/5 border-2 border-dashed border-brand-hover flex justify-center items-center text-brand hover:bg-brand/30">
+                      <i className="pi pi-camera text-xl" />
+                    </div>
+                    Upload avatar
+                  </label>
                 )}
-                {!avatar && 'Add an avatar:'}
+                {avatar && (
+                  <label
+                    htmlFor="avatar"
+                    className="flex flex-col gap-2 items-center hover:text-brand  font-semibold mb-2"
+                  >
+                    <img
+                      src={avatarUrl}
+                      alt=""
+                      className="w-20 h-20 object-cover object-top rounded-full border-2 border-dashed border-brand-hover "
+                    />
+                    Edit avatar
+                  </label>
+                )}
                 <input
                   type="file"
                   name="avatar"
                   id="avatar"
                   onChange={handleAvatar}
+                  className="uploadAvatar"
+                  hidden
                 />
-              </label>
 
-              {/* Email */}
-              <label htmlFor="email">
-                Email:
-                <input
-                  type="email"
-                  name="email"
-                  id="email"
-                  required
-                  value={email}
-                  onChange={({ target }) => setEmail(target.value)}
-                  placeholder="artist@email.com"
-                />
-              </label>
-
-              {/* Password */}
-              <label htmlFor="password">
-                Password:
-                <input
-                  type="password"
-                  name="password"
-                  id="password"
-                  required
-                  value={password}
-                  onChange={({ target }) => setPassword(target.value)}
-                  placeholder="••••••••"
-                />
-              </label>
-
-              {/* Name */}
-              <label htmlFor="name">
-                Name:
-                <input
-                  type="text"
-                  name="name"
-                  id="name"
-                  required
-                  value={name}
-                  onChange={({ target }) => setName(target.value)}
-                  placeholder="Lois"
-                />
-              </label>
-
-              {/* Username */}
-              <label htmlFor="username">
-                Username:
-                <input
-                  type="text"
-                  name="username"
-                  id="username"
-                  required
-                  value={username}
-                  onChange={({ target }) => setUsername(target.value)}
-                  placeholder="loish"
-                />
-              </label>
-              {isArtist && (
-                <>
-                  {/* IS ARTIST */}
-                  {/* Portfolio */}
-                  <label htmlFor="portfolio">
-                    Portfolio:
-                    <input
-                      type="url"
-                      name="portfolio"
-                      id="portfolio"
+                <div className="grid grid-cols-2 w-6/12 gap-4">
+                  {/* Name */}
+                  <label
+                    htmlFor="name"
+                    className="flex flex-col font-semibold gap-1"
+                  >
+                    Name
+                    <InputText
+                      type="text"
+                      name="name"
+                      id="name"
                       required
-                      value={portfolio}
-                      onChange={({ target }) => setPortfolio(target.value)}
-                      placeholder="http://www.portfolio.com"
+                      value={name}
+                      onChange={({ target }) => setName(target.value)}
+                      placeholder="Lois van Baarle"
+                      className="focus:border-brand focus:shadow-[0_0_0_1px_rgb(204,32,92)] hover:border-brand shadow-none valid:shadow-[0_0_0_1px_rgb(204,32,92)] valid:border-brand"
+                      pt={{
+                        root: {
+                          className:
+                            'text-black font-medium filled:border-2 placeholder:text-black/30 placeholder:font-normal',
+                        },
+                      }}
                     />
                   </label>
-                  <Button
-                    label="Back"
-                    severity="secondary"
-                    text
-                    rounded
-                    className="hover:text-brand-hover hover:bg-brand/0"
-                    onClick={previousStep}
+
+                  {/* Username */}
+                  <label
+                    htmlFor="username"
+                    className="flex flex-col font-semibold gap-1"
+                  >
+                    Username
+                    <InputText
+                      type="text"
+                      name="username"
+                      id="username"
+                      required
+                      value={username}
+                      onChange={({ target }) => setUsername(target.value)}
+                      placeholder="loish"
+                      className="focus:border-brand focus:shadow-[0_0_0_1px_rgb(204,32,92)] hover:border-brand shadow-none valid:shadow-[0_0_0_1px_rgb(204,32,92)] valid:border-brand"
+                      pt={{
+                        root: {
+                          className:
+                            'text-black font-medium filled:border-2 placeholder:text-black/30 placeholder:font-normal',
+                        },
+                      }}
+                    />
+                  </label>
+                </div>
+
+                {/* Email */}
+
+                <label
+                  htmlFor="email"
+                  className="flex flex-col w-6/12 font-semibold gap-1"
+                >
+                  Email
+                  <InputText
+                    type="email"
+                    name="email"
+                    id="email"
+                    required
+                    value={email}
+                    onChange={({ target }) => setEmail(target.value)}
+                    placeholder="email@email.com"
+                    className="focus:border-brand focus:shadow-[0_0_0_1px_rgb(204,32,92)] hover:border-brand shadow-none valid:shadow-[0_0_0_1px_rgb(204,32,92)] valid:border-brand"
+                    pt={{
+                      root: {
+                        className:
+                          'text-black font-medium filled:border-2 placeholder:text-black/30 placeholder:font-normal',
+                      },
+                    }}
                   />
-                  <Button
-                    label="Continue"
-                    rounded
-                    className="bg-brand border-brand hover:border-opacity-0 hover:bg-brand-hover"
-                    onClick={nextStep}
+                </label>
+
+                {/* Password */}
+                <label
+                  htmlFor="password"
+                  className="flex flex-col w-6/12 font-semibold gap-1"
+                >
+                  Password
+                  <Password
+                    type="password"
+                    name="password"
+                    id="password"
+                    required
+                    value={password}
+                    onChange={({ target }) => setPassword(target.value)}
+                    placeholder="8+ characters"
+                    toggleMask
+                    className="focus:border-brand focus:shadow-[0_0_0_1px_rgb(204,32,92)] hover:border-brand shadow-none "
+                    pt={{
+                      input: {
+                        className:
+                          'text-black font-medium filled:border-2 placeholder:text-black/30 placeholder:font-normal focus:border-brand focus:shadow-[0_0_0_1px_rgb(204,32,92)] hover:border-brand shadow-none w-full valid:shadow-[0_0_0_1px_rgb(204,32,92)] valid:border-brand',
+                      },
+                    }}
                   />
-                </>
-              )}
-              {!isArtist && (
-                <>
-                  <Button
-                    label="Back"
-                    severity="secondary"
-                    text
-                    rounded
-                    className="hover:text-brand-hover hover:bg-brand/0"
-                    onClick={previousStep}
-                  />
-                  <Button
-                    label="Register"
-                    rounded
-                    className="bg-brand border-brand hover:border-opacity-0 hover:bg-brand-hover"
-                    type="submit"
-                  />
-                </>
-              )}
+                </label>
+
+                {isArtist && (
+                  <>
+                    {/* IS ARTIST */}
+                    {/* Portfolio */}
+
+                    <label
+                      htmlFor="portfolio"
+                      className="flex flex-col w-6/12 font-semibold gap-1"
+                    >
+                      Portfolio:
+                      <InputText
+                        type="url"
+                        name="portfolio"
+                        id="portfolio"
+                        value={portfolio}
+                        onChange={({ target }) => setPortfolio(target.value)}
+                        placeholder="http://www.portfolio.com"
+                        className="focus:border-brand focus:shadow-[0_0_0_1px_rgb(204,32,92)] hover:border-brand shadow-none "
+                        pt={{
+                          root: {
+                            className:
+                              'text-black font-medium filled:border-2 placeholder:text-black/30 placeholder:font-normal portfolio',
+                          },
+                        }}
+                      />
+                    </label>
+
+                    {/* new buttons */}
+                    <div className="flex items-center gap-4 mt-4">
+                      <Button
+                        label="Back"
+                        severity="secondary"
+                        text
+                        rounded
+                        className="hover:text-brand-hover hover:bg-brand/0"
+                        onClick={previousStep}
+                      />
+                      {(email.length <= 0 ||
+                        password.length <= 0 ||
+                        name.length <= 0 ||
+                        username.length <= 0) && (
+                        <Button
+                          label="Continue"
+                          rounded
+                          className="bg-black-a-5/30 border-black-a-5/0 hover:border-opacity-0 hover:bg-brand-hover"
+                          onClick={nextStep}
+                          disabled
+                        />
+                      )}
+                      {email.length > 0 &&
+                        password.length > 0 &&
+                        name.length > 0 &&
+                        username.length > 0 && (
+                          <Button
+                            label="Continue"
+                            rounded
+                            className="bg-brand border-brand hover:border-opacity-0 hover:bg-brand-hover"
+                            onClick={nextStep}
+                          />
+                        )}
+                    </div>
+                  </>
+                )}
+                {!isArtist && (
+                  <div className="flex items-center gap-4 mt-4">
+                    <Button
+                      label="Back"
+                      severity="secondary"
+                      text
+                      rounded
+                      className="hover:text-brand-hover hover:bg-brand/0"
+                      onClick={previousStep}
+                    />
+                    {(email.length <= 0 ||
+                      password.length <= 0 ||
+                      name.length <= 0 ||
+                      username.length <= 0) && (
+                      <Button
+                        label="Register"
+                        rounded
+                        disabled
+                        className="bg-black-a-5/30 border-black-a-5/0 hover:border-opacity-0 hover:bg-brand-hover"
+                      />
+                    )}
+                    {email.length > 0 &&
+                      password.length > 0 &&
+                      name.length > 0 &&
+                      username.length > 0 && (
+                        <Button
+                          label="Register"
+                          rounded
+                          className="bg-brand border-brand hover:border-opacity-0 hover:bg-brand-hover"
+                          type="submit"
+                        />
+                      )}
+                  </div>
+                )}
+              </div>
             </>
           )}
 
           {/* IS ARTIST */}
           {isArtist && step === 3 && (
             <>
-              <h2>We are here to help you price your art</h2>
-              {/* Rate */}
-              <label htmlFor="rate">
-                Hourly rate:
-                <input
-                  type="number"
-                  name="rate"
-                  id="rate"
-                  required
-                  value={rate}
-                  onChange={({ target }) => {
-                    setRate(target.value);
-                  }}
-                  placeholder={avgSalary + '€'}
-                />
-                <p>
-                  We recommend a minimum hourly rate of {avgSalary}€. This rate
-                  is calculated from the monthly average base salary of workers
-                  in the arts, entertainment, sports and recreation activities
-                  sector, in Portugal in 2021
+              <h1 className="text-2xl font-semibold hidden">
+                Sign up to illlu
+              </h1>
+              <div className="flex flex-col items-center gap-2">
+                <h2 className="text-3xl font-semibold">
+                  We are here to help you price your art
+                </h2>
+                <p className="mb-2 text-sm text-black-a-5 ">
+                  Our mission is to help you price your work
                 </p>
-              </label>
+              </div>
+              <div className="w-full flex flex-col items-center gap-4">
+                <p className="mb-2 text-md text-black p-4 border-l-8 rounded-md border-brand bg-brand/10 flex flex-col gap-1 w-10/12">
+                  <span className="text-brand flex gap-2 items-center">
+                    <i className="pi pi-info-circle font-semibold" />
+                    <b>Info</b>
+                  </span>
+                  <span>
+                    We recommend a minimum hourly rate of <b>{avgSalary}€</b>.
+                    This rate is calculated from the monthly average base salary
+                    of workers in the arts, entertainment, sports and recreation
+                    activities sector in Portugal in 2021
+                  </span>
+                </p>
+                {/* Rate */}
 
-              {/* SUBMIT */}
-              <Button
-                label="Back"
-                severity="secondary"
-                text
-                rounded
-                className="hover:text-brand-hover hover:bg-brand/0"
-                onClick={previousStep}
-              />
-              <Button
-                label="Register"
-                rounded
-                className="bg-brand border-brand hover:border-opacity-0 hover:bg-brand-hover"
-                type="submit"
-              />
+                <label
+                  htmlFor="rate"
+                  className="flex flex-col w-6/12 font-semibold gap-1"
+                >
+                  Hourly rate
+                  <InputNumber
+                    name="rate"
+                    id="rate"
+                    required
+                    value={rate}
+                    onValueChange={e => {
+                      setRate(e.target.value);
+                    }}
+                    placeholder={avgSalary + '€'}
+                    // showButtons
+                    min={1}
+                    // className="text-black font-medium filled:border-2 placeholder:text-black/30 placeholder:font-normal focus:border-brand focus:shadow-[0_0_0_1px_rgb(204,32,92)] hover:border-brand shadow-none valid:shadow-[0_0_0_1px_rgb(204,32,92)] valid:border-brand"
+                    // pt={{
+                    //   input: {
+                    //     className:
+                    //       'text-black font-medium filled:border-2 placeholder:text-black/30 placeholder:font-normal focus:border-brand focus:shadow-[0_0_0_1px_rgb(204,32,92)] hover:border-brand shadow-none valid:shadow-[0_0_0_1px_rgb(204,32,92)] valid:border-brand',
+                    //   },
+                    //   // root: {
+                    //   //   className:
+                    //   //     'text-black font-medium filled:border-2 placeholder:text-black/30 placeholder:font-normal focus:border-brand focus:shadow-[0_0_0_1px_rgb(204,32,92)] hover:border-brand shadow-none valid:shadow-[0_0_0_1px_rgb(204,32,92)] valid:border-brand',
+                    //   // },
+                    //   incrementButton: {
+                    //     className: 'bg-brand border-brand',
+                    //   },
+                    //   decrementButton: {
+                    //     className: 'bg-brand border-brand',
+                    //   },
+                    // }}
+                  />
+                </label>
+
+                {/* SUBMIT */}
+                <div className="flex items-center gap-4 mt-4">
+                  <Button
+                    label="Back"
+                    severity="secondary"
+                    text
+                    rounded
+                    className="hover:text-brand-hover hover:bg-brand/0"
+                    onClick={previousStep}
+                  />
+                  {(rate === null || rate === 0) && (
+                    <Button
+                      label="Register"
+                      rounded
+                      className="bg-black-a-5/30 border-black-a-5/0 hover:border-opacity-0 hover:bg-brand-hover"
+                      disabled
+                    />
+                  )}
+                  {rate && (
+                    <Button
+                      label="Register"
+                      rounded
+                      className="bg-brand border-brand hover:border-opacity-0 hover:bg-brand-hover"
+                      type="submit"
+                    />
+                  )}
+                </div>
+              </div>
             </>
           )}
         </form>
