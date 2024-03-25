@@ -177,7 +177,7 @@ function SignUp() {
                   severity="secondary"
                   text
                   rounded
-                  className="hover:text-brand-hover hover:bg-brand/0"
+                  className="text-grey hover:text-brand-hover hover:bg-brand/0"
                   onClick={goBack}
                 />
                 {isArtist === null && (
@@ -381,7 +381,7 @@ function SignUp() {
                         severity="secondary"
                         text
                         rounded
-                        className="hover:text-brand-hover hover:bg-brand/0"
+                        className="text-grey hover:text-brand-hover hover:bg-brand/0"
                         onClick={previousStep}
                       />
                       {(email.length <= 0 ||
@@ -417,7 +417,7 @@ function SignUp() {
                       severity="secondary"
                       text
                       rounded
-                      className="hover:text-brand-hover hover:bg-brand/0"
+                      className="text-grey hover:text-brand-hover hover:bg-brand/0"
                       onClick={previousStep}
                     />
                     {(email.length <= 0 ||
@@ -520,7 +520,7 @@ function SignUp() {
                     severity="secondary"
                     text
                     rounded
-                    className="hover:text-brand-hover hover:bg-brand/0"
+                    className="text-grey hover:text-brand-hover hover:bg-brand/0"
                     onClick={previousStep}
                   />
                   {(rate === null || rate === 0) && (

@@ -34,7 +34,7 @@ function Navbar() {
                 severity="secondary"
                 text
                 rounded
-                className="hover:text-brand-hover hover:bg-brand/0"
+                className="hover:text-brand-hover hover:bg-brand/0 text-grey"
               />
             </Link>
             <Link to="/signup">
