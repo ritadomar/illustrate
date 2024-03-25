@@ -66,7 +66,7 @@ function Home() {
               <Link
                 to={`/${artwork.artist.username}/artwork/${artwork._id}`}
                 key={artwork._id}
-                className="hover:text-brand"
+                className="hover:text-brand-hover"
               >
                 <article className="artwork flex flex-col gap-2">
                   <div
@@ -83,7 +83,7 @@ function Home() {
                     <img
                       src={artwork.artist.avatarUrl}
                       alt=""
-                      className="aspect-square object-cover rounded-full w-6 h-6 border-2 border-brand"
+                      className="aspect-square object-cover rounded-full w-6 h-6 border-2 border-brand-hover"
                     />
                     <p>{artwork.artist.username}</p>
                   </div>

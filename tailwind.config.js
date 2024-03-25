@@ -17,6 +17,7 @@ export default {
       black: '#131011',
       'black-a-5': 'rgba(19, 16, 17, 0.5)',
       white: '#ffffff',
+      accent: '#f9a49e',
       'accent-light': '#FCDAD8',
     },
     extend: {},

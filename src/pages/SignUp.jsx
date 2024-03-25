@@ -133,7 +133,7 @@ function SignUp() {
                 How are you planning to use Illu?
               </h2>
               <div className="grid grid-cols-2 gap-4 w-10/12">
-                <label className="p-4 border-brand/30 border-2 rounded-lg flex flex-col items-end gap-4 has-[:checked]:bg-brand/10 has-[:checked]:border-brand has-[:checked]:font-semibold has-[:checked]:border-brand/0">
+                <label className="p-4 border-accent-light border-2 rounded-lg flex flex-col items-end gap-4 has-[:checked]:bg-accent-light/50 has-[:checked]:border-brand has-[:checked]:font-semibold has-[:checked]:border-brand/0">
                   <input
                     type="radio"
                     name="isArtist"
@@ -151,7 +151,7 @@ function SignUp() {
                     For posting and selling my art
                   </span>
                 </label>
-                <label className="p-4 border-brand/30 border-2 rounded-lg flex flex-col items-end gap-4 has-[:checked]:bg-brand/10 has-[:checked]:border-brand has-[:checked]:font-semibold has-[:checked]:border-brand/0">
+                <label className="p-4 border-accent-light border-2 rounded-lg flex flex-col items-end gap-4 has-[:checked]:bg-accent-light/50 has-[:checked]:border-brand has-[:checked]:font-semibold has-[:checked]:border-brand/0">
                   <input
                     type="radio"
                     name="isArtist"
@@ -217,9 +217,9 @@ function SignUp() {
                 {!avatar && (
                   <label
                     htmlFor="avatar"
-                    className=" group cursor-pointer flex flex-col gap-2 items-center font-semibold mb-2 hover:text-brand"
+                    className=" group cursor-pointer flex flex-col gap-2 items-center font-semibold mb-2 hover:text-brand-hover"
                   >
-                    <div className="cursor-pointer w-20 h-20 rounded-full bg-brand/5 border-2 border-dashed border-brand-hover flex justify-center items-center text-brand group-hover:bg-brand/30">
+                    <div className="cursor-pointer w-20 h-20 rounded-full bg-brand-hover/5 border-2 border-dashed border-brand-hover flex justify-center items-center text-brand-hover group-hover:bg-brand-hover/30">
                       <i className="pi pi-camera text-xl" />
                     </div>
                     Upload avatar
@@ -228,7 +228,7 @@ function SignUp() {
                 {avatar && (
                   <label
                     htmlFor="avatar"
-                    className="group cursor-pointer flex flex-col gap-2 items-center hover:text-brand  font-semibold mb-2"
+                    className="group cursor-pointer flex flex-col gap-2 items-center hover:text-brand-hover  font-semibold mb-2"
                   >
                     <img
                       src={avatarUrl}
@@ -463,7 +463,7 @@ function SignUp() {
                 </p>
               </div>
               <div className="w-full flex flex-col items-center gap-4">
-                <p className="mb-2 text-md text-black p-4 border-l-8 rounded-md border-brand bg-brand/10 flex flex-col gap-1 w-10/12">
+                <p className="mb-2 text-md text-black p-4 border-l-8 rounded-md border-brand-hover bg-brand-hover/10 flex flex-col gap-1 w-10/12">
                   <span className="text-brand flex gap-2 items-center">
                     <i className="pi pi-info-circle font-semibold" />
                     <b>Info</b>
