@@ -12,11 +12,12 @@ export default {
   ],
   theme: {
     colors: {
-      brand: 'rgb(204, 32, 92)',
-      'brand-hover': 'rgba(204, 32, 92, 0.7)',
-      black: 'rgb(0, 0, 0)',
-      'black-a-5': 'rgba(0, 0, 0, 0.5)',
+      brand: '#CC205C',
+      'brand-hover': '#f75381',
+      black: '#131011',
+      'black-a-5': 'rgba(19, 16, 17, 0.5)',
       white: '#ffffff',
+      'accent-light': '#FCDAD8',
     },
     extend: {},
   },

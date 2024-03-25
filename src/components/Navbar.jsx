@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { useContext } from 'react';
 import { AuthContext } from '../context/auth.context';
 import ProfileMenu from './ProfileMenu';
-import logo from '../assets/logo-illlu.svg';
+import logo from '../assets/logo-light.svg';
 import { Button } from 'primereact/button';
 import IsSigning from './IsSigning';
 
@@ -11,16 +11,17 @@ function Navbar() {
   return (
     <nav className="Navbar px-10 py-4 absolute w-full h-20">
       {/* home */}
-      <Link to="/">
+      <Link to="/" className="h-full">
         {/* change to logo */}
-        <img src={logo} alt="illlu logo" />
+        <img src={logo} alt="illlu logo" className="h-full" />
       </Link>
+
       <IsSigning>
         <div className="nav-links font-medium">
-          <Link to="/explore" className="hover:text-brand">
+          <Link to="/explore" className="hover:text-brand-hover">
             Explore
           </Link>
-          <Link to="/resources" className="hover:text-brand">
+          <Link to="/resources" className="hover:text-brand-hover">
             Resources
           </Link>
         </div>

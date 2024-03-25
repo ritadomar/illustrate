@@ -91,7 +91,7 @@ function ProfileMenu() {
                         label={user.username[0].toUpperCase()}
                         size="xlarge"
                         shape="circle"
-                        className="object-cover"
+                        className="object-cover "
                       />
                     )}
                     <p>{user.username}</p>
@@ -137,7 +137,7 @@ function ProfileMenu() {
               onMouseEnter={event => menuRight.current.toggle(event)}
               aria-controls="popup_menu_right"
               aria-haspopup
-              className="object-cover"
+              className="object-cover bg-accent-light"
             />
           )}
         </>

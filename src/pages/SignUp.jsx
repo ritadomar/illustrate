@@ -10,7 +10,6 @@ import buyersImage from '../assets/oc-hi-five.svg';
 import { InputText } from 'primereact/inputtext';
 import { Password } from 'primereact/password';
 import { InputNumber } from 'primereact/inputnumber';
-import { Messages } from 'primereact/messages';
 
 // import { avgSalary as getAvgSalary } from '../api/ine.api';
 
@@ -218,9 +217,9 @@ function SignUp() {
                 {!avatar && (
                   <label
                     htmlFor="avatar"
-                    className="flex flex-col gap-2 items-center font-semibold mb-2"
+                    className=" group cursor-pointer flex flex-col gap-2 items-center font-semibold mb-2 hover:text-brand"
                   >
-                    <div className="w-20 h-20 rounded-full bg-brand/5 border-2 border-dashed border-brand-hover flex justify-center items-center text-brand hover:bg-brand/30">
+                    <div className="cursor-pointer w-20 h-20 rounded-full bg-brand/5 border-2 border-dashed border-brand-hover flex justify-center items-center text-brand group-hover:bg-brand/30">
                       <i className="pi pi-camera text-xl" />
                     </div>
                     Upload avatar
@@ -229,12 +228,12 @@ function SignUp() {
                 {avatar && (
                   <label
                     htmlFor="avatar"
-                    className="flex flex-col gap-2 items-center hover:text-brand  font-semibold mb-2"
+                    className="group cursor-pointer flex flex-col gap-2 items-center hover:text-brand  font-semibold mb-2"
                   >
                     <img
                       src={avatarUrl}
                       alt=""
-                      className="w-20 h-20 object-cover object-top rounded-full border-2 border-dashed border-brand-hover "
+                      className="cursor-pointer w-20 h-20 object-cover object-top rounded-full border-2 border-dashed border-brand-hover "
                     />
                     Edit avatar
                   </label>
@@ -244,7 +243,7 @@ function SignUp() {
                   name="avatar"
                   id="avatar"
                   onChange={handleAvatar}
-                  className="uploadAvatar"
+                  className="uploadAvatar cursor-pointer"
                   hidden
                 />
 
@@ -369,7 +368,7 @@ function SignUp() {
                         pt={{
                           root: {
                             className:
-                              'text-black font-medium filled:border-2 placeholder:text-black/30 placeholder:font-normal portfolio',
+                              'text-black font-medium placeholder:text-black/30 placeholder:font-normal portfolio',
                           },
                         }}
                       />

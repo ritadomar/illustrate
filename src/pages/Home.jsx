@@ -21,7 +21,7 @@ function Home() {
   }, []);
 
   return (
-    <main>
+    <main className="bg-gradient-to-b from-accent-light/30 to-white">
       <section className="hero flex flex-col items-center justify-center gap-8 px-10">
         <h1 className="text-7xl font-semibold text-center">
           <TypeAnimation
@@ -102,7 +102,7 @@ function Home() {
           />
         </Link>
       </section>
-      <section className="hire flex flex-col items-center justify-center gap-8 bg-brand/20 px-36">
+      <section className="hire flex flex-col items-center justify-center gap-8 bg-accent-light/50 px-36">
         <h2 className="text-6xl font-semibold text-center">
           Find the perfect illustrator on illlu!
         </h2>
