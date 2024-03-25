@@ -14,15 +14,22 @@ export default {
     colors: {
       brand: '#CC205C',
       'brand-hover': '#f75381',
+      'brand-darkest': '#280502',
       black: '#131011',
       'black-a-5': 'rgba(19, 16, 17, 0.5)',
       white: '#ffffff',
       accent: '#f9a49e',
+      'accent-strong': '#F86353',
       'accent-light': '#FCDAD8',
       'accent-dark': '#CC3A20',
       gray: '#978C8E',
+      'gray-darker': '#73686a',
     },
-    extend: {},
+    extend: {
+      fontFamily: {
+        display: 'bely-display, ui-sans-serif, sans-serif',
+      },
+    },
   },
   plugins: [import('@tailwindcss/forms')],
 };

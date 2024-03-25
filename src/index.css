@@ -9,6 +9,12 @@
   @tailwind utilities;
 }
 
+@layer base {
+  html {
+    font-family: 'work-sans', system-ui, sans-serif !important;
+  }
+}
+
 /* .Authentication {
   display: flex;
   flex-direction: column;
@@ -140,7 +146,7 @@ a {
 } */
 
 .hero {
-  height: 70vh;
+  height: 80vh;
 }
 
 .hire {
@@ -165,6 +171,10 @@ a {
 .portfolio:enabled:valid {
   border: 1px solid #d1d5db !important;
   box-shadow: none !important;
+}
+
+.p-inputtext {
+  font-family: 'work-sans', system-ui, sans-serif !important;
 }
 
 .p-inputtext:enabled {

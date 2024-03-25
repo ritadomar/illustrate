@@ -10,7 +10,7 @@ function Home() {
   const getArtworks = async () => {
     try {
       const response = await getAllArtworks();
-      setArtworks(response.data.slice(0, 16));
+      setArtworks(response.data.reverse().slice(0, 16));
     } catch (error) {
       console.log();
     }
@@ -21,9 +21,9 @@ function Home() {
   }, []);
 
   return (
-    <main className="bg-gradient-to-b from-accent-light/30 to-white">
-      <section className="hero flex flex-col items-center justify-center gap-8 px-10">
-        <h1 className="text-7xl font-semibold text-center">
+    <main className="bg-gradient-to-b from-accent-light/50 to-white">
+      <section className="hero flex flex-col items-center justify-center gap-8 px-10 pt-10">
+        <h1 className="text-8xl  text-center font-display text-brand-darkest">
           <TypeAnimation
             sequence={[
               // Same substring at the start will only be typed out once, initially
@@ -44,7 +44,8 @@ function Home() {
             // omitDeletionAnimation={true}
             // style={{ fontSize: '2em', display: 'inline-block' }}
             repeat={Infinity}
-          />{' '}
+          />
+          <br />
           Illustrations
         </h1>
         <p className="text-2xl text-center">
@@ -68,12 +69,12 @@ function Home() {
                 key={artwork._id}
                 className="hover:text-brand-hover"
               >
-                <article className="artwork flex flex-col gap-2">
+                <article className="artwork flex flex-col gap-2 ">
                   <div
                     style={{
                       '--image-url': `url(${artwork.artworkUrl})`,
                     }}
-                    className="bg-[image:var(--image-url)]  bg-no-repeat bg-cover aspect-square rounded"
+                    className="bg-[image:var(--image-url)]  bg-no-repeat bg-cover aspect-square rounded  bg-white border-2 border-accent-light"
                   >
                     <div className="flex p-4 items-end w-full h-full hover:bg-gradient-to-t from-black-a-5 artwork-overlay rounded">
                       <h3 className="text-lg artwork-title">{artwork.title}</h3>
@@ -102,12 +103,12 @@ function Home() {
           />
         </Link>
       </section>
-      <section className="hire flex flex-col items-center justify-center gap-8 bg-accent-light/50 px-36">
-        <h2 className="text-6xl font-semibold text-center">
+      <section className="hire flex flex-col items-center justify-center gap-8 bg-accent px-36 pt-10">
+        <h2 className="text-6xl font-semibold text-center font-display w-1/2">
           Find the perfect illustrator on illlu!
         </h2>
-        <p className="text-xl text-center">
-          At illlu we're committed to supporting artists and paying them fairly.
+        <p className="text-xl text-center w-1/2">
+          We're committed to supporting artists!
           <br />
           Turn your creative ideas into stunning illustrations. Sign up and
           connect with talented artists in minutes.
@@ -116,7 +117,7 @@ function Home() {
           <Button
             label="Get started now"
             rounded
-            className="bg-brand border-brand hover:border-opacity-0 hover:bg-brand-hover"
+            className="bg-white border-white hover:text-gray-darker text-black text-md"
           />
         </Link>
       </section>
