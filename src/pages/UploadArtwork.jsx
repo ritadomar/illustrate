@@ -6,6 +6,11 @@ import { AuthContext } from '../context/auth.context';
 import InputTag from '../components/InputTag';
 import { getProfile } from '../api/profiles.api';
 import { getCommission } from '../api/commission.api';
+import uploadImg from '../assets/upload.svg';
+import { Button } from 'primereact/button';
+import { InputText } from 'primereact/inputtext';
+import { InputTextarea } from 'primereact/inputtextarea';
+import { Chips } from 'primereact/chips';
 
 function UploadArt() {
   const [title, setTitle] = useState('');
@@ -18,6 +23,14 @@ function UploadArt() {
   const [displayArtwork, setDisplayArtwork] = useState('');
   const [artist, setArtist] = useState(null);
 
+  const { isSigning, setIsSigning } = useContext(AuthContext);
+
+  useEffect(() => {
+    setIsSigning(true);
+    return () => {
+      setIsSigning(false);
+    };
+  }, []);
   // to display commissions list
   const [commissionsList, setCommissionsList] = useState(null);
 
@@ -138,95 +151,168 @@ function UploadArt() {
 
   return (
     <>
-      <main className="Authentication">
-        <h1>Upload Artwork</h1>
-        <form onSubmit={handleSubmit}>
-          <label htmlFor="artwork">
-            {artwork && (
-              <>
-                Edit artwork:
-                <img src={displayArtwork} alt="" width={'100%'} />
-              </>
+      <main className=" h-dvh mx-10 py-24">
+        <h1 hidden>Upload Artwork</h1>
+        <form
+          onSubmit={handleSubmit}
+          className="grid grid-cols-12 gap-10 h-full"
+        >
+          {/* <label htmlFor="artwork"> */}
+          {/* {artwork && (
+            <>
+              Edit artwork:
+              <img src={displayArtwork} alt="" width={'100%'} />
+            </>
+          )} */}
+
+          {/* Artwork */}
+          <div className="col-span-6 border-2 border-dashed border-accent rounded flex flex-col justify-center items-center p-4 w-full h-full">
+            {!artwork && (
+              <label
+                htmlFor="artwork"
+                className=" group cursor-pointer flex flex-col gap-2 items-center font-semibold mb-2 hover:text-brand-hover"
+              >
+                <img src={uploadImg} className="w-32 mb-8" alt="" />
+                <span className="underline underline-offset-4 decoration-brand decoration-2">
+                  Upload artwork
+                </span>
+                <span className="mb-2 text-sm text-black-a-5 font-normal">
+                  We support <span className="font-semibold">JPEG</span>,{' '}
+                  <span className="font-semibold">PNG</span>,{' '}
+                  <span className="font-semibold">GIF</span>,{' '}
+                  <span className="font-semibold">TIFF</span> and{' '}
+                  <span className="font-semibold">PNG</span>
+                </span>
+              </label>
             )}
-            {!artwork && 'Upload your artwork:'}
+            {artwork && (
+              <label
+                htmlFor="artwork"
+                className=" group cursor-pointer flex flex-col gap-2 items-center justify-center font-semibold hover:text-brand-hover h-full w-full"
+              >
+                <img
+                  src={displayArtwork}
+                  alt=""
+                  className="cursor-pointer artwork-img"
+                />
+              </label>
+            )}
+
+            <input
+              type="file"
+              name="artwork"
+              id="artwork"
+              onChange={handleArtwork}
+              className="uploadArtwork cursor-pointer"
+              hidden
+            />
+          </div>
+
+          {/* {!artwork && 'Upload your artwork:'}
             <input
               type="file"
               name="artwork"
               id="artwork"
               onChange={handleArtwork}
             />
-          </label>
-          <label htmlFor="title">
-            Title:
-            <input
-              type="text"
-              name="title"
-              id="title"
-              value={title}
-              onChange={({ target }) => setTitle(target.value)}
-              placeholder="Artwork title"
-            />
-          </label>
-          <label htmlFor="description">
-            Description:
-            <textarea
-              type="text"
-              name="description"
-              id="description"
-              value={description}
-              onChange={({ target }) => setDescription(target.value)}
-              placeholder="Insert artwork description"
-            />
-          </label>
-          <label htmlFor="tags">
-            Tags:
-            <InputTag tags={inputTags} setTags={setInputTags} />
-          </label>
-          <label htmlFor="time">
-            Time spent on piece (hours):
-            <input
-              type="number"
-              name="time"
-              id="time"
-              value={time}
-              onChange={({ target }) => {
-                setTime(target.value);
-                handleCost(target.value);
-              }}
-              placeholder="10h"
-            />
-            <p>Artwork cost: {time && `${cost}€`}</p>
-          </label>
+          </label> */}
+          <div className="col-span-6 h-screen flex flex-col items-center pt-16 gap-2">
+            <label
+              htmlFor="title"
+              className="flex flex-col w-8/12 font-semibold gap-1"
+            >
+              Title
+              <InputText
+                required
+                type="text"
+                name="title"
+                id="title"
+                value={title}
+                onChange={({ target }) => setTitle(target.value)}
+                placeholder="Artwork title"
+                className="focus:border-brand focus:shadow-[0_0_0_1px_rgb(204,32,92)] hover:border-brand shadow-none valid:shadow-[0_0_0_1px_rgb(204,32,92)] valid:border-brand"
+                pt={{
+                  root: {
+                    className:
+                      'text-black font-medium filled:border-2 placeholder:text-black/30 placeholder:font-normal',
+                  },
+                }}
+              />
+            </label>
+            <label
+              htmlFor="description"
+              className="flex flex-col w-6/12 font-semibold gap-1"
+            >
+              Description
+              <InputTextarea
+                autoResize
+                name="description"
+                id="description"
+                value={description}
+                onChange={({ target }) => setDescription(target.value)}
+                placeholder="Insert artwork description"
+                className="portfolio focus:border-brand focus:shadow-[0_0_0_1px_rgb(204,32,92)] hover:border-brand shadow-none valid:shadow-[0_0_0_1px_rgb(204,32,92)] valid:border-brand"
+                pt={{
+                  root: {
+                    className:
+                      'text-black font-medium filled:border-2 placeholder:text-black/30 placeholder:font-normal',
+                  },
+                }}
+              />
+            </label>
+            <label
+              htmlFor="tags"
+              className="flex flex-col w-6/12 font-semibold gap-1"
+            >
+              Tags
+              <InputTag tags={inputTags} setTags={setInputTags} />
+            </label>
+            <label htmlFor="time">
+              Time spent on piece (hours):
+              <input
+                type="number"
+                name="time"
+                id="time"
+                value={time}
+                onChange={({ target }) => {
+                  setTime(target.value);
+                  handleCost(target.value);
+                }}
+                placeholder="10h"
+              />
+              <p>Artwork cost: {time && `${cost}€`}</p>
+            </label>
 
-          {commissionsList && commissionsList.length > 0 && (
-            <>
-              <h2>Add to commissions:</h2>
-              {commissionsList.map(commission => {
-                return (
-                  <label className="radio" key={commission._id}>
-                    {
-                      <input
-                        type="checkbox"
-                        name="commission"
-                        value={commission._id}
-                        checked={selectedCommissions.includes(commission._id)}
-                        onChange={handleCheck}
-                      />
-                    }
-                    {commission.exampleArtwork.length > 0 && (
-                      <img
-                        src={commission.exampleArtwork[0].artworkUrl}
-                        alt=""
-                        width={100}
-                      />
-                    )}
-                    {commission.title}
-                  </label>
-                );
-              })}
-            </>
-          )}
-          <button type="submit">Upload artwork</button>
+            {commissionsList && commissionsList.length > 0 && (
+              <>
+                <h2>Add to commissions:</h2>
+                {commissionsList.map(commission => {
+                  return (
+                    <label className="radio" key={commission._id}>
+                      {
+                        <input
+                          type="checkbox"
+                          name="commission"
+                          value={commission._id}
+                          checked={selectedCommissions.includes(commission._id)}
+                          onChange={handleCheck}
+                        />
+                      }
+                      {commission.exampleArtwork.length > 0 && (
+                        <img
+                          src={commission.exampleArtwork[0].artworkUrl}
+                          alt=""
+                          width={100}
+                        />
+                      )}
+                      {commission.title}
+                    </label>
+                  );
+                })}
+              </>
+            )}
+            <button type="submit">Upload artwork</button>
+          </div>
         </form>
       </main>
     </>

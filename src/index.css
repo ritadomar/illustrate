@@ -203,3 +203,26 @@ a {
 .p-button:focus {
   box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px var(--accent), 0 1px 2px 0 black;
 }
+
+.artwork-img {
+  max-width: none;
+  height: 100%;
+  max-height: 70vh;
+}
+
+input:focus {
+  outline: none;
+}
+
+.suggestions ul {
+  display: flex;
+  flex-direction: column;
+}
+
+.suggestions li {
+  padding: 12px 8px;
+}
+
+.suggestions mark {
+  background-color: var(--accent);
+}
