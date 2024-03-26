@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
+import { AuthContext } from '../context/auth.context';
 import { useNavigate, useParams } from 'react-router-dom';
 import { updateArtwork, getArtwork } from '../api/artwork.api';
 import { getCommission } from '../api/commission.api';
@@ -11,6 +12,7 @@ import { InputTextarea } from 'primereact/inputtextarea';
 import { InputNumber } from 'primereact/inputnumber';
 import { Tooltip } from 'primereact/tooltip';
 import ErrorMessage from '../components/ErrorMessage';
+import { ScrollPanel } from 'primereact/scrollpanel';
 
 function EditArtwork() {
   const [title, setTitle] = useState('');
@@ -31,6 +33,8 @@ function EditArtwork() {
   const [selectedCommissions, setSelectedCommissions] = useState([]);
 
   const { artworkId, username } = useParams();
+
+  const { isSigning, setIsSigning } = useContext(AuthContext);
 
   const navigate = useNavigate();
 
@@ -79,6 +83,13 @@ function EditArtwork() {
 
   useEffect(() => {
     getSingleArtwork();
+  }, []);
+
+  useEffect(() => {
+    setIsSigning(true);
+    return () => {
+      setIsSigning(false);
+    };
   }, []);
 
   useEffect(() => {
@@ -158,7 +169,9 @@ function EditArtwork() {
   return (
     <>
       <main className=" h-dvh mx-10 py-24">
-        <h1 hidden>Edit Artwork</h1>
+        <h1 className="absolute inset-x-0 top-6 text-2xl font-bold text-center text-black -z-10">
+          Edit Artwork
+        </h1>
         <form
           onSubmit={handleSubmit}
           className="grid grid-cols-12 gap-4 h-full"
@@ -312,40 +325,62 @@ function EditArtwork() {
                 </div>
               </label>
 
-              {selectedCommissions &&
-                commissionsList &&
-                commissionsList.length > 0 && (
-                  <>
-                    <h2>Add to commissions:</h2>
-                    {commissionsList.map(commission => {
-                      return (
-                        <label className="radio" key={commission._id}>
-                          {
-                            <input
-                              type="checkbox"
-                              name="commission"
-                              value={commission._id}
-                              checked={selectedCommissions.includes(
-                                commission._id
-                              )}
-                              onChange={handleCheck}
-                            />
-                          }
-                          {commission.exampleArtwork.length > 0 && (
-                            <img
-                              src={commission.exampleArtwork[0].artworkUrl}
-                              alt=""
-                              width={100}
-                            />
-                          )}
-                          {commission.title}
-                        </label>
-                      );
-                    })}
-                  </>
-                )}
+              <section className="commissions">
+                <h2 className="font-semibold mb-2">Add to Commissions</h2>
+                {selectedCommissions &&
+                  commissionsList &&
+                  commissionsList.length > 0 && (
+                    <>
+                      <ScrollPanel
+                        style={{ width: '100%', height: '25vh' }}
+                        pt={{
+                          barY: {
+                            className: 'bg-accent-light',
+                          },
+                        }}
+                      >
+                        <div className="grid grid-cols-3 gap-2 pr-4 rounded">
+                          {commissionsList.map(commission => {
+                            return (
+                              <label
+                                htmlFor={commission._id}
+                                key={commission._id}
+                                className="p-2 rounded border-accent-light border-2 flex flex-col gap-1 has-[:checked]:bg-accent-light/50 has-[:checked]:border-brand has-[:checked]:font-semibold has-[:checked]:border-brand/0"
+                              >
+                                <div className="flex gap-2 items-center">
+                                  <input
+                                    type="checkbox"
+                                    name="commission"
+                                    id={commission._id}
+                                    value={commission._id}
+                                    checked={selectedCommissions.includes(
+                                      commission._id
+                                    )}
+                                    onChange={handleCheck}
+                                    className="border-1 border-white h-4 w-4 rounded checked:bg-brand-hover checked:ring-brand-hover appearance-none ring-2 ring-brand/30"
+                                  />
+                                  <span className="pi pi-check text-xs text-white -ml-[22px]"></span>
+                                  <p className="truncate">{commission.title}</p>
+                                </div>
+                                {commission.exampleArtwork.length > 0 && (
+                                  <img
+                                    src={
+                                      commission.exampleArtwork[0].artworkUrl
+                                    }
+                                    alt={commission.title}
+                                    className="no-pin aspect-video object-cover object-top bg-white rounded-sm"
+                                  />
+                                )}
+                              </label>
+                            );
+                          })}
+                        </div>
+                      </ScrollPanel>
+                    </>
+                  )}
+              </section>
             </div>
-            <div className="flex items-center gap-4 mt-4">
+            <div className="flex items-center gap-4 mt-4 absolute top-0 right-10">
               <Button
                 label="Cancel"
                 severity="secondary"

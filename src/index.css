@@ -60,6 +60,11 @@
   --black-a-8: rgba(19, 16, 17, 0.8);
   --accent: #f9a49e;
   --accent-light: #fcdad8;
+  --accent-strong: #f86353;
+  --accent-strong-transparent: #f8635377;
+  --accent-dark: #cc3a20;
+  --accent-dark-transparent: #cc3a2077;
+  --brand-hover-transparent: #f7538177;
 }
 
 /* NAVBAR */
@@ -224,4 +229,8 @@ input:focus {
 
 .suggestions mark {
   background-color: var(--accent);
+}
+
+.p-image-preview-container:hover > .p-image-preview-indicator {
+  background-color: var(--accent-strong-transparent);
 }

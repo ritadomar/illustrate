@@ -7,6 +7,7 @@ import { Button } from 'primereact/button';
 import { Avatar } from 'primereact/avatar';
 import commissionImg from '../assets/commission.svg';
 import timeImg from '../assets/time.svg';
+import { Image } from 'primereact/image';
 
 function ArtworkDetails() {
   const [artwork, setArtwork] = useState(null);
@@ -97,10 +98,17 @@ function ArtworkDetails() {
           )}
           <main className="grid grid-cols-12 pt-24 pl-10 pr-32 gap-4">
             <div className="col-span-5">
-              <img
+              <Image
                 src={artwork.artworkUrl}
-                className="rounded "
+                className="rounded w-full"
+                imageClassName="w-full"
                 alt={artwork.title}
+                preview
+                pt={{
+                  preview: {
+                    className: 'bg-white',
+                  },
+                }}
               />
             </div>
             <div className="flex flex-col col-span-7 gap-8 top-20 h-1/2">
