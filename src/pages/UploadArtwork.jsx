@@ -12,6 +12,8 @@ import { InputText } from 'primereact/inputtext';
 import { InputTextarea } from 'primereact/inputtextarea';
 import { InputNumber } from 'primereact/inputnumber';
 import ErrorMessage from '../components/ErrorMessage';
+import { ScrollPanel } from 'primereact/scrollpanel';
+import timeImg from '../assets/time.svg';
 
 function UploadArt() {
   const [title, setTitle] = useState('');
@@ -159,7 +161,9 @@ function UploadArt() {
   return (
     <>
       <main className=" h-dvh mx-10 py-24">
-        <h1 hidden>Upload Artwork</h1>
+        <h1 className="absolute inset-x-0 top-6 text-2xl font-bold text-center text-black -z-10">
+          Upload Artwork
+        </h1>
         <form
           onSubmit={handleSubmit}
           className="grid grid-cols-12 gap-4 h-full"
@@ -316,38 +320,71 @@ function UploadArt() {
                 </div>
               </label>
 
-              {commissionsList && commissionsList.length > 0 && (
-                <>
-                  <h2>Add to commissions:</h2>
-                  {commissionsList.map(commission => {
-                    return (
-                      <label className="radio" key={commission._id}>
-                        {
-                          <input
-                            type="checkbox"
-                            name="commission"
-                            value={commission._id}
-                            checked={selectedCommissions.includes(
-                              commission._id
-                            )}
-                            onChange={handleCheck}
-                          />
-                        }
-                        {commission.exampleArtwork.length > 0 && (
-                          <img
-                            src={commission.exampleArtwork[0].artworkUrl}
-                            alt=""
-                            width={100}
-                          />
-                        )}
-                        {commission.title}
-                      </label>
-                    );
-                  })}
-                </>
-              )}
+              <section className="commissions">
+                <h2 className="font-semibold mb-2">Add to Commissions</h2>
+                {(!commissionsList || commissionsList.length <= 0) && (
+                  <div
+                    className="flex flex-col justify-center items-center gap-2 bg-white border-2 border-accent-light border-dashed rounded"
+                    style={{ width: '100%', height: '25vh' }}
+                  >
+                    <img src={timeImg} alt="" className="w-2/12" />
+
+                    <p className="text-sm text-gray text-center">
+                      You don't have any commissions yet!
+                    </p>
+                  </div>
+                )}
+
+                {commissionsList && commissionsList.length > 0 && (
+                  <>
+                    <ScrollPanel
+                      style={{ width: '100%', height: '25vh' }}
+                      pt={{
+                        barY: {
+                          className: 'bg-accent-light',
+                        },
+                      }}
+                    >
+                      <div className="grid grid-cols-3 gap-2 pr-4 rounded">
+                        {commissionsList.map(commission => {
+                          return (
+                            <label
+                              htmlFor={commission._id}
+                              key={commission._id}
+                              className="p-2 rounded border-accent-light border-2 flex flex-col gap-1 has-[:checked]:bg-accent-light/50 has-[:checked]:border-brand has-[:checked]:font-semibold has-[:checked]:border-brand/0"
+                            >
+                              <div className="flex gap-2 items-center">
+                                <input
+                                  type="checkbox"
+                                  name="commission"
+                                  id={commission._id}
+                                  value={commission._id}
+                                  checked={selectedCommissions.includes(
+                                    commission._id
+                                  )}
+                                  onChange={handleCheck}
+                                  className="border-1 border-white h-4 w-4 rounded checked:bg-brand-hover checked:ring-brand-hover appearance-none ring-2 ring-brand/30"
+                                />
+                                <span className="pi pi-check text-xs text-white -ml-[22px]"></span>
+                                <p className="truncate">{commission.title}</p>
+                              </div>
+                              {commission.exampleArtwork.length > 0 && (
+                                <img
+                                  src={commission.exampleArtwork[0].artworkUrl}
+                                  alt={commission.title}
+                                  className="no-pin aspect-video object-cover object-top bg-white rounded-sm"
+                                />
+                              )}
+                            </label>
+                          );
+                        })}
+                      </div>
+                    </ScrollPanel>
+                  </>
+                )}
+              </section>
             </div>
-            <div className="flex items-center gap-4 mt-4">
+            <div className="flex items-center gap-4 mt-4 absolute top-0 right-10">
               <Button
                 label="Cancel"
                 severity="secondary"
@@ -356,7 +393,11 @@ function UploadArt() {
                 className="text-grey hover:text-brand-hover hover:bg-brand/0"
                 onClick={goBack}
               />
-              {(time === null || time === 0 || title.length <= 0) && (
+              {(time === null ||
+                time === 0 ||
+                time.length <= 0 ||
+                title.length <= 0 ||
+                displayArtwork.length <= 0) && (
                 <Button
                   label="Upload Artwork"
                   rounded
@@ -364,7 +405,7 @@ function UploadArt() {
                   disabled
                 />
               )}
-              {time && title && (
+              {time && title && displayArtwork && (
                 <Button
                   label="Upload Artwork"
                   rounded

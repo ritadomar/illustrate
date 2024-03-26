@@ -106,7 +106,10 @@ function ArtworkDetails() {
             <div className="flex flex-col col-span-7 gap-8 top-20 h-1/2">
               <div className="flex flex-col gap-2">
                 <h1 className="text-6xl font-semibold">{artwork.title}</h1>
-                <div className="flex items-center gap-2">
+                <Link
+                  to={`/${artwork.artist.username}`}
+                  className="hover:text-brand flex items-center gap-2"
+                >
                   {artwork.artist.avatarUrl && (
                     <Avatar
                       image={artwork.artist.avatarUrl}
@@ -124,7 +127,7 @@ function ArtworkDetails() {
                     />
                   )}
                   <p>{artwork.artist.username}</p>
-                </div>
+                </Link>
               </div>
 
               <div className="flex flex-col gap-2">
@@ -134,7 +137,7 @@ function ArtworkDetails() {
                     return (
                       <span
                         key={tag._id}
-                        className="italic font-semibold text-brand hover:text-brand-hover"
+                        className="italic font-semibold text-accent-strong hover:text-accent-dark"
                       >
                         #{tag.tagName}
                       </span>
@@ -166,18 +169,17 @@ function ArtworkDetails() {
                           <div className="flex flex-col gap-4 items-center justify-center col-span-1 p-8 bg-white border-2 border-accent-light border-dashed rounded h-72">
                             <img src={commissionImg} alt="" className="w-1/4" />
                             <div className="flex flex-col gap-2 items-center justify-center">
-                              <h3 className="text-center font-semibold text-lg">
-                                Create your first commission
-                              </h3>
+                              {/* <h3 className="text-center font-semibold text-lg">
+                                
+                              </h3> */}
                               <p className="text-sm text-gray text-center">
-                                Show off your best work and bundle it into a
-                                commission.
+                                This artwork is not part of a commission yet!
                               </p>
                             </div>
                             <Link to="/newCommission">
                               <Button
                                 size="small"
-                                label="Get started"
+                                label="Create commission"
                                 rounded
                                 className="bg-brand border-brand hover:border-opacity-0 hover:bg-brand-hover"
                               />
