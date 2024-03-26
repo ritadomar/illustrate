@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { TypeAnimation } from 'react-type-animation';
 import { Button } from 'primereact/button';
+import { Avatar } from 'primereact/avatar';
 
 function Home() {
   const [artworks, setArtworks] = useState([]);
@@ -81,11 +82,22 @@ function Home() {
                     </div>
                   </div>
                   <div className="flex items-center gap-1">
-                    <img
-                      src={artwork.artist.avatarUrl}
-                      alt=""
-                      className="aspect-square object-cover rounded-full w-6 h-6 border-2 border-brand-hover"
-                    />
+                    {artwork.artist.avatarUrl && (
+                      <Avatar
+                        image={artwork.artist.avatarUrl}
+                        size="small"
+                        shape="circle"
+                        className="object-cover border-2 border-brand w-8 h-8 ml-1"
+                      />
+                    )}
+                    {!artwork.artist.avatarUrl && (
+                      <Avatar
+                        label={artwork.artist.username[0].toUpperCase()}
+                        size="small"
+                        shape="circle"
+                        className="object-cover border-2 border-brand w-8 h-8 ml-1"
+                      />
+                    )}
                     <p>{artwork.artist.username}</p>
                   </div>
                 </article>

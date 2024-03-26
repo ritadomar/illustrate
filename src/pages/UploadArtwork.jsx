@@ -10,7 +10,8 @@ import uploadImg from '../assets/upload.svg';
 import { Button } from 'primereact/button';
 import { InputText } from 'primereact/inputtext';
 import { InputTextarea } from 'primereact/inputtextarea';
-import { Chips } from 'primereact/chips';
+import { InputNumber } from 'primereact/inputnumber';
+import ErrorMessage from '../components/ErrorMessage';
 
 function UploadArt() {
   const [title, setTitle] = useState('');
@@ -22,8 +23,15 @@ function UploadArt() {
   const [commissions, setCommissions] = useState([]);
   const [displayArtwork, setDisplayArtwork] = useState('');
   const [artist, setArtist] = useState(null);
+  const [error, setError] = useState(null);
 
   const { isSigning, setIsSigning } = useContext(AuthContext);
+
+  const navigate = useNavigate();
+
+  const goBack = () => {
+    navigate('/');
+  };
 
   useEffect(() => {
     setIsSigning(true);
@@ -38,8 +46,6 @@ function UploadArt() {
   const [selectedCommissions, setSelectedCommissions] = useState([]);
 
   const { user } = useContext(AuthContext);
-
-  const navigate = useNavigate();
 
   const getArtist = async () => {
     try {
@@ -145,6 +151,7 @@ function UploadArt() {
       await addArtwork(requestBody);
       navigate(`/${user.username}`);
     } catch (error) {
+      setError(error.response.data.message);
       console.log;
     }
   };
@@ -155,71 +162,13 @@ function UploadArt() {
         <h1 hidden>Upload Artwork</h1>
         <form
           onSubmit={handleSubmit}
-          className="grid grid-cols-12 gap-10 h-full"
+          className="grid grid-cols-12 gap-4 h-full"
         >
-          {/* <label htmlFor="artwork"> */}
-          {/* {artwork && (
-            <>
-              Edit artwork:
-              <img src={displayArtwork} alt="" width={'100%'} />
-            </>
-          )} */}
-
-          {/* Artwork */}
-          <div className="col-span-6 border-2 border-dashed border-accent rounded flex flex-col justify-center items-center p-4 w-full h-full">
-            {!artwork && (
-              <label
-                htmlFor="artwork"
-                className=" group cursor-pointer flex flex-col gap-2 items-center font-semibold mb-2 hover:text-brand-hover"
-              >
-                <img src={uploadImg} className="w-32 mb-8" alt="" />
-                <span className="underline underline-offset-4 decoration-brand decoration-2">
-                  Upload artwork
-                </span>
-                <span className="mb-2 text-sm text-black-a-5 font-normal">
-                  We support <span className="font-semibold">JPEG</span>,{' '}
-                  <span className="font-semibold">PNG</span>,{' '}
-                  <span className="font-semibold">GIF</span>,{' '}
-                  <span className="font-semibold">TIFF</span> and{' '}
-                  <span className="font-semibold">PNG</span>
-                </span>
-              </label>
-            )}
-            {artwork && (
-              <label
-                htmlFor="artwork"
-                className=" group cursor-pointer flex flex-col gap-2 items-center justify-center font-semibold hover:text-brand-hover h-full w-full"
-              >
-                <img
-                  src={displayArtwork}
-                  alt=""
-                  className="cursor-pointer artwork-img"
-                />
-              </label>
-            )}
-
-            <input
-              type="file"
-              name="artwork"
-              id="artwork"
-              onChange={handleArtwork}
-              className="uploadArtwork cursor-pointer"
-              hidden
-            />
-          </div>
-
-          {/* {!artwork && 'Upload your artwork:'}
-            <input
-              type="file"
-              name="artwork"
-              id="artwork"
-              onChange={handleArtwork}
-            />
-          </label> */}
-          <div className="col-span-6 h-screen flex flex-col items-center pt-16 gap-2">
+          <div className="col-span-6 flex flex-col gap-4">
+            {/* Title */}
             <label
               htmlFor="title"
-              className="flex flex-col w-8/12 font-semibold gap-1"
+              className="w-full font-semibold flex flex-col gap-2"
             >
               Title
               <InputText
@@ -230,7 +179,7 @@ function UploadArt() {
                 value={title}
                 onChange={({ target }) => setTitle(target.value)}
                 placeholder="Artwork title"
-                className="focus:border-brand focus:shadow-[0_0_0_1px_rgb(204,32,92)] hover:border-brand shadow-none valid:shadow-[0_0_0_1px_rgb(204,32,92)] valid:border-brand"
+                className="focus:border-brand focus:shadow-[0_0_0_1px_rgb(204,32,92)] hover:border-brand shadow-none valid:shadow-[0_0_0_1px_rgb(204,32,92)] valid:border-brand w-full"
                 pt={{
                   root: {
                     className:
@@ -239,79 +188,191 @@ function UploadArt() {
                 }}
               />
             </label>
-            <label
-              htmlFor="description"
-              className="flex flex-col w-6/12 font-semibold gap-1"
-            >
-              Description
-              <InputTextarea
-                autoResize
-                name="description"
-                id="description"
-                value={description}
-                onChange={({ target }) => setDescription(target.value)}
-                placeholder="Insert artwork description"
-                className="portfolio focus:border-brand focus:shadow-[0_0_0_1px_rgb(204,32,92)] hover:border-brand shadow-none valid:shadow-[0_0_0_1px_rgb(204,32,92)] valid:border-brand"
-                pt={{
-                  root: {
-                    className:
-                      'text-black font-medium filled:border-2 placeholder:text-black/30 placeholder:font-normal',
-                  },
-                }}
-              />
-            </label>
-            <label
-              htmlFor="tags"
-              className="flex flex-col w-6/12 font-semibold gap-1"
-            >
-              Tags
-              <InputTag tags={inputTags} setTags={setInputTags} />
-            </label>
-            <label htmlFor="time">
-              Time spent on piece (hours):
+            <div className=" border-2 border-dashed border-accent rounded flex flex-col justify-center items-center p-4 w-full h-full">
+              {/* Artwork */}
+              {!artwork && (
+                <label
+                  htmlFor="artwork"
+                  className=" group cursor-pointer flex flex-col gap-2 items-center font-semibold mb-2 hover:text-brand-hover"
+                >
+                  <img src={uploadImg} className="w-32 mb-8" alt="" />
+                  <span className="underline underline-offset-4 decoration-brand decoration-2">
+                    Upload artwork
+                  </span>
+                  <span className="mb-2 text-sm text-black-a-5 font-normal text-center">
+                    We support <span className="font-semibold">JPEG</span>,{' '}
+                    <span className="font-semibold">PNG</span>,{' '}
+                    <span className="font-semibold">GIF</span>,{' '}
+                    <span className="font-semibold">TIFF</span> and{' '}
+                    <span className="font-semibold">PNG</span> <br />
+                    Make sure your file is under{' '}
+                    <span className="font-semibold">10MB</span>
+                  </span>
+                </label>
+              )}
+              {artwork && (
+                <label
+                  htmlFor="artwork"
+                  className=" group cursor-pointer flex flex-col gap-2 items-center justify-center font-semibold hover:text-brand-hover h-full w-full"
+                >
+                  <img
+                    src={displayArtwork}
+                    alt=""
+                    className="cursor-pointer artwork-img"
+                  />
+                  <span className="size-0 text-white group-hover:text-brand group-hover:size-auto">
+                    Replace Image
+                  </span>
+                </label>
+              )}
               <input
-                type="number"
-                name="time"
-                id="time"
-                value={time}
-                onChange={({ target }) => {
-                  setTime(target.value);
-                  handleCost(target.value);
-                }}
-                placeholder="10h"
+                type="file"
+                name="artwork"
+                id="artwork"
+                onChange={handleArtwork}
+                className="uploadArtwork cursor-pointer"
+                hidden
               />
-              <p>Artwork cost: {time && `${cost}€`}</p>
-            </label>
+            </div>
+          </div>
 
-            {commissionsList && commissionsList.length > 0 && (
-              <>
-                <h2>Add to commissions:</h2>
-                {commissionsList.map(commission => {
-                  return (
-                    <label className="radio" key={commission._id}>
-                      {
-                        <input
-                          type="checkbox"
-                          name="commission"
-                          value={commission._id}
-                          checked={selectedCommissions.includes(commission._id)}
-                          onChange={handleCheck}
-                        />
-                      }
-                      {commission.exampleArtwork.length > 0 && (
-                        <img
-                          src={commission.exampleArtwork[0].artworkUrl}
-                          alt=""
-                          width={100}
-                        />
-                      )}
-                      {commission.title}
-                    </label>
-                  );
-                })}
-              </>
-            )}
-            <button type="submit">Upload artwork</button>
+          <div className="col-span-6 h-full flex flex-col items-end justify-between">
+            {error && <ErrorMessage error={error} className="w-6/12" />}
+
+            <div className="flex flex-col gap-4 ">
+              {/* Description */}
+              <label
+                htmlFor="description"
+                className="flex flex-col w-11/12 font-semibold gap-1"
+              >
+                Description
+                <InputTextarea
+                  name="description"
+                  id="description"
+                  value={description}
+                  onChange={({ target }) => setDescription(target.value)}
+                  placeholder="Insert artwork description"
+                  className=" focus:border-brand focus:shadow-[0_0_0_1px_rgb(204,32,92)] hover:border-brand shadow-none valid:shadow-[0_0_0_1px_rgb(204,32,92)] valid:border-brand w-full portfolio"
+                  pt={{
+                    root: {
+                      className:
+                        'portfolio text-black font-medium filled:border-2 placeholder:text-black/30 placeholder:font-normal w-full',
+                    },
+                  }}
+                />
+              </label>
+
+              {/* Tags */}
+              <label
+                htmlFor="tags"
+                className="flex flex-col w-11/12 font-semibold gap-1"
+              >
+                Tags
+                <InputTag tags={inputTags} setTags={setInputTags} />
+              </label>
+
+              {/* Time */}
+              <label
+                htmlFor="time"
+                className="flex flex-col w-11/12 font-semibold gap-1"
+              >
+                Time spent on piece (hours){' '}
+                <span className="font-normal mb-2 text-sm text-black-a-5 font-normal">
+                  Please take into consideration time spent researching and
+                  talking with your client, if it applies
+                </span>
+                <div className="grid grid-cols-2 gap-4">
+                  <InputNumber
+                    name="time"
+                    id="time"
+                    required
+                    value={time}
+                    onChange={e => {
+                      setTime(e.value);
+                      handleCost(e.value);
+                    }}
+                    placeholder="10h"
+                    min={1}
+                    className="w-3/5"
+                    pt={{
+                      root: {
+                        className: 'w-full grow-0',
+                      },
+                      input: {
+                        className: 'w-full grow-0',
+                      },
+                    }}
+                  />
+
+                  <p className="flex items-center gap-2 font-normal text-gray">
+                    Artwork cost:{' '}
+                    {!time && (
+                      <span className="text-gray font-semibold">0€</span>
+                    )}
+                    {time && (
+                      <span className="text-black font-semibold">{`${cost}€`}</span>
+                    )}
+                  </p>
+                </div>
+              </label>
+
+              {commissionsList && commissionsList.length > 0 && (
+                <>
+                  <h2>Add to commissions:</h2>
+                  {commissionsList.map(commission => {
+                    return (
+                      <label className="radio" key={commission._id}>
+                        {
+                          <input
+                            type="checkbox"
+                            name="commission"
+                            value={commission._id}
+                            checked={selectedCommissions.includes(
+                              commission._id
+                            )}
+                            onChange={handleCheck}
+                          />
+                        }
+                        {commission.exampleArtwork.length > 0 && (
+                          <img
+                            src={commission.exampleArtwork[0].artworkUrl}
+                            alt=""
+                            width={100}
+                          />
+                        )}
+                        {commission.title}
+                      </label>
+                    );
+                  })}
+                </>
+              )}
+            </div>
+            <div className="flex items-center gap-4 mt-4">
+              <Button
+                label="Cancel"
+                severity="secondary"
+                text
+                rounded
+                className="text-grey hover:text-brand-hover hover:bg-brand/0"
+                onClick={goBack}
+              />
+              {(time === null || time === 0 || title.length <= 0) && (
+                <Button
+                  label="Upload Artwork"
+                  rounded
+                  className="bg-black-a-5/30 border-black-a-5/0 hover:border-opacity-0 hover:bg-brand-hover"
+                  disabled
+                />
+              )}
+              {time && title && (
+                <Button
+                  label="Upload Artwork"
+                  rounded
+                  className="bg-brand border-brand hover:border-opacity-0 hover:bg-brand-hover"
+                  type="submit"
+                />
+              )}
+            </div>
           </div>
         </form>
       </main>

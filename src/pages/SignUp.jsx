@@ -10,6 +10,7 @@ import buyersImage from '../assets/oc-hi-five.svg';
 import { InputText } from 'primereact/inputtext';
 import { Password } from 'primereact/password';
 import { InputNumber } from 'primereact/inputnumber';
+import ErrorMessage from '../components/ErrorMessage';
 
 // import { avgSalary as getAvgSalary } from '../api/ine.api';
 
@@ -487,8 +488,8 @@ function SignUp() {
                     id="rate"
                     required
                     value={rate}
-                    onValueChange={e => {
-                      setRate(e.target.value);
+                    onChange={e => {
+                      setRate(e.value);
                     }}
                     placeholder={avgSalary + '€'}
                     // showButtons
@@ -543,8 +544,8 @@ function SignUp() {
               </div>
             </>
           )}
+          {error && <ErrorMessage error={error} className="w-6/12" />}
         </form>
-        {error && <p>{error}</p>}
       </div>
     </main>
   );

@@ -7,6 +7,7 @@ import signupImage from '../assets/signup.jpg';
 import { InputText } from 'primereact/inputtext';
 import { Password } from 'primereact/password';
 import { Button } from 'primereact/button';
+import ErrorMessage from '../components/ErrorMessage';
 
 function LogIn() {
   const { isLoggedIn, storeToken, authenticateUser, isSigning, setIsSigning } =
@@ -121,6 +122,7 @@ function LogIn() {
             />
           </label>
 
+          {error && <ErrorMessage error={error} className="w-6/12" />}
           <div className="flex items-center gap-4">
             <Button
               label="Back"
@@ -138,7 +140,6 @@ function LogIn() {
             />
           </div>
         </form>
-        {error && <p>{error}</p>}
       </div>
     </main>
   );

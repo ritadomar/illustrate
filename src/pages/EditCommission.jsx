@@ -4,6 +4,7 @@ import { AuthContext } from '../context/auth.context';
 import InputTag from '../components/InputTag';
 import { getProfile } from '../api/profiles.api';
 import { getCommission, updateCommission } from '../api/commission.api';
+import ErrorMessage from '../components/ErrorMessage';
 
 function EditCommission() {
   const [title, setTitle] = useState('');
@@ -13,6 +14,7 @@ function EditCommission() {
   //   const [cost, setCost] = useState(0);
   const [exampleArtwork, setExampleArtwork] = useState([]);
   const [artist, setArtist] = useState(null);
+  const [error, setError] = useState(null);
 
   // to display artwork list
   // const [artworkList, setArtworkList] = useState(null);
@@ -107,6 +109,8 @@ function EditCommission() {
       await updateCommission(requestBody);
       navigate(`/${user.username}`);
     } catch (error) {
+      setError(error.response.data.message);
+
       console.log;
     }
   };
@@ -178,6 +182,7 @@ function EditCommission() {
 
         <button type="submit">Save Changes</button>
       </form>
+      {error && <ErrorMessage error={error} className="w-6/12" />}
     </main>
   );
 }

@@ -4,6 +4,7 @@ import { AuthContext } from '../context/auth.context';
 import InputTag from '../components/InputTag';
 import { getProfile } from '../api/profiles.api';
 import { addCommission } from '../api/commission.api';
+import ErrorMessage from '../components/ErrorMessage';
 
 function CreateCommission() {
   const [title, setTitle] = useState('');
@@ -13,6 +14,7 @@ function CreateCommission() {
   //   const [cost, setCost] = useState(0);
   const [exampleArtwork, setExampleArtwork] = useState([]);
   const [artist, setArtist] = useState(null);
+  const [error, setError] = useState(null);
 
   const { user } = useContext(AuthContext);
 
@@ -71,6 +73,8 @@ function CreateCommission() {
       await addCommission(requestBody);
       navigate(`/${user.username}`);
     } catch (error) {
+      setError(error.response.data.message);
+
       console.log;
     }
   };
@@ -157,6 +161,7 @@ function CreateCommission() {
 
           <button type="submit">Create commission</button>
         </form>
+        {error && <ErrorMessage error={error} />}
       </main>
     </>
   );

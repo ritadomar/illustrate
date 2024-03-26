@@ -24,6 +24,7 @@ export default {
       'accent-dark': '#CC3A20',
       gray: '#978C8E',
       'gray-darker': '#73686a',
+      red: '#E83939',
     },
     extend: {
       fontFamily: {
