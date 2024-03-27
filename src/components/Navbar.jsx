@@ -12,13 +12,12 @@ function Navbar() {
   return (
     <nav className="Navbar px-10 py-4 absolute w-full h-20">
       {/* home */}
-      <Link to="/" className="h-full">
+      <Link to="/" className="h-full z-10">
         {/* change to logo */}
         <img src={logo} alt="illlu logo" className="h-full" />
       </Link>
-      <CurrencyDropdown />
       <IsSigning>
-        <div className="nav-links font-medium">
+        <div className="absolute inset-x-0 top-7 nav-links font-medium">
           <Link to="/explore" className="hover:text-brand-hover">
             Explore
           </Link>
@@ -27,27 +26,30 @@ function Navbar() {
           </Link>
         </div>
         {/* Protect */}
-        {!isLoggedIn && (
-          <div className="user-links">
-            <Link to="/login">
-              <Button
-                label="Log In"
-                severity="secondary"
-                text
-                rounded
-                className="hover:text-brand-hover hover:bg-brand/0 text-grey"
-              />
-            </Link>
-            <Link to="/signup">
-              <Button
-                label="Sign Up"
-                rounded
-                className="bg-brand border-brand hover:border-opacity-0 hover:bg-brand-hover"
-              />
-            </Link>
-          </div>
-        )}
-        {isLoggedIn && <ProfileMenu />}
+        <div className="flex gap-2 items-center justify-end z-10">
+          <CurrencyDropdown />
+          {!isLoggedIn && (
+            <div className="user-links">
+              <Link to="/login">
+                <Button
+                  label="Log In"
+                  severity="secondary"
+                  text
+                  rounded
+                  className="hover:text-brand-hover hover:bg-brand/0 text-grey"
+                />
+              </Link>
+              <Link to="/signup">
+                <Button
+                  label="Sign Up"
+                  rounded
+                  className="bg-brand border-brand hover:border-opacity-0 hover:bg-brand-hover"
+                />
+              </Link>
+            </div>
+          )}
+          {isLoggedIn && <ProfileMenu />}
+        </div>
       </IsSigning>
     </nav>
   );

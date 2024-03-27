@@ -1,10 +1,9 @@
 import { Dropdown } from 'primereact/dropdown';
-import { useContext, useState, useEffect } from 'react';
+import { useContext } from 'react';
 import { CurrencyContext } from '../context/currency.context';
 
 function CurrencyDropdown() {
-  const { currency, setCurrency, exchangeRates, setExchangeRates } =
-    useContext(CurrencyContext);
+  const { currency, setCurrency, exchangeRates } = useContext(CurrencyContext);
 
   return (
     <>
@@ -14,8 +13,7 @@ function CurrencyDropdown() {
           value={currency}
           onChange={e => setCurrency(e.value)}
           options={exchangeRates}
-          optionLabel="name"
-          className="w-full md:w-14rem"
+          optionLabel="displayName"
         />
       )}
     </>

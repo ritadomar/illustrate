@@ -524,7 +524,7 @@ function SignUp() {
                     className="text-grey hover:text-brand-hover hover:bg-brand/0"
                     onClick={previousStep}
                   />
-                  {(rate === null || rate === 0) && (
+                  {(rate === null || rate === 0 || rate.length <= 0) && (
                     <Button
                       label="Register"
                       rounded
