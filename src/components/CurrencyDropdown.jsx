@@ -7,7 +7,6 @@ function CurrencyDropdown() {
 
   return (
     <>
-      {console.log(currency, exchangeRates)}
       {currency && exchangeRates && (
         <Dropdown
           value={currency}

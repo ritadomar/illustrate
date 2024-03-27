@@ -143,8 +143,11 @@ function CommissionDetails() {
                 item={itemTemplate}
                 thumbnail={thumbnailTemplate}
                 showItemNavigators
-                className="col-span-7 "
+                className="col-span-7 rounded"
                 pt={{
+                  content: {
+                    className: 'rounded overflow-hidden',
+                  },
                   thumbnailContainer: {
                     className: 'bg-accent-light/20',
                   },
