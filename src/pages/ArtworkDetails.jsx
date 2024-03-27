@@ -9,6 +9,7 @@ import commissionImg from '../assets/commission.svg';
 import timeImg from '../assets/time.svg';
 import { Image } from 'primereact/image';
 import { CurrencyContext } from '../context/currency.context';
+import ReadMoreArea from '@foxeian/react-read-more';
 
 function ArtworkDetails() {
   const [artwork, setArtwork] = useState(null);
@@ -141,8 +142,14 @@ function ArtworkDetails() {
               </div>
 
               <div className="flex flex-col gap-2">
-                <p>{artwork.description}</p>
-                <div className="flex flex-wrap gap-2">
+                <ReadMoreArea
+                  wordsLimit={700}
+                  buttonClassName="hover:!text-brand-hover !no-underline"
+                  buttonStyle={{ color: '#CC205C' }}
+                >
+                  {artwork.description}
+                </ReadMoreArea>
+                <div className="flex flex-wrap gap-2 ">
                   {artwork.tags.map(tag => {
                     return (
                       <span
