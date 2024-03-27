@@ -2,6 +2,7 @@ import { useState, useEffect, useContext } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../context/auth.context';
+import { CurrencyContext } from '../context/currency.context';
 import { getCommission, deleteCommission } from '../api/commission.api';
 import { Button } from 'primereact/button';
 import { Avatar } from 'primereact/avatar';
@@ -13,6 +14,8 @@ function CommissionDetails() {
   const [images, setImages] = useState(null);
 
   const { user, isLoggedIn } = useContext(AuthContext);
+
+  const { currency, currencySymbol } = useContext(CurrencyContext);
 
   const { commissionId, username } = useParams();
   const navigate = useNavigate();
@@ -175,7 +178,8 @@ function CommissionDetails() {
                     <p>
                       From{' '}
                       <span className="text-2xl text-black font-semibold">
-                        {Math.round(commission.cost)}€
+                        {currencySymbol}
+                        {Math.round(commission.cost * currency.exchangeRate)}
                       </span>
                     </p>
                   </div>

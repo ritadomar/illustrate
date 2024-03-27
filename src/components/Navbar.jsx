@@ -5,6 +5,7 @@ import ProfileMenu from './ProfileMenu';
 import logo from '../assets/logo-light.svg';
 import { Button } from 'primereact/button';
 import IsSigning from './IsSigning';
+import CurrencyDropdown from './CurrencyDropdown';
 
 function Navbar() {
   const { isLoggedIn } = useContext(AuthContext);
@@ -15,7 +16,7 @@ function Navbar() {
         {/* change to logo */}
         <img src={logo} alt="illlu logo" className="h-full" />
       </Link>
-
+      <CurrencyDropdown />
       <IsSigning>
         <div className="nav-links font-medium">
           <Link to="/explore" className="hover:text-brand-hover">

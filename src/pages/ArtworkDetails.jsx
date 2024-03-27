@@ -8,12 +8,14 @@ import { Avatar } from 'primereact/avatar';
 import commissionImg from '../assets/commission.svg';
 import timeImg from '../assets/time.svg';
 import { Image } from 'primereact/image';
+import { CurrencyContext } from '../context/currency.context';
 
 function ArtworkDetails() {
   const [artwork, setArtwork] = useState(null);
   const [commissionCover, setCommissionCover] = useState([]);
 
   const { user } = useContext(AuthContext);
+  const { currency, currencySymbol } = useContext(CurrencyContext);
 
   const { artworkId, username } = useParams();
   const navigate = useNavigate();
@@ -218,7 +220,11 @@ function ArtworkDetails() {
                                     {commission.title}
                                   </h3>
                                   <p className="text-md text-black font-semibold text-left">
-                                    From €{commission.cost}
+                                    <span className="font-normal">From</span>{' '}
+                                    {currencySymbol}
+                                    {Math.round(
+                                      commission.cost * currency.exchangeRate
+                                    )}
                                   </p>
                                 </div>
                               </article>
