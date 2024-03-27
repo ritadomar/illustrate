@@ -8,6 +8,8 @@ import { Button } from 'primereact/button';
 import { Avatar } from 'primereact/avatar';
 import { Galleria } from 'primereact/galleria';
 import { ScrollPanel } from 'primereact/scrollpanel';
+import { Image } from 'primereact/image';
+import ReadMoreArea from '@foxeian/react-read-more';
 
 function CommissionDetails() {
   const [commission, setCommission] = useState(null);
@@ -47,10 +49,17 @@ function CommissionDetails() {
 
   const itemTemplate = item => {
     return (
-      <img
+      <Image
         src={item.artworkUrl}
         alt={item.title}
-        className="w-full h-[70vh] object-contain"
+        imageClassName="w-full h-[70vh] object-contain"
+        // className="w-full h-[70vh] object-contain"
+        preview
+        pt={{
+          preview: {
+            className: 'bg-white',
+          },
+        }}
         // style={{ width: '100%', maxHeight: '70vh', objectFit: 'contain' }}
       />
     );
@@ -152,7 +161,7 @@ function CommissionDetails() {
                     className: 'bg-accent-light/20',
                   },
                   itemContainer: {
-                    className: 'bg-accent-light/20 pt-4',
+                    className: 'bg-accent-light/20 py-4 px-16',
                   },
                   previousItemIcon: {
                     className: 'text-accent-strong !w-6',
@@ -175,7 +184,7 @@ function CommissionDetails() {
               <header className="px-4 pt-4">
                 <div className="flex flex-col gap-2">
                   <div className="flex justify-between gap-4 items-center">
-                    <h1 className="text-6xl font-semibold">
+                    <h1 className="text-4xl font-semibold">
                       {commission.title}
                     </h1>
                     <p>
@@ -193,17 +202,15 @@ function CommissionDetails() {
                     {commission.artist.avatarUrl && (
                       <Avatar
                         image={commission.artist.avatarUrl}
-                        size="medium"
                         shape="circle"
-                        className="object-cover border-2 border-brand"
+                        className="object-cover border-2 border-brand box-border"
                       />
                     )}
                     {!commission.artist.avatarUrl && (
                       <Avatar
                         label={commission.artist.username[0].toUpperCase()}
-                        size="medium"
                         shape="circle"
-                        className="object-cover border-2 border-brand"
+                        className="object-cover border-2 border-brand box-border"
                       />
                     )}
                     <p>{commission.artist.username}</p>
@@ -213,9 +220,14 @@ function CommissionDetails() {
 
               <div className="flex flex-col gap-2 flex-grow px-4">
                 <h2 className="text-2xl font-semibold">Commission details</h2>
-                <ScrollPanel className="w-full flex-grow">
-                  <p className="font-['Work-Sans']">{commission.description}</p>
-                </ScrollPanel>
+                <ReadMoreArea
+                  wordsLimit={500}
+                  buttonClassName="hover:!text-brand-hover !no-underline"
+                  buttonStyle={{ color: '#CC205C' }}
+                  textClassName="font-['Work-Sans']"
+                >
+                  {commission.description}
+                </ReadMoreArea>
               </div>
               <div className="flex flex-wrap gap-2 px-4">
                 {commission.tags.map(tag => {

@@ -115,7 +115,7 @@ function Home() {
           />
         </Link>
       </section>
-      <section className="hire flex flex-col items-center justify-center gap-8 bg-accent px-36 pt-10">
+      <section className="hire flex flex-col items-center justify-center gap-8 bg-accent px-20 pt-10">
         <h2 className="text-6xl font-semibold text-center font-display w-1/2">
           Find the perfect illustrator on illlu!
         </h2>
