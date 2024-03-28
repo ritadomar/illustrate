@@ -118,6 +118,9 @@ function LogIn() {
                   className:
                     'text-black font-medium filled:border-2 placeholder:text-black/30 placeholder:font-normal focus:border-brand focus:shadow-[0_0_0_1px_rgb(204,32,92)] hover:border-brand shadow-none w-full valid:shadow-[0_0_0_1px_rgb(204,32,92)] valid:border-brand',
                 },
+                panel: {
+                  className: 'hidden',
+                },
               }}
             />
           </label>

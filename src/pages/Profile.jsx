@@ -167,7 +167,7 @@ function Profile() {
                             <Link to="/upload">
                               <Button
                                 size="small"
-                                label="Upload artwork"
+                                label="Create commission"
                                 rounded
                                 className="bg-brand border-brand hover:border-opacity-0 hover:bg-brand-hover"
                               />

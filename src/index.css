@@ -89,6 +89,14 @@ a {
   border-color: white;
 }
 
+.dark button {
+  border-color: transparent;
+}
+
+.dark .p-button-secondary *:hover {
+  color: var(--accent-light) !important;
+}
+
 .dark a:hover {
   color: var(--accent-light) !important;
 }
