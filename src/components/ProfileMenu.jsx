@@ -117,7 +117,7 @@ function ProfileMenu() {
   return (
     <>
       {isLoggedIn && (
-        <>
+        <Link to={`/${user.username}`}>
           {user.avatarUrl && (
             <Avatar
               image={user.avatarUrl}
@@ -140,7 +140,7 @@ function ProfileMenu() {
               className="object-cover bg-accent-light border-4 border-brand"
             />
           )}
-        </>
+        </Link>
       )}
       <Menu
         model={items[0]}

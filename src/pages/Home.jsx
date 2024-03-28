@@ -68,7 +68,7 @@ function Home() {
               <Link
                 to={`/${artwork.artist.username}/artwork/${artwork._id}`}
                 key={artwork._id}
-                className="hover:text-brand-hover"
+                className="hover:text-brand-hover cursor-pointer"
               >
                 <article className="artwork flex flex-col gap-2 ">
                   <div
@@ -105,7 +105,7 @@ function Home() {
             );
           })}
         </div>
-        <Link to={'/signup'}>
+        <Link to={'/explore'}>
           <Button
             label="Explore illustrations"
             rounded

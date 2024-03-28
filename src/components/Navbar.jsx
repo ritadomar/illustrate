@@ -1,20 +1,29 @@
 import { Link } from 'react-router-dom';
 import { useContext } from 'react';
 import { AuthContext } from '../context/auth.context';
+import { StyleContext } from '../context/style.context';
 import ProfileMenu from './ProfileMenu';
 import logo from '../assets/logo-light.svg';
+import logoWhite from '../assets/logo-white.svg';
 import { Button } from 'primereact/button';
 import IsSigning from './IsSigning';
 import CurrencyDropdown from './CurrencyDropdown';
 
 function Navbar() {
   const { isLoggedIn } = useContext(AuthContext);
+  const { navTheme } = useContext(StyleContext);
+
   return (
-    <nav className="Navbar px-10 py-4 absolute w-full h-20">
+    <nav className={`Navbar px-10 py-4 absolute w-full h-20 ${navTheme}`}>
       {/* home */}
       <Link to="/" className="h-full z-10">
         {/* change to logo */}
-        <img src={logo} alt="illlu logo" className="h-full" />
+        {navTheme === 'light' && (
+          <img src={logo} alt="illlu logo" className="h-full" />
+        )}
+        {navTheme === 'dark' && (
+          <img src={logoWhite} alt="illlu logo" className="h-full" />
+        )}
       </Link>
       <IsSigning>
         <div className="absolute inset-x-0 top-7 nav-links font-medium">

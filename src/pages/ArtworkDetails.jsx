@@ -197,6 +197,7 @@ function ArtworkDetails() {
                             <Link
                               key={commission._id}
                               to={`/${artwork.artist.username}/commission/${commission._id}`}
+                              className="group cursor-pointer"
                             >
                               <article className="flex flex-col gap-2 items-start col-span-1 bg-white h-72">
                                 <img
@@ -205,7 +206,7 @@ function ArtworkDetails() {
                                   className="w-full h-3/4 object-cover object-top rounded"
                                 />
                                 <div className="flex flex-col gap-0 items-start">
-                                  <h3 className="text-left text-lg">
+                                  <h3 className="text-left text-lg group-hover:text-brand-hover">
                                     {commission.title}
                                   </h3>
                                   <p className="text-md text-black font-semibold text-left">

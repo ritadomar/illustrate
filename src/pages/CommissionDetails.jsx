@@ -7,7 +7,6 @@ import { getCommission, deleteCommission } from '../api/commission.api';
 import { Button } from 'primereact/button';
 import { Avatar } from 'primereact/avatar';
 import { Galleria } from 'primereact/galleria';
-import { ScrollPanel } from 'primereact/scrollpanel';
 import { Image } from 'primereact/image';
 import ReadMoreArea from '@foxeian/react-read-more';
 

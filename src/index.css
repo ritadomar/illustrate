@@ -83,6 +83,16 @@ a {
   box-sizing: border-box;
 }
 
+.dark * {
+  color: white !important;
+  stroke: white;
+  border-color: white;
+}
+
+.dark a:hover {
+  color: var(--accent-light) !important;
+}
+
 .p-avatar {
   background-color: var(--accent-light);
 }
@@ -292,4 +302,8 @@ input:focus {
   .p-dropdown-items
   .p-dropdown-item:not(.p-highlight):not(.p-disabled).p-focus {
   background-color: white;
+}
+
+.p-button-icon::before {
+  font-weight: 600;
 }
