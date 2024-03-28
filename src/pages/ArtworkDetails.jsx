@@ -100,14 +100,17 @@ function ArtworkDetails() {
             </div>
           )}
           <main className="grid grid-cols-12 pt-24 pl-10 pr-32 gap-4">
-            <div className="col-span-5">
+            <div className="col-span-5 ">
               <Image
                 src={artwork.artworkUrl}
-                className="rounded w-full"
+                className="rounded w-full "
                 imageClassName="w-full"
                 alt={artwork.title}
                 preview
                 pt={{
+                  root: {
+                    className: 'sticky top-4 overflow-hidden',
+                  },
                   preview: {
                     className: 'bg-white',
                   },
