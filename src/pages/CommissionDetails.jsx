@@ -74,27 +74,6 @@ function CommissionDetails() {
     );
   };
 
-  //   const populateCommissionCover = async () => {
-  //     try {
-  //       if (artwork) {
-  //         const commissionImages = artwork.commissions.map(commission => {
-  //           const cover = getArtwork(commission.exampleArtwork[0]);
-  //           return cover;
-  //         });
-
-  //         const response = await Promise.all(commissionImages);
-
-  //         const covers = response.map(cover => {
-  //           return cover.data.artworkUrl;
-  //         });
-  //         console.log('covers', covers);
-  //         setCommissionCover(covers);
-  //       }
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   };
-
   const handleDelete = async () => {
     try {
       await deleteCommission(commissionId);

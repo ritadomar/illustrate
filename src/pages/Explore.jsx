@@ -92,92 +92,99 @@ function Explore() {
 
   return (
     <main className="pt-32 px-10 flex flex-col gap-12 h-full">
-      <h1 className="hidden">Explore illustrations</h1>
-      <div className="flex gap-4 items-end justify-between">
-        <div className="flex flex-col gap-2">
-          <h2 className="font-semibold text-black text-xl">
-            Browse popular tags
-          </h2>
-          <div className="flex gap-4 items-center">
-            {popularTags &&
-              popularTags.map(tag => {
-                return (
-                  <Link to={`/explore/${tag.tagName}`} key={tag._id}>
-                    <span className="italic font-semibold text-accent-strong hover:text-accent-dark">
-                      #{tag.tagName}
-                    </span>
-                  </Link>
-                );
-              })}
+      <div className="grid grid-cols-12 gap-8">
+        <div className="flex flex-col gap-6 items-end col-span-3 ">
+          <div className="flex flex-col gap-2 w-full sticky top-6">
+            <h2 className="font-semibold text-black text-xl">Browse tags</h2>
+
+            <div className="flex flex-wrap gap-x-4 gap-y-2 items-center">
+              {popularTags &&
+                popularTags.map(tag => {
+                  return (
+                    <Link to={`/explore/${tag.tagName}`} key={tag._id}>
+                      <span className="italic font-semibold text-accent-strong hover:text-accent-dark">
+                        #{tag.tagName}
+                      </span>
+                    </Link>
+                  );
+                })}
+            </div>
+          </div>
+          {tags && (
+            <span className="w-full mb-3 sticky top-44">
+              <span className="pi pi-search text-black absolute ml-3 mt-[14px] z-10"></span>
+              <AutoComplete
+                value={selectedTag}
+                suggestions={filteredTags}
+                completeMethod={search}
+                onChange={handleSearch}
+                placeholder={'Search tags'}
+                className="p-inputtext-sm w-full"
+                pt={{
+                  root: {
+                    className: 'w-full',
+                  },
+                }}
+              />
+            </span>
+          )}
+        </div>
+        <div className="w-full mb-4 col-span-9">
+          <h1 className="text-3xl font-semibold text-black mb-8">
+            Explore illustrations
+          </h1>
+          <div className="grid md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-6 w-full">
+            {filteredArtwork.map(artwork => {
+              return (
+                <DeferredContent key={artwork._id}>
+                  <article className="artwork flex flex-col gap-2 mb-4">
+                    <Link
+                      to={`/${artwork.artist.username}/artwork/${artwork._id}`}
+                      className="hover:text-brand-hover cursor-pointer"
+                    >
+                      <div
+                        style={{
+                          '--image-url': `url(${artwork.artworkUrl})`,
+                        }}
+                        className="bg-[image:var(--image-url)]  bg-no-repeat bg-cover aspect-square rounded  bg-white border-2 border-accent-light"
+                      >
+                        <div className="flex p-4 items-end w-full h-full hover:bg-gradient-to-t from-black-a-5 artwork-overlay rounded">
+                          <h3 className="text-lg artwork-title">
+                            {artwork.title}
+                          </h3>
+                        </div>
+                      </div>
+                    </Link>
+                    <Link
+                      to={`/${artwork.artist.username}/`}
+                      className="hover:text-brand-hover cursor-pointer z-10"
+                    >
+                      <div className="flex items-center gap-1">
+                        {artwork.artist.avatarUrl && (
+                          <Avatar
+                            image={artwork.artist.avatarUrl}
+                            size="small"
+                            shape="circle"
+                            className="object-cover border-2 border-brand w-6 h-6"
+                          />
+                        )}
+                        {!artwork.artist.avatarUrl && (
+                          <Avatar
+                            label={artwork.artist.username[0].toUpperCase()}
+                            size="small"
+                            shape="circle"
+                            className="object-cover border-2 border-brand w-6 h-6"
+                          />
+                        )}
+                        <p>{artwork.artist.username}</p>
+                      </div>
+                    </Link>
+                  </article>
+                </DeferredContent>
+              );
+            })}
           </div>
         </div>
-        {tags && (
-          <span className="flex-grow">
-            <span className="pi pi-search text-black absolute ml-3 mt-[14px] z-10"></span>
-            <AutoComplete
-              value={selectedTag}
-              suggestions={filteredTags}
-              completeMethod={search}
-              onChange={handleSearch}
-              placeholder={'Search tags'}
-              className="p-inputtext-sm w-full"
-              pt={{
-                root: {
-                  className: 'w-full',
-                },
-              }}
-            />
-          </span>
-        )}
-      </div>
-      <div className="grid md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-6 w-full">
-        {filteredArtwork.map(artwork => {
-          return (
-            <DeferredContent key={artwork._id}>
-              <article className="artwork flex flex-col gap-2 mb-4">
-                <Link
-                  to={`/${artwork.artist.username}/artwork/${artwork._id}`}
-                  className="hover:text-brand-hover cursor-pointer"
-                >
-                  <div
-                    style={{
-                      '--image-url': `url(${artwork.artworkUrl})`,
-                    }}
-                    className="bg-[image:var(--image-url)]  bg-no-repeat bg-cover aspect-square rounded  bg-white border-2 border-accent-light"
-                  >
-                    <div className="flex p-4 items-end w-full h-full hover:bg-gradient-to-t from-black-a-5 artwork-overlay rounded">
-                      <h3 className="text-lg artwork-title">{artwork.title}</h3>
-                    </div>
-                  </div>
-                </Link>
-                <Link
-                  to={`/${artwork.artist.username}/`}
-                  className="hover:text-brand-hover cursor-pointer z-10"
-                >
-                  <div className="flex items-center gap-1">
-                    {artwork.artist.avatarUrl && (
-                      <Avatar
-                        image={artwork.artist.avatarUrl}
-                        size="small"
-                        shape="circle"
-                        className="object-cover border-2 border-brand w-6 h-6"
-                      />
-                    )}
-                    {!artwork.artist.avatarUrl && (
-                      <Avatar
-                        label={artwork.artist.username[0].toUpperCase()}
-                        size="small"
-                        shape="circle"
-                        className="object-cover border-2 border-brand w-6 h-6"
-                      />
-                    )}
-                    <p>{artwork.artist.username}</p>
-                  </div>
-                </Link>
-              </article>
-            </DeferredContent>
-          );
-        })}
       </div>
     </main>
   );

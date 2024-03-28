@@ -5,6 +5,9 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Home from './pages/Home';
 import Explore from './pages/Explore';
+import ExploreTag from './pages/ExploreTag';
+import FindCommissions from './pages/FindCommissions';
+import FindCommissionsTag from './pages/FindCommissionsTag';
 
 // Auth
 import SignUp from './pages/SignUp';
@@ -37,7 +40,9 @@ function App() {
         {/* Home */}
         <Route path="/" element={<Home />} />
         <Route path="/explore" element={<Explore />} />
-        {/* <Route path="/find" element={<FindCommissions />} /> */}
+        <Route path="/explore/:tagName" element={<ExploreTag />} />
+        <Route path="/find" element={<FindCommissions />} />
+        <Route path="/find/:tagName" element={<FindCommissionsTag />} />
 
         {/* Account */}
         <Route

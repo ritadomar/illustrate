@@ -142,6 +142,15 @@ function ArtworkDetails() {
                   )}
                   <p>{artwork.artist.username}</p>
                 </Link>
+                {user && user.username === username && (
+                  <div className="flex items-center gap-2 mt-2">
+                    <p className="text-gray">Artwork cost:</p>
+                    <p className="font-medium">
+                      {currencySymbol}
+                      {Math.round(artwork.cost * currency.exchangeRate)}
+                    </p>
+                  </div>
+                )}
               </div>
 
               <div className="flex flex-col gap-2">
