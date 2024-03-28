@@ -158,6 +158,8 @@ function ArtworkDetails() {
                   wordsLimit={700}
                   buttonClassName="hover:!text-brand-hover !no-underline"
                   buttonStyle={{ color: '#CC205C' }}
+                  textClassName="font-['Work-Sans'] wrap-paragraph"
+                  className="wrap-paragraph"
                 >
                   {artwork.description}
                 </ReadMoreArea>

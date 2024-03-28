@@ -358,3 +358,7 @@ input:focus {
   width: 100%;
   padding-left: 40px;
 }
+
+.wrap-paragraph {
+  white-space: pre-wrap;
+}

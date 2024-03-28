@@ -202,7 +202,8 @@ function CommissionDetails() {
                   wordsLimit={500}
                   buttonClassName="hover:!text-brand-hover !no-underline"
                   buttonStyle={{ color: '#CC205C' }}
-                  textClassName="font-['Work-Sans']"
+                  textClassName="font-['Work-Sans'] wrap-paragraph"
+                  className="wrap-paragraph"
                 >
                   {commission.description}
                 </ReadMoreArea>
@@ -224,13 +225,13 @@ function CommissionDetails() {
                 {isLoggedIn && (
                   <>
                     <p>Ready to make a commission?</p>
-                    <div>
+                    <a href={`mailto:${commission.artist.email}`}>
                       <Button
                         label={`Contact ${commission.artist.username}`}
                         rounded
                         className="bg-brand border-brand hover:border-opacity-0 hover:bg-brand-hover"
                       />
-                    </div>
+                    </a>
                   </>
                 )}
                 {!isLoggedIn && (
