@@ -146,9 +146,12 @@ function UploadArt() {
         uploadData.append('file', artwork);
 
         const response = await upload(uploadData);
-        console.log(response.data);
+        const optimized = response.data.imgUrl.replace(
+          '/upload/',
+          '/upload/f_auto,q_auto/'
+        );
 
-        requestBody.artworkUrl = response.data.imgUrl;
+        requestBody.artworkUrl = optimized;
       }
       await addArtwork(requestBody);
       navigate(`/${user.username}`);

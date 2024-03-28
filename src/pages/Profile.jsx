@@ -10,6 +10,7 @@ import { Avatar } from 'primereact/avatar';
 import { Tag } from 'primereact/tag';
 
 import timeImg from '../assets/time.svg';
+import uploadImg from '../assets/upload.svg';
 
 import { Button } from 'primereact/button';
 
@@ -164,7 +165,7 @@ function Profile() {
                             No commissions yet!
                           </p>
                           {user && user.username === username && (
-                            <Link to="/upload">
+                            <Link to="/newCommission">
                               <Button
                                 size="small"
                                 label="Create commission"
@@ -218,10 +219,31 @@ function Profile() {
                 {/* ARTWORK */}
                 <section className="flex flex-col gap-2">
                   <h2 className="text-2xl font-semibold">Artwork</h2>
-                  {userProfile.artwork.length <= 0 && (
-                    <p>No artwork uploaded yet!</p>
-                  )}
                   <div className="grid grid-cols-4 gap-2">
+                    {userProfile.artwork.length <= 0 && (
+                      <>
+                        <div className="flex flex-col gap-4 items-center justify-center col-span-1 p-8 bg-white border-2 border-accent-light border-dashed rounded h-72">
+                          <img src={uploadImg} alt="" className="w-1/4" />
+
+                          <p className="text-sm text-gray text-center">
+                            No artwork yet!
+                          </p>
+                          {user && user.username === username && (
+                            <Link to="/upload">
+                              <Button
+                                size="small"
+                                label="Upload artwork"
+                                rounded
+                                className="bg-brand border-brand hover:border-opacity-0 hover:bg-brand-hover"
+                              />
+                            </Link>
+                          )}
+                        </div>
+                        <div className="flex flex-col gap-4 items-center justify-center col-span-1 bg-white bg-gradient-to-t from-accent-light/50 to-accent-light/10 rounded h-72"></div>
+                        <div className="flex flex-col gap-4 items-center justify-center col-span-1 bg-white bg-gradient-to-t from-accent-light/50 to-accent-light/10 rounded h-72"></div>
+                        <div className="flex flex-col gap-4 items-center justify-center col-span-1 bg-white bg-gradient-to-t from-accent-light/50 to-accent-light/10 rounded h-72"></div>
+                      </>
+                    )}
                     {userProfile.artwork &&
                       userProfile.artwork.map(artwork => {
                         return (

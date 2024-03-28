@@ -156,8 +156,12 @@ function EditArtwork() {
         uploadData.append('file', artwork);
 
         const response = await upload(uploadData);
+        const optimized = response.data.imgUrl.replace(
+          '/upload/',
+          '/upload/f_auto,q_auto/'
+        );
 
-        requestBody.artworkUrl = response.data.imgUrl;
+        requestBody.artworkUrl = optimized;
       }
       await updateArtwork(requestBody);
       navigate(`/${username}/artwork/${artworkId}`);

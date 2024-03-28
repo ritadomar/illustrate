@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { TypeAnimation } from 'react-type-animation';
 import { Button } from 'primereact/button';
 import { Avatar } from 'primereact/avatar';
+import { DeferredContent } from 'primereact/deferredcontent';
 
 function Home() {
   const [artworks, setArtworks] = useState([]);
@@ -65,43 +66,46 @@ function Home() {
         <div className="grid md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-6 w-full">
           {artworks.map(artwork => {
             return (
-              <Link
-                to={`/${artwork.artist.username}/artwork/${artwork._id}`}
-                key={artwork._id}
-                className="hover:text-brand-hover cursor-pointer"
-              >
-                <article className="artwork flex flex-col gap-2 ">
-                  <div
-                    style={{
-                      '--image-url': `url(${artwork.artworkUrl})`,
-                    }}
-                    className="bg-[image:var(--image-url)]  bg-no-repeat bg-cover aspect-square rounded  bg-white border-2 border-accent-light"
-                  >
-                    <div className="flex p-4 items-end w-full h-full hover:bg-gradient-to-t from-black-a-5 artwork-overlay rounded">
-                      <h3 className="text-lg artwork-title">{artwork.title}</h3>
+              <DeferredContent key={artwork._id}>
+                <Link
+                  to={`/${artwork.artist.username}/artwork/${artwork._id}`}
+                  className="hover:text-brand-hover cursor-pointer"
+                >
+                  <article className="artwork flex flex-col gap-2 ">
+                    <div
+                      style={{
+                        '--image-url': `url(${artwork.artworkUrl})`,
+                      }}
+                      className="bg-[image:var(--image-url)]  bg-no-repeat bg-cover aspect-square rounded  bg-white border-2 border-accent-light"
+                    >
+                      <div className="flex p-4 items-end w-full h-full hover:bg-gradient-to-t from-black-a-5 artwork-overlay rounded">
+                        <h3 className="text-lg artwork-title">
+                          {artwork.title}
+                        </h3>
+                      </div>
                     </div>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    {artwork.artist.avatarUrl && (
-                      <Avatar
-                        image={artwork.artist.avatarUrl}
-                        size="small"
-                        shape="circle"
-                        className="object-cover border-2 border-brand w-8 h-8 ml-1"
-                      />
-                    )}
-                    {!artwork.artist.avatarUrl && (
-                      <Avatar
-                        label={artwork.artist.username[0].toUpperCase()}
-                        size="small"
-                        shape="circle"
-                        className="object-cover border-2 border-brand w-8 h-8 ml-1"
-                      />
-                    )}
-                    <p>{artwork.artist.username}</p>
-                  </div>
-                </article>
-              </Link>
+                    <div className="flex items-center gap-1">
+                      {artwork.artist.avatarUrl && (
+                        <Avatar
+                          image={artwork.artist.avatarUrl}
+                          size="small"
+                          shape="circle"
+                          className="object-cover border-2 border-brand w-8 h-8 ml-1"
+                        />
+                      )}
+                      {!artwork.artist.avatarUrl && (
+                        <Avatar
+                          label={artwork.artist.username[0].toUpperCase()}
+                          size="small"
+                          shape="circle"
+                          className="object-cover border-2 border-brand w-8 h-8 ml-1"
+                        />
+                      )}
+                      <p>{artwork.artist.username}</p>
+                    </div>
+                  </article>
+                </Link>
+              </DeferredContent>
             );
           })}
         </div>
