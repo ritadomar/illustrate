@@ -26,6 +26,7 @@ function Profile() {
   const getUserProfile = async () => {
     try {
       const response = await getProfile(username);
+      response.data.artwork.reverse();
       setUserProfile(response.data);
     } catch (error) {
       console.log(error);

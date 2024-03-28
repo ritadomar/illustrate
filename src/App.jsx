@@ -4,6 +4,7 @@ import { Route, Routes } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Home from './pages/Home';
+import Explore from './pages/Explore';
 
 // Auth
 import SignUp from './pages/SignUp';
@@ -35,6 +36,8 @@ function App() {
       <Routes>
         {/* Home */}
         <Route path="/" element={<Home />} />
+        <Route path="/explore" element={<Explore />} />
+        {/* <Route path="/find" element={<FindCommissions />} /> */}
 
         {/* Account */}
         <Route

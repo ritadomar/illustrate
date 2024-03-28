@@ -30,8 +30,8 @@ function Navbar() {
           <Link to="/explore" className="hover:text-brand-hover">
             Explore
           </Link>
-          <Link to="/resources" className="hover:text-brand-hover">
-            Resources
+          <Link to="/find" className="hover:text-brand-hover">
+            Find Commissions
           </Link>
         </div>
         {/* Protect */}

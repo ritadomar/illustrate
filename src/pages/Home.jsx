@@ -14,7 +14,7 @@ function Home() {
       const response = await getAllArtworks();
       setArtworks(response.data.reverse().slice(0, 16));
     } catch (error) {
-      console.log();
+      console.log(error);
     }
   };
 
@@ -67,11 +67,11 @@ function Home() {
           {artworks.map(artwork => {
             return (
               <DeferredContent key={artwork._id}>
-                <Link
-                  to={`/${artwork.artist.username}/artwork/${artwork._id}`}
-                  className="hover:text-brand-hover cursor-pointer"
-                >
-                  <article className="artwork flex flex-col gap-2 ">
+                <article className="artwork flex flex-col gap-2 ">
+                  <Link
+                    to={`/${artwork.artist.username}/artwork/${artwork._id}`}
+                    className="hover:text-brand-hover cursor-pointer"
+                  >
                     <div
                       style={{
                         '--image-url': `url(${artwork.artworkUrl})`,
@@ -84,6 +84,11 @@ function Home() {
                         </h3>
                       </div>
                     </div>
+                  </Link>
+                  <Link
+                    to={`/${artwork.artist.username}/`}
+                    className="hover:text-brand-hover cursor-pointer z-10"
+                  >
                     <div className="flex items-center gap-1">
                       {artwork.artist.avatarUrl && (
                         <Avatar
@@ -103,8 +108,8 @@ function Home() {
                       )}
                       <p>{artwork.artist.username}</p>
                     </div>
-                  </article>
-                </Link>
+                  </Link>
+                </article>
               </DeferredContent>
             );
           })}
