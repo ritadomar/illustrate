@@ -200,15 +200,20 @@ function CommissionDetails() {
 
               <div className="flex flex-col gap-2 flex-grow px-4">
                 <h2 className="text-2xl font-semibold">Commission details</h2>
-                <ReadMoreArea
-                  wordsLimit={500}
-                  buttonClassName="hover:!text-brand-hover !no-underline"
-                  buttonStyle={{ color: '#CC205C' }}
-                  textClassName="font-['Work-Sans'] wrap-paragraph"
-                  className="wrap-paragraph"
-                >
-                  {commission.description}
-                </ReadMoreArea>
+                {commission.description.length > 700 && (
+                  <ReadMoreArea
+                    wordsLimit={700}
+                    buttonClassName="hover:!text-brand-hover !no-underline"
+                    buttonStyle={{ color: '#CC205C' }}
+                    textClassName="font-['Work-Sans'] wrap-paragraph"
+                    className="wrap-paragraph"
+                  >
+                    {commission.description}
+                  </ReadMoreArea>
+                )}
+                {commission.description.length <= 700 && (
+                  <p>{commission.description}</p>
+                )}
               </div>
               <div className="flex flex-wrap gap-2 px-4">
                 {commission.tags.map(tag => {

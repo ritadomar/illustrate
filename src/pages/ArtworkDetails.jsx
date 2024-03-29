@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 import { AuthContext } from '../context/auth.context';
 import { Button } from 'primereact/button';
 import { Avatar } from 'primereact/avatar';
-import commissionImg from '../assets/commission.svg';
 import timeImg from '../assets/time.svg';
 import { Image } from 'primereact/image';
 import { CurrencyContext } from '../context/currency.context';
@@ -156,15 +155,20 @@ function ArtworkDetails() {
               </div>
 
               <div className="flex flex-col gap-2">
-                <ReadMoreArea
-                  wordsLimit={700}
-                  buttonClassName="hover:!text-brand-hover !no-underline"
-                  buttonStyle={{ color: '#CC205C' }}
-                  textClassName="font-['Work-Sans'] wrap-paragraph"
-                  className="wrap-paragraph"
-                >
-                  {artwork.description}
-                </ReadMoreArea>
+                {artwork.description.length > 700 && (
+                  <ReadMoreArea
+                    wordsLimit={700}
+                    buttonClassName="hover:!text-brand-hover !no-underline"
+                    buttonStyle={{ color: '#CC205C' }}
+                    textClassName="font-['Work-Sans'] wrap-paragraph"
+                    className="wrap-paragraph"
+                  >
+                    {artwork.description}
+                  </ReadMoreArea>
+                )}
+                {artwork.description.length <= 700 && (
+                  <p>{artwork.description}</p>
+                )}
                 <div className="flex flex-wrap gap-2 ">
                   {artwork.tags.map(tag => {
                     return (
