@@ -50,7 +50,6 @@ function EditProfile() {
       setPortfolio(response.data.portfolio);
       setRate(response.data.rate);
       if (response.data.avatarUrl) {
-        setAvatar(response.data.avatarUrl);
         setAvatarUrl(response.data.avatarUrl);
       }
     } catch (error) {
@@ -104,6 +103,10 @@ function EditProfile() {
         const response = await upload(uploadData);
 
         user.avatarUrl = response.data.imgUrl;
+      }
+
+      if (!avatar && avatarUrl) {
+        user.avatarUrl = avatarUrl;
       }
 
       await updateProfile(user);
@@ -166,7 +169,7 @@ function EditProfile() {
           <div className="w-full flex flex-col items-center gap-4">
             <h2 className="font-semibold mb-2 w-full">Edit details</h2>
             {/* Avatar */}
-            {!avatar && (
+            {!avatarUrl && (
               <label
                 htmlFor="avatar"
                 className=" group cursor-pointer flex flex-col gap-2 items-center font-semibold mb-2 hover:text-brand-hover"
@@ -177,7 +180,7 @@ function EditProfile() {
                 Upload avatar
               </label>
             )}
-            {avatar && (
+            {avatarUrl && (
               <label
                 htmlFor="avatar"
                 className="group cursor-pointer flex flex-col gap-2 items-center hover:text-brand-hover  font-semibold mb-2"
