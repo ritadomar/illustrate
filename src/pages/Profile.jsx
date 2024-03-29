@@ -11,6 +11,7 @@ import { Tag } from 'primereact/tag';
 
 import timeImg from '../assets/time.svg';
 import uploadImg from '../assets/upload.svg';
+import Error from './Error';
 
 import { Button } from 'primereact/button';
 

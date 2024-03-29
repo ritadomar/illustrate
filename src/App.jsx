@@ -4,6 +4,9 @@ import { Route, Routes } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Home from './pages/Home';
+import Error from './pages/Error';
+
+// Explore
 import Explore from './pages/Explore';
 import ExploreTag from './pages/ExploreTag';
 import FindCommissions from './pages/FindCommissions';
@@ -39,6 +42,7 @@ function App() {
       <Routes>
         {/* Home */}
         <Route path="/" element={<Home />} />
+
         <Route path="/explore" element={<Explore />} />
         <Route path="/explore/:tagName" element={<ExploreTag />} />
         <Route path="/find" element={<FindCommissions />} />
@@ -115,6 +119,8 @@ function App() {
             </IsPrivate>
           }
         />
+
+        <Route path="*" element={<Error />} />
       </Routes>
       <IsSigning>
         <Footer />

@@ -86,7 +86,7 @@ function LogIn() {
               required
               value={credential}
               onChange={({ target }) => setCredential(target.value)}
-              placeholder="email@email.com"
+              placeholder="username or email"
               className="focus:border-brand focus:shadow-[0_0_0_1px_rgb(204,32,92)] hover:border-brand shadow-none valid:shadow-[0_0_0_1px_rgb(204,32,92)] valid:border-brand"
               pt={{
                 root: {
