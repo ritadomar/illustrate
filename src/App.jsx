@@ -24,6 +24,7 @@ import IsSigning from './components/IsSigning';
 
 // Profile
 import Profile from './pages/Profile';
+import EditProfile from './pages/EditProfile';
 
 // Artwork
 import UploadArtwork from './pages/UploadArtwork';
@@ -67,6 +68,16 @@ function App() {
         />
         {/* Profile */}
         <Route path="/:username" element={<Profile />} />
+        <Route
+          path="/:username/edit"
+          element={
+            <IsPrivate>
+              <IsForArtists>
+                <EditProfile />
+              </IsForArtists>
+            </IsPrivate>
+          }
+        />
 
         {/* Artwork routes */}
         <Route

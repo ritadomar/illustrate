@@ -121,6 +121,14 @@ function Profile() {
                 )}
               </div>
               <p className="text-brand font-normal text-lg">@{username}</p>
+              {user && user.username === username && (
+                <Link
+                  to={`/${username}/edit`}
+                  className="text-sm font-semibold"
+                >
+                  Edit Profile
+                </Link>
+              )}
             </div>
             <div className="flex gap-2 items-center mt-1">
               {userProfile.isArtist && userProfile.portfolio.length > 0 && (
