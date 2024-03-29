@@ -244,7 +244,7 @@ function FindCommissions() {
           </div>
 
           {tags && (
-            <span className="w-full mb-3  sticky top-44">
+            <span className="w-full mb-3  sticky top-48">
               <span className="pi pi-search text-black absolute ml-3 mt-[14px] z-10"></span>
               <AutoComplete
                 value={selectedTag}
@@ -261,7 +261,7 @@ function FindCommissions() {
               />
             </span>
           )}
-          <div className="flex flex-col gap-2 w-full  sticky top-64">
+          <div className="flex flex-col gap-2 w-full  sticky top-72">
             <h2 className="font-semibold text-black text-xl flex items-center justify-between">
               Filter by price
               <span

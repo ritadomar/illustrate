@@ -111,7 +111,7 @@ function Explore() {
             </div>
           </div>
           {tags && (
-            <span className="w-full mb-3 sticky top-44">
+            <span className="w-full mb-3 sticky top-72">
               <span className="pi pi-search text-black absolute ml-3 mt-[14px] z-10"></span>
               <AutoComplete
                 value={selectedTag}
