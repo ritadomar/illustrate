@@ -362,3 +362,8 @@ input:focus {
 .wrap-paragraph {
   white-space: pre-wrap;
 }
+
+.p-accordion-toggle-icon {
+  order: 10;
+  margin-left: 8px;
+}

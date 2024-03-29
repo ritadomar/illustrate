@@ -36,6 +36,9 @@ import CreateCommission from './pages/CreateCommission';
 import CommissionDetails from './pages/CommissionDetails';
 import EditCommission from './pages/EditCommission';
 
+// Requests
+import RequestsPage from './pages/RequestsPage';
+
 function App() {
   return (
     <>
@@ -72,9 +75,17 @@ function App() {
           path="/:username/edit"
           element={
             <IsPrivate>
-              <IsForArtists>
-                <EditProfile />
-              </IsForArtists>
+              <EditProfile />
+            </IsPrivate>
+          }
+        />
+
+        {/* Requests */}
+        <Route
+          path="/:username/requests"
+          element={
+            <IsPrivate>
+              <RequestsPage />
             </IsPrivate>
           }
         />
