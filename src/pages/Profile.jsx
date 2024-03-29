@@ -11,9 +11,9 @@ import { Tag } from 'primereact/tag';
 
 import timeImg from '../assets/time.svg';
 import uploadImg from '../assets/upload.svg';
-import Error from './Error';
 
 import { Button } from 'primereact/button';
+import Loading from '../components/Loading';
 
 function Profile() {
   const { username } = useParams();
@@ -69,6 +69,8 @@ function Profile() {
 
   return (
     <>
+      {!userProfile && <Loading />}
+
       {userProfile && (
         <header className="flex flex-col items-center justify-end h-[63vh]">
           {userProfile.artwork.length <= 0 && (
@@ -149,135 +151,133 @@ function Profile() {
           </div>
         </header>
       )}
-      <main className="pt-24 px-10 flex flex-col gap-6">
-        {userProfile && (
-          <>
-            {userProfile && userProfile.isArtist && (
-              <>
-                {/* COMMISSIONS */}
-                <section className="flex flex-col gap-2">
-                  <h2 className="text-2xl font-semibold">Commissions</h2>
-                  <div className="grid grid-cols-3 gap-2">
-                    {userProfile.commissions.length <= 0 && (
-                      <>
-                        <div className="flex flex-col gap-4 items-center justify-center col-span-1 p-8 bg-white border-2 border-accent-light border-dashed rounded h-72">
-                          <img src={timeImg} alt="" className="w-1/4" />
+      {userProfile && (
+        <main className="pt-24 px-10 flex flex-col gap-6">
+          {userProfile && userProfile.isArtist && (
+            <>
+              {/* COMMISSIONS */}
+              <section className="flex flex-col gap-2">
+                <h2 className="text-2xl font-semibold">Commissions</h2>
+                <div className="grid grid-cols-3 gap-2">
+                  {userProfile.commissions.length <= 0 && (
+                    <>
+                      <div className="flex flex-col gap-4 items-center justify-center col-span-1 p-8 bg-white border-2 border-accent-light border-dashed rounded h-72">
+                        <img src={timeImg} alt="" className="w-1/4" />
 
-                          <p className="text-sm text-gray text-center">
-                            No commissions yet!
-                          </p>
-                          {user && user.username === username && (
-                            <Link to="/newCommission">
-                              <Button
-                                size="small"
-                                label="Create commission"
-                                rounded
-                                className="bg-brand border-brand hover:border-opacity-0 hover:bg-brand-hover"
-                              />
-                            </Link>
-                          )}
-                        </div>
-                        <div className="flex flex-col gap-4 items-center justify-center col-span-1 bg-white bg-gradient-to-t from-accent-light/50 to-accent-light/10 rounded h-72"></div>
-                        <div className="flex flex-col gap-4 items-center justify-center col-span-1 bg-white bg-gradient-to-t from-accent-light/50 to-accent-light/10 rounded h-72"></div>
-                      </>
-                    )}
+                        <p className="text-sm text-gray text-center">
+                          No commissions yet!
+                        </p>
+                        {user && user.username === username && (
+                          <Link to="/newCommission">
+                            <Button
+                              size="small"
+                              label="Create commission"
+                              rounded
+                              className="bg-brand border-brand hover:border-opacity-0 hover:bg-brand-hover"
+                            />
+                          </Link>
+                        )}
+                      </div>
+                      <div className="flex flex-col gap-4 items-center justify-center col-span-1 bg-white bg-gradient-to-t from-accent-light/50 to-accent-light/10 rounded h-72"></div>
+                      <div className="flex flex-col gap-4 items-center justify-center col-span-1 bg-white bg-gradient-to-t from-accent-light/50 to-accent-light/10 rounded h-72"></div>
+                    </>
+                  )}
 
-                    {userProfile.commissions.length > 0 && commissionCover && (
-                      <>
-                        {userProfile.commissions.map((commission, index) => {
-                          return (
-                            <Link
-                              key={commission._id}
-                              to={`/${userProfile.username}/commission/${commission._id}`}
-                              className="group cursor-pointer"
-                            >
-                              <article className="flex flex-col gap-2 items-start col-span-1 bg-white h-72">
-                                <img
-                                  src={commissionCover[index]}
-                                  alt=""
-                                  className="w-full h-3/4 object-cover object-top rounded"
-                                />
-                                <div className="flex flex-col gap-0 items-start">
-                                  <h3 className="text-left text-lg group-hover:text-brand-hover">
-                                    {commission.title}
-                                  </h3>
-                                  <p className="text-md text-black font-semibold text-left">
-                                    <span className="font-normal">From</span>{' '}
-                                    {currencySymbol}
-                                    {Math.round(
-                                      commission.cost * currency.exchangeRate
-                                    )}
-                                  </p>
-                                </div>
-                              </article>
-                            </Link>
-                          );
-                        })}
-                      </>
-                    )}
-                  </div>
-                </section>
-
-                {/* ARTWORK */}
-                <section className="flex flex-col gap-2">
-                  <h2 className="text-2xl font-semibold">Artwork</h2>
-                  <div className="grid grid-cols-4 gap-2">
-                    {userProfile.artwork.length <= 0 && (
-                      <>
-                        <div className="flex flex-col gap-4 items-center justify-center col-span-1 p-8 bg-white border-2 border-accent-light border-dashed rounded h-72">
-                          <img src={uploadImg} alt="" className="w-1/4" />
-
-                          <p className="text-sm text-gray text-center">
-                            No artwork yet!
-                          </p>
-                          {user && user.username === username && (
-                            <Link to="/upload">
-                              <Button
-                                size="small"
-                                label="Upload artwork"
-                                rounded
-                                className="bg-brand border-brand hover:border-opacity-0 hover:bg-brand-hover"
-                              />
-                            </Link>
-                          )}
-                        </div>
-                        <div className="flex flex-col gap-4 items-center justify-center col-span-1 bg-white bg-gradient-to-t from-accent-light/50 to-accent-light/10 rounded h-72"></div>
-                        <div className="flex flex-col gap-4 items-center justify-center col-span-1 bg-white bg-gradient-to-t from-accent-light/50 to-accent-light/10 rounded h-72"></div>
-                        <div className="flex flex-col gap-4 items-center justify-center col-span-1 bg-white bg-gradient-to-t from-accent-light/50 to-accent-light/10 rounded h-72"></div>
-                      </>
-                    )}
-                    {userProfile.artwork &&
-                      userProfile.artwork.map(artwork => {
+                  {userProfile.commissions.length > 0 && commissionCover && (
+                    <>
+                      {userProfile.commissions.map((commission, index) => {
                         return (
                           <Link
-                            to={`/${username}/artwork/${artwork._id}`}
-                            key={artwork._id}
-                            className="hover:text-brand-hover cursor-pointer"
+                            key={commission._id}
+                            to={`/${userProfile.username}/commission/${commission._id}`}
+                            className="group cursor-pointer"
                           >
-                            <article className="artwork flex flex-col gap-2 ">
-                              <div
-                                style={{
-                                  '--image-url': `url(${artwork.artworkUrl})`,
-                                }}
-                                className="bg-[image:var(--image-url)]  bg-no-repeat bg-cover aspect-square rounded  bg-white border-2 border-accent-light"
-                              >
-                                <div className="flex p-4 items-end w-full h-full hover:bg-gradient-to-t from-black-a-5 artwork-overlay rounded">
-                                  <h3 className="text-lg artwork-title">
-                                    {artwork.title}
-                                  </h3>
-                                </div>
+                            <article className="flex flex-col gap-2 items-start col-span-1 bg-white h-72">
+                              <img
+                                src={commissionCover[index]}
+                                alt=""
+                                className="w-full h-3/4 object-cover object-top rounded"
+                              />
+                              <div className="flex flex-col gap-0 items-start">
+                                <h3 className="text-left text-lg group-hover:text-brand-hover">
+                                  {commission.title}
+                                </h3>
+                                <p className="text-md text-black font-semibold text-left">
+                                  <span className="font-normal">From</span>{' '}
+                                  {currencySymbol}
+                                  {Math.round(
+                                    commission.cost * currency.exchangeRate
+                                  )}
+                                </p>
                               </div>
                             </article>
                           </Link>
                         );
                       })}
-                  </div>
-                </section>
-              </>
-            )}
-          </>
-        )}
-      </main>
+                    </>
+                  )}
+                </div>
+              </section>
+
+              {/* ARTWORK */}
+              <section className="flex flex-col gap-2">
+                <h2 className="text-2xl font-semibold">Artwork</h2>
+                <div className="grid grid-cols-4 gap-2">
+                  {userProfile.artwork.length <= 0 && (
+                    <>
+                      <div className="flex flex-col gap-4 items-center justify-center col-span-1 p-8 bg-white border-2 border-accent-light border-dashed rounded h-72">
+                        <img src={uploadImg} alt="" className="w-1/4" />
+
+                        <p className="text-sm text-gray text-center">
+                          No artwork yet!
+                        </p>
+                        {user && user.username === username && (
+                          <Link to="/upload">
+                            <Button
+                              size="small"
+                              label="Upload artwork"
+                              rounded
+                              className="bg-brand border-brand hover:border-opacity-0 hover:bg-brand-hover"
+                            />
+                          </Link>
+                        )}
+                      </div>
+                      <div className="flex flex-col gap-4 items-center justify-center col-span-1 bg-white bg-gradient-to-t from-accent-light/50 to-accent-light/10 rounded h-72"></div>
+                      <div className="flex flex-col gap-4 items-center justify-center col-span-1 bg-white bg-gradient-to-t from-accent-light/50 to-accent-light/10 rounded h-72"></div>
+                      <div className="flex flex-col gap-4 items-center justify-center col-span-1 bg-white bg-gradient-to-t from-accent-light/50 to-accent-light/10 rounded h-72"></div>
+                    </>
+                  )}
+                  {userProfile.artwork &&
+                    userProfile.artwork.map(artwork => {
+                      return (
+                        <Link
+                          to={`/${username}/artwork/${artwork._id}`}
+                          key={artwork._id}
+                          className="hover:text-brand-hover cursor-pointer"
+                        >
+                          <article className="artwork flex flex-col gap-2 ">
+                            <div
+                              style={{
+                                '--image-url': `url(${artwork.artworkUrl})`,
+                              }}
+                              className="bg-[image:var(--image-url)]  bg-no-repeat bg-cover aspect-square rounded  bg-white border-2 border-accent-light"
+                            >
+                              <div className="flex p-4 items-end w-full h-full hover:bg-gradient-to-t from-black-a-5 artwork-overlay rounded">
+                                <h3 className="text-lg artwork-title">
+                                  {artwork.title}
+                                </h3>
+                              </div>
+                            </div>
+                          </article>
+                        </Link>
+                      );
+                    })}
+                </div>
+              </section>
+            </>
+          )}
+        </main>
+      )}
     </>
   );
 }

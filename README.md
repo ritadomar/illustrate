@@ -15,6 +15,7 @@ Finally, no matter if you're an illustrator or an art lover, you can just use Il
 
 - [axios](https://www.npmjs.com/package/axios)
 - [PrimeReact](https://www.npmjs.com/package/primereact)
+- [react-lottie](https://www.npmjs.com/package/react-lottie)
 - [react-read-more](https://www.npmjs.com/package/@foxeian/react-read-more)
 - [react-tag-input](https://www.npmjs.com/package/react-tag-input)
 - [Tailwind CSS](https://www.npmjs.com/package/tailwindcss)

@@ -10,6 +10,7 @@ import timeImg from '../assets/time.svg';
 import { Image } from 'primereact/image';
 import { CurrencyContext } from '../context/currency.context';
 import ReadMoreArea from '@foxeian/react-read-more';
+import Loading from '../components/Loading';
 
 function ArtworkDetails() {
   const [artwork, setArtwork] = useState(null);
@@ -69,6 +70,7 @@ function ArtworkDetails() {
 
   return (
     <>
+      {!artwork && <Loading />}
       {artwork && (
         <>
           {user && user.username === username && (

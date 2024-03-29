@@ -5,9 +5,10 @@ import { TypeAnimation } from 'react-type-animation';
 import { Button } from 'primereact/button';
 import { Avatar } from 'primereact/avatar';
 import { DeferredContent } from 'primereact/deferredcontent';
+import Loading from '../components/Loading';
 
 function Home() {
-  const [artworks, setArtworks] = useState([]);
+  const [artworks, setArtworks] = useState(null);
 
   const getArtworks = async () => {
     try {
@@ -64,55 +65,57 @@ function Home() {
       <section className="flex flex-col items-center gap-10 px-10 mb-20">
         <h2 className="text-4xl w-full">Explore illustrations</h2>
         <div className="grid md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-6 w-full">
-          {artworks.map(artwork => {
-            return (
-              <DeferredContent key={artwork._id}>
-                <article className="artwork flex flex-col gap-2 ">
-                  <Link
-                    to={`/${artwork.artist.username}/artwork/${artwork._id}`}
-                    className="hover:text-brand-hover cursor-pointer"
-                  >
-                    <div
-                      style={{
-                        '--image-url': `url(${artwork.artworkUrl})`,
-                      }}
-                      className="bg-[image:var(--image-url)]  bg-no-repeat bg-cover aspect-square rounded  bg-white border-2 border-accent-light"
+          {!artworks && <Loading props="home" />}
+          {artworks &&
+            artworks.map(artwork => {
+              return (
+                <DeferredContent key={artwork._id}>
+                  <article className="artwork flex flex-col gap-2 ">
+                    <Link
+                      to={`/${artwork.artist.username}/artwork/${artwork._id}`}
+                      className="hover:text-brand-hover cursor-pointer"
                     >
-                      <div className="flex p-4 items-end w-full h-full hover:bg-gradient-to-t from-black-a-5 artwork-overlay rounded">
-                        <h3 className="text-lg artwork-title">
-                          {artwork.title}
-                        </h3>
+                      <div
+                        style={{
+                          '--image-url': `url(${artwork.artworkUrl})`,
+                        }}
+                        className="bg-[image:var(--image-url)]  bg-no-repeat bg-cover aspect-square rounded  bg-white border-2 border-accent-light"
+                      >
+                        <div className="flex p-4 items-end w-full h-full hover:bg-gradient-to-t from-black-a-5 artwork-overlay rounded">
+                          <h3 className="text-lg artwork-title">
+                            {artwork.title}
+                          </h3>
+                        </div>
                       </div>
-                    </div>
-                  </Link>
-                  <Link
-                    to={`/${artwork.artist.username}/`}
-                    className="hover:text-brand-hover cursor-pointer z-10"
-                  >
-                    <div className="flex items-center gap-1">
-                      {artwork.artist.avatarUrl && (
-                        <Avatar
-                          image={artwork.artist.avatarUrl}
-                          size="small"
-                          shape="circle"
-                          className="object-cover border-2 border-brand w-8 h-8 ml-1"
-                        />
-                      )}
-                      {!artwork.artist.avatarUrl && (
-                        <Avatar
-                          label={artwork.artist.username[0].toUpperCase()}
-                          size="small"
-                          shape="circle"
-                          className="object-cover border-2 border-brand w-8 h-8 ml-1"
-                        />
-                      )}
-                      <p>{artwork.artist.username}</p>
-                    </div>
-                  </Link>
-                </article>
-              </DeferredContent>
-            );
-          })}
+                    </Link>
+                    <Link
+                      to={`/${artwork.artist.username}/`}
+                      className="hover:text-brand-hover cursor-pointer z-10"
+                    >
+                      <div className="flex items-center gap-1">
+                        {artwork.artist.avatarUrl && (
+                          <Avatar
+                            image={artwork.artist.avatarUrl}
+                            size="small"
+                            shape="circle"
+                            className="object-cover border-2 border-brand w-8 h-8 ml-1"
+                          />
+                        )}
+                        {!artwork.artist.avatarUrl && (
+                          <Avatar
+                            label={artwork.artist.username[0].toUpperCase()}
+                            size="small"
+                            shape="circle"
+                            className="object-cover border-2 border-brand w-8 h-8 ml-1"
+                          />
+                        )}
+                        <p>{artwork.artist.username}</p>
+                      </div>
+                    </Link>
+                  </article>
+                </DeferredContent>
+              );
+            })}
         </div>
         <Link to={'/explore'}>
           <Button

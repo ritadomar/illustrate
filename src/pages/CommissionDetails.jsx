@@ -9,6 +9,7 @@ import { Avatar } from 'primereact/avatar';
 import { Galleria } from 'primereact/galleria';
 import { Image } from 'primereact/image';
 import ReadMoreArea from '@foxeian/react-read-more';
+import Loading from '../components/Loading';
 
 function CommissionDetails() {
   const [commission, setCommission] = useState(null);
@@ -89,6 +90,7 @@ function CommissionDetails() {
 
   return (
     <>
+      {!commission && <Loading />}
       {commission && (
         <>
           {user && user.username === username && (
