@@ -230,12 +230,11 @@ function CommissionDetails() {
               <div className="flex flex-wrap gap-2 px-4">
                 {commission.tags.map(tag => {
                   return (
-                    <span
-                      key={tag._id}
-                      className="italic font-semibold text-accent-strong hover:text-accent-dark"
-                    >
-                      #{tag.tagName}
-                    </span>
+                    <Link key={tag._id} to={`/find/${tag.tagName}`}>
+                      <span className="italic font-semibold text-accent-strong hover:text-accent-dark">
+                        #{tag.tagName}
+                      </span>
+                    </Link>
                   );
                 })}
               </div>

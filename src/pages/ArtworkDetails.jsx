@@ -181,12 +181,11 @@ function ArtworkDetails() {
                 <div className="flex flex-wrap gap-2 ">
                   {artwork.tags.map(tag => {
                     return (
-                      <span
-                        key={tag._id}
-                        className="italic font-semibold text-accent-strong hover:text-accent-dark"
-                      >
-                        #{tag.tagName}
-                      </span>
+                      <Link key={tag._id} to={`/explore/${tag.tagName}`}>
+                        <span className="italic font-semibold text-accent-strong hover:text-accent-dark">
+                          #{tag.tagName}
+                        </span>
+                      </Link>
                     );
                   })}
                 </div>
