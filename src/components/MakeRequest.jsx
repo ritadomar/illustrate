@@ -15,8 +15,6 @@ function MakeRequest({ commission, visible, setVisible }) {
   const { user } = useContext(AuthContext);
   const { currencySymbol, currency } = useContext(CurrencyContext);
 
-  const navigate = useNavigate();
-
   const handleSubmit = async e => {
     try {
       e.preventDefault();
@@ -114,7 +112,7 @@ function MakeRequest({ commission, visible, setVisible }) {
           />
           {!description && (
             <Button
-              label="Save Changes"
+              label="Make Request"
               rounded
               disabled
               className="bg-black-a-5/30 border-black-a-5/0 hover:border-opacity-0 hover:bg-brand-hover"
@@ -122,7 +120,7 @@ function MakeRequest({ commission, visible, setVisible }) {
           )}
           {description && (
             <Button
-              label="Save Changes"
+              label="Make Request"
               rounded
               className="bg-brand border-brand hover:border-opacity-0 hover:bg-brand-hover"
               type="submit"

@@ -70,7 +70,25 @@ function Profile() {
   return (
     <>
       {!userProfile && <Loading />}
+      {user && user.username === username && (
+        <div className="flex flex-col p-4 gap-4 absolute top-[31vh] right-6">
+          <Link to={`/${username}/edit`}>
+            <Button
+              icon="pi pi-pencil"
+              label="Edit profile"
+              rounded
+              outlined
+              severity="secondary"
+              aria-label="Edit"
+              size="small"
+              // tooltip="Edit"
+              // tooltipOptions={{ position: 'left' }}
 
+              className="bg-white border-brand border-2 text-brand hover:text-brand-hover hover:border-brand-hover hover:bg-white"
+            />
+          </Link>
+        </div>
+      )}
       {userProfile && (
         <header className="flex flex-col items-center justify-end h-[63vh]">
           {userProfile.artwork.length <= 0 && (
@@ -120,15 +138,18 @@ function Profile() {
                   ></Tag>
                 )}
               </div>
-              <p className="text-brand font-normal text-lg">@{username}</p>
-              {user && user.username === username && (
-                <Link
-                  to={`/${username}/edit`}
-                  className="text-sm font-semibold"
-                >
-                  Edit Profile
-                </Link>
-              )}
+              <span className="flex items-center gap-2">
+                <p className="text-brand font-normal text-lg">@{username}</p>
+                {userProfile.avgRating > 0 && (
+                  <>
+                    <span>|</span>{' '}
+                    <span className="flex items-center gap-1  text-brand font-semibold">
+                      <span className="pi pi-star-fill"></span>
+                      <p>{userProfile.avgRating}</p>
+                    </span>
+                  </>
+                )}
+              </span>
             </div>
             <div className="flex gap-2 items-center mt-1">
               {userProfile.isArtist && userProfile.portfolio.length > 0 && (

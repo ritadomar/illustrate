@@ -197,6 +197,15 @@ function CommissionDetails() {
                       />
                     )}
                     <p>{commission.artist.username}</p>
+                    {commission.artist.avgRating > 0 && (
+                      <>
+                        <span>|</span>{' '}
+                        <span className="flex items-center gap-1  text-brand font-semibold">
+                          <span className="pi pi-star-fill"></span>
+                          <p>{commission.artist.avgRating}</p>
+                        </span>
+                      </>
+                    )}
                   </Link>
                 </div>
               </header>

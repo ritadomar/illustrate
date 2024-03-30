@@ -110,6 +110,15 @@ function Home() {
                           />
                         )}
                         <p>{artwork.artist.username}</p>
+                        {artwork.artist.avgRating > 0 && (
+                          <>
+                            <span>|</span>{' '}
+                            <span className="flex items-center gap-1  text-brand font-semibold">
+                              <span className="pi pi-star-fill"></span>
+                              <p>{artwork.artist.avgRating}</p>
+                            </span>
+                          </>
+                        )}
                       </div>
                     </Link>
                   </article>

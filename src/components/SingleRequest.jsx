@@ -1,13 +1,12 @@
+/* eslint-disable react/prop-types */
 import { Button } from 'primereact/button';
 import { useState, useEffect } from 'react';
 import { updateRequest } from '../api/requests.api';
-import { Rating } from 'primereact/rating';
+import CreateRating from './CreateRating';
 
-function SingleRequest({ request, user, getRequests, setRequests, requests }) {
+function SingleRequest({ request, user, getRequests }) {
   const [status, setStatus] = useState(request.status);
-  const [rating, setRating] = useState(null);
-
-  console.log(rating);
+  const [visible, setVisible] = useState(false);
 
   const handleUpdate = async newStatus => {
     try {
@@ -19,10 +18,14 @@ function SingleRequest({ request, user, getRequests, setRequests, requests }) {
 
       await updateRequest(requestBody);
       setStatus(newStatus);
+      if (newStatus === 'completed') {
+        setVisible(true);
+      }
     } catch (error) {
       console.log(error);
     }
   };
+
   useEffect(() => {
     getRequests();
   }, [status]);
@@ -58,47 +61,12 @@ function SingleRequest({ request, user, getRequests, setRequests, requests }) {
               {status === 'approved' && (
                 <div className="flex gap-4 mt-2 justify-end">
                   <Button
-                    label="Cancel"
+                    label="Cancel commission"
                     rounded
-                    text
+                    outlined
                     severity="danger"
                     size="small"
                     onClick={() => handleUpdate('canceled')}
-                  />
-                  <Button
-                    label="Mark as completed"
-                    rounded
-                    outlined
-                    severity="success"
-                    size="small"
-                    onClick={() => handleUpdate('completed')}
-                  />
-                </div>
-              )}
-
-              {status === 'completed' && (
-                <div className="flex gap-4 mt-2 justify-end">
-                  <p>Rate {request.buyer.username}</p>{' '}
-                  <Rating
-                    cancel={false}
-                    value={rating}
-                    onChange={e => setRating(e.value)}
-                    className="text-brand"
-                    pt={{
-                      onIcon: {
-                        className: 'text-brand focus:shadow-none',
-                      },
-                      offIcon: {
-                        className:
-                          'text-gray hover:text-brand focus:shadow-none',
-                      },
-                      item: {
-                        className: 'focus:shadow-none',
-                      },
-                      root: {
-                        className: 'gap-1',
-                      },
-                    }}
                   />
                 </div>
               )}
@@ -109,7 +77,7 @@ function SingleRequest({ request, user, getRequests, setRequests, requests }) {
               {status === 'pending' && (
                 <div className="flex gap-2 mt-2 justify-end">
                   <Button
-                    label="Cancel"
+                    label="Cancel request"
                     rounded
                     severity="danger"
                     size="small"
@@ -122,7 +90,7 @@ function SingleRequest({ request, user, getRequests, setRequests, requests }) {
               {status === 'approved' && (
                 <div className="flex gap-4 mt-2 justify-end">
                   <Button
-                    label="Cancel"
+                    label="Cancel commission"
                     rounded
                     text
                     severity="danger"
@@ -139,33 +107,12 @@ function SingleRequest({ request, user, getRequests, setRequests, requests }) {
                   />
                 </div>
               )}
-
-              {status === 'completed' && (
-                <div className="flex gap-2 mt-2 justify-end">
-                  <p>Rate {request.artist.username}</p>{' '}
-                  <Rating
-                    cancel={false}
-                    value={rating}
-                    onChange={e => setRating(e.value)}
-                    className="text-brand"
-                    pt={{
-                      onIcon: {
-                        className: 'text-brand focus:shadow-none',
-                      },
-                      offIcon: {
-                        className:
-                          'text-gray hover:text-brand focus:shadow-none',
-                      },
-                      item: {
-                        className: 'focus:shadow-none',
-                      },
-                      root: {
-                        className: 'gap-1',
-                      },
-                    }}
-                  />
-                </div>
-              )}
+              <CreateRating
+                giver={request.buyer}
+                receiver={request.artist}
+                visible={visible}
+                setVisible={setVisible}
+              />
             </>
           )}
         </>
