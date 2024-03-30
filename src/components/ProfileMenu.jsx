@@ -59,6 +59,13 @@ function ProfileMenu() {
           navigate('/newCommission');
         },
       },
+      {
+        label: 'Requests',
+        icon: 'pi pi-inbox',
+        command: () => {
+          navigate(`/${user.username}/requests`);
+        },
+      },
       { separator: true },
       {
         label: 'Log Out',
@@ -100,6 +107,13 @@ function ProfileMenu() {
               )}
             </>
           );
+        },
+      },
+      {
+        label: 'Requests',
+        icon: 'pi pi-inbox',
+        command: () => {
+          navigate(`/${user.username}/requests`);
         },
       },
       { separator: true },

@@ -10,8 +10,11 @@ import { Galleria } from 'primereact/galleria';
 import { Image } from 'primereact/image';
 import ReadMoreArea from '@foxeian/react-read-more';
 import Loading from '../components/Loading';
+import MakeRequest from '../components/MakeRequest';
 
 function CommissionDetails() {
+  const [visible, setVisible] = useState(false);
+
   const [commission, setCommission] = useState(null);
   const [images, setImages] = useState(null);
 
@@ -194,6 +197,15 @@ function CommissionDetails() {
                       />
                     )}
                     <p>{commission.artist.username}</p>
+                    {commission.artist.avgRating > 0 && (
+                      <>
+                        <span>|</span>{' '}
+                        <span className="flex items-center gap-1  text-brand font-semibold">
+                          <span className="pi pi-star-fill"></span>
+                          <p>{commission.artist.avgRating}</p>
+                        </span>
+                      </>
+                    )}
                   </Link>
                 </div>
               </header>
@@ -212,7 +224,7 @@ function CommissionDetails() {
                   </ReadMoreArea>
                 )}
                 {commission.description.length <= 700 && (
-                  <p>{commission.description}</p>
+                  <p className="wrap-paragraph">{commission.description}</p>
                 )}
               </div>
               <div className="flex flex-wrap gap-2 px-4">
@@ -232,13 +244,24 @@ function CommissionDetails() {
                 {isLoggedIn && (
                   <>
                     <p>Ready to make a commission?</p>
-                    <a href={`mailto:${commission.artist.email}`}>
+                    <Button
+                      onClick={() => setVisible(true)}
+                      label={`Contact ${commission.artist.username}`}
+                      rounded
+                      className="bg-brand border-brand hover:border-opacity-0 hover:bg-brand-hover"
+                    />
+                    <MakeRequest
+                      visible={visible}
+                      setVisible={setVisible}
+                      commission={commission}
+                    />
+                    {/* <a href={`mailto:${commission.artist.email}`}>
                       <Button
                         label={`Contact ${commission.artist.username}`}
                         rounded
                         className="bg-brand border-brand hover:border-opacity-0 hover:bg-brand-hover"
                       />
-                    </a>
+                    </a> */}
                   </>
                 )}
                 {!isLoggedIn && (

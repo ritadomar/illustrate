@@ -142,6 +142,15 @@ function ArtworkDetails() {
                     />
                   )}
                   <p>{artwork.artist.username}</p>
+                  {artwork.artist.avgRating > 0 && (
+                    <>
+                      <span>|</span>{' '}
+                      <span className="flex items-center gap-1  text-brand font-semibold">
+                        <span className="pi pi-star-fill"></span>
+                        <p>{artwork.artist.avgRating}</p>
+                      </span>
+                    </>
+                  )}
                 </Link>
                 {user && user.username === username && (
                   <div className="flex items-center gap-2 mt-2">
@@ -167,7 +176,7 @@ function ArtworkDetails() {
                   </ReadMoreArea>
                 )}
                 {artwork.description.length <= 700 && (
-                  <p>{artwork.description}</p>
+                  <p className="wrap-paragraph">{artwork.description}</p>
                 )}
                 <div className="flex flex-wrap gap-2 ">
                   {artwork.tags.map(tag => {
