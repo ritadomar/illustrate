@@ -34,40 +34,67 @@ function SingleRequest({ request, user, getRequests }) {
     <>
       {status && (
         <>
-          <p>{request.description}</p>
+          <p className="wrap-paragraph">{request.description}</p>
+
           {request.artist.username === user.username && (
             <>
               {status === 'pending' && (
-                <div className="flex gap-4 mt-2 justify-end">
-                  <Button
-                    label="Reject"
-                    rounded
-                    severity="danger"
-                    size="small"
-                    text
-                    onClick={() => handleUpdate('rejected')}
-                  />
-                  <Button
-                    label="Accept"
-                    rounded
-                    severity="success"
-                    size="small"
-                    outlined
-                    onClick={() => handleUpdate('approved')}
-                  />
+                <div className="flex justify-between items-baseline  mt-2">
+                  <a
+                    href={`mailto:${request.buyer.email}`}
+                    className="font-semibold text-brand hover:text-brand-hover"
+                  >
+                    {/* <Button
+                        label={`Contact ${request.buyer.username}`}
+                        rounded
+                        className="bg-brand border-brand hover:border-opacity-0 hover:bg-brand-hover"
+                      /> */}
+                    Contact {request.buyer.username}
+                  </a>
+                  <div className="flex gap-4 justify-end">
+                    <Button
+                      label="Reject"
+                      rounded
+                      severity="danger"
+                      size="small"
+                      text
+                      onClick={() => handleUpdate('rejected')}
+                    />
+                    <Button
+                      label="Accept"
+                      rounded
+                      severity="success"
+                      size="small"
+                      outlined
+                      onClick={() => handleUpdate('approved')}
+                    />
+                  </div>
                 </div>
               )}
 
               {status === 'approved' && (
-                <div className="flex gap-4 mt-2 justify-end">
-                  <Button
-                    label="Cancel commission"
-                    rounded
-                    outlined
-                    severity="danger"
-                    size="small"
-                    onClick={() => handleUpdate('canceled')}
-                  />
+                <div className="flex justify-between items-baseline  mt-2">
+                  <a
+                    href={`mailto:${request.buyer.email}`}
+                    className="font-semibold text-brand hover:text-brand-hover"
+                  >
+                    {/* <Button
+                        label={`Contact ${request.buyer.username}`}
+                        rounded
+                        className="bg-brand border-brand hover:border-opacity-0 hover:bg-brand-hover"
+                      /> */}
+                    Contact {request.buyer.username}
+                  </a>
+                  <div className="flex gap-4 justify-end">
+                    <Button
+                      label="Cancel commission"
+                      rounded
+                      outlined
+                      severity="danger"
+                      size="small"
+                      onClick={() => handleUpdate('canceled')}
+                    />
+                  </div>
                 </div>
               )}
             </>
@@ -75,36 +102,62 @@ function SingleRequest({ request, user, getRequests }) {
           {request.buyer.username === user.username && (
             <>
               {status === 'pending' && (
-                <div className="flex gap-2 mt-2 justify-end">
-                  <Button
-                    label="Cancel request"
-                    rounded
-                    severity="danger"
-                    size="small"
-                    outlined
-                    onClick={() => handleUpdate('canceled')}
-                  />
+                <div className="flex justify-between items-baseline  mt-2">
+                  <a
+                    href={`mailto:${request.artist.email}`}
+                    className="font-semibold text-brand hover:text-brand-hover"
+                  >
+                    {/* <Button
+                        label={`Contact ${request.buyer.username}`}
+                        rounded
+                        className="bg-brand border-brand hover:border-opacity-0 hover:bg-brand-hover"
+                      /> */}
+                    Contact {request.artist.username}
+                  </a>
+                  <div className="flex gap-4 justify-end">
+                    <Button
+                      label="Cancel request"
+                      rounded
+                      severity="danger"
+                      size="small"
+                      outlined
+                      onClick={() => handleUpdate('canceled')}
+                    />
+                  </div>
                 </div>
               )}
 
               {status === 'approved' && (
-                <div className="flex gap-4 mt-2 justify-end">
-                  <Button
-                    label="Cancel commission"
-                    rounded
-                    text
-                    severity="danger"
-                    size="small"
-                    onClick={() => handleUpdate('canceled')}
-                  />
-                  <Button
-                    label="Mark as completed"
-                    rounded
-                    outlined
-                    severity="success"
-                    size="small"
-                    onClick={() => handleUpdate('completed')}
-                  />
+                <div className="flex justify-between items-baseline  mt-2">
+                  <a
+                    href={`mailto:${request.artist.email}`}
+                    className="font-semibold text-brand hover:text-brand-hover"
+                  >
+                    {/* <Button
+                        label={`Contact ${request.buyer.username}`}
+                        rounded
+                        className="bg-brand border-brand hover:border-opacity-0 hover:bg-brand-hover"
+                      /> */}
+                    Contact {request.artist.username}
+                  </a>
+                  <div className="flex gap-4 justify-end">
+                    <Button
+                      label="Cancel commission"
+                      rounded
+                      text
+                      severity="danger"
+                      size="small"
+                      onClick={() => handleUpdate('canceled')}
+                    />
+                    <Button
+                      label="Mark as completed"
+                      rounded
+                      outlined
+                      severity="success"
+                      size="small"
+                      onClick={() => handleUpdate('completed')}
+                    />
+                  </div>
                 </div>
               )}
               <CreateRating

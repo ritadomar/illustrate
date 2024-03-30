@@ -176,7 +176,7 @@ function ArtworkDetails() {
                   </ReadMoreArea>
                 )}
                 {artwork.description.length <= 700 && (
-                  <p>{artwork.description}</p>
+                  <p className="wrap-paragraph">{artwork.description}</p>
                 )}
                 <div className="flex flex-wrap gap-2 ">
                   {artwork.tags.map(tag => {

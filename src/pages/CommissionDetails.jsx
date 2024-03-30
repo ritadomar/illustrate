@@ -224,7 +224,7 @@ function CommissionDetails() {
                   </ReadMoreArea>
                 )}
                 {commission.description.length <= 700 && (
-                  <p>{commission.description}</p>
+                  <p className="wrap-paragraph">{commission.description}</p>
                 )}
               </div>
               <div className="flex flex-wrap gap-2 px-4">
