@@ -189,64 +189,108 @@ function RequestsPage() {
                     }}
                     header={
                       <div className="flex items-center justify-between">
-                        {request.buyer.username === user.username && (
-                          <div className="flex items-center gap-2">
-                            <>
-                              {request.artist.avatarUrl && (
-                                <Avatar
-                                  image={request.artist.avatarUrl}
-                                  shape="circle"
-                                  size="large"
-                                  className="object-cover border-2 border-brand "
-                                />
-                              )}
-                              {!request.artist.avatarUrl && (
-                                <Avatar
-                                  label={request.artist.username[0].toUpperCase()}
-                                  shape="circle"
-                                  size="large"
-                                  className="object-cover border-2 border-brand "
-                                />
-                              )}
-                            </>
-                            <div className="flex flex-col gap-2">
-                              <p>{request.artist.username}</p>
+                        {request.buyer === null &&
+                          request.artist.username === user.username && (
+                            <div className="flex items-center gap-2">
+                              <Avatar
+                                icon="pi pi-user"
+                                shape="circle"
+                                size="large"
+                                className="object-cover border-2 border-brand "
+                              />
 
-                              <p className="truncate font-normal">
-                                {request.description}
-                              </p>
-                            </div>
-                          </div>
-                        )}
-                        {request.artist.username === user.username && (
-                          <div className="flex items-center gap-2">
-                            <>
-                              {request.buyer.avatarUrl && (
-                                <Avatar
-                                  image={request.buyer.avatarUrl}
-                                  shape="circle"
-                                  size="large"
-                                  className="object-cover border-2 border-brand "
-                                />
-                              )}
-                              {!request.buyer.avatarUrl && (
-                                <Avatar
-                                  label={request.buyer.username[0].toUpperCase()}
-                                  shape="circle"
-                                  size="large"
-                                  className="object-cover border-2 border-brand "
-                                />
-                              )}
-                            </>
-                            <div className="flex flex-col gap-2">
-                              <p>{request.buyer.username}</p>
+                              <div className="flex flex-col gap-2">
+                                <p>deleted account</p>
 
-                              <p className="truncate font-normal">
-                                {request.description}
-                              </p>
+                                <p className="truncate font-normal">
+                                  {request.description}
+                                </p>
+                              </div>
                             </div>
-                          </div>
-                        )}
+                          )}
+                        {request.artist === null &&
+                          request.buyer.username === user.username && (
+                            <div className="flex items-center gap-2">
+                              <Avatar
+                                icon="pi pi-user"
+                                shape="circle"
+                                size="large"
+                                className="object-cover border-2 border-brand "
+                              />
+
+                              <div className="flex flex-col gap-2">
+                                <p>deleted account</p>
+
+                                <p className="truncate font-normal">
+                                  {request.description}
+                                </p>
+                              </div>
+                            </div>
+                          )}
+
+                        {request.buyer !== null &&
+                          request.artist !== null &&
+                          request.buyer.username === user.username && (
+                            <div className="flex items-center gap-2">
+                              <>
+                                {request.artist.avatarUrl && (
+                                  <Avatar
+                                    image={request.artist.avatarUrl}
+                                    shape="circle"
+                                    size="large"
+                                    className="object-cover border-2 border-brand "
+                                  />
+                                )}
+                                {!request.artist.avatarUrl && (
+                                  <Avatar
+                                    label={request.artist.username[0].toUpperCase()}
+                                    shape="circle"
+                                    size="large"
+                                    className="object-cover border-2 border-brand "
+                                  />
+                                )}
+                              </>
+                              <div className="flex flex-col gap-2">
+                                <p>{request.artist.username}</p>
+
+                                <p className="truncate font-normal">
+                                  {request.description}
+                                </p>
+                              </div>
+                            </div>
+                          )}
+
+                        {request.artist !== null &&
+                          request.buyer !== null &&
+                          request.artist.username === user.username && (
+                            <div className="flex items-center gap-2">
+                              <>
+                                {request.buyer.avatarUrl && (
+                                  <Avatar
+                                    image={request.buyer.avatarUrl}
+                                    shape="circle"
+                                    size="large"
+                                    className="object-cover border-2 border-brand "
+                                  />
+                                )}
+                                {!request.buyer.avatarUrl && (
+                                  <Avatar
+                                    label={request.buyer.username[0].toUpperCase()}
+                                    shape="circle"
+                                    size="large"
+                                    className="object-cover border-2 border-brand "
+                                  />
+                                )}
+                              </>
+                              <div className="flex flex-col gap-2">
+                                <p>{request.buyer.username}</p>
+
+                                <p className="truncate font-normal">
+                                  {request.description}
+                                </p>
+                              </div>
+                            </div>
+                          )}
                         <>
                           {request.status === 'pending' && (
                             <Tag
