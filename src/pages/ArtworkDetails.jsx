@@ -147,7 +147,7 @@ function ArtworkDetails() {
                       <span>|</span>{' '}
                       <span className="flex items-center gap-1  text-brand font-semibold">
                         <span className="pi pi-star-fill"></span>
-                        <p>{artwork.artist.avgRating}</p>
+                        <p>{Math.round(artwork.artist.avgRating * 10) / 10}</p>
                       </span>
                     </>
                   )}

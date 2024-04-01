@@ -202,7 +202,9 @@ function CommissionDetails() {
                         <span>|</span>{' '}
                         <span className="flex items-center gap-1  text-brand font-semibold">
                           <span className="pi pi-star-fill"></span>
-                          <p>{commission.artist.avgRating}</p>
+                          <p>
+                            {Math.round(commission.artist.avgRating * 10) / 10}
+                          </p>
                         </span>
                       </>
                     )}

@@ -145,7 +145,7 @@ function Profile() {
                     <span>|</span>{' '}
                     <span className="flex items-center gap-1  text-brand font-semibold">
                       <span className="pi pi-star-fill"></span>
-                      <p>{userProfile.avgRating}</p>
+                      <p>{Math.round(userProfile.avgRating * 10) / 10}</p>
                     </span>
                   </>
                 )}
